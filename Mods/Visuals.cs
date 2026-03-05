@@ -3228,7 +3228,7 @@ namespace Seralyth.Mods
                     {
                         if (!castingNameTags.ContainsKey(vrrig))
                         {
-                            GameObject go = new GameObject("Seralyth_SimplisticTag");
+                            GameObject go = new GameObject("Seralyth_CastingTag");
                             go.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
                             TextMeshPro text = go.AddComponent<TextMeshPro>();

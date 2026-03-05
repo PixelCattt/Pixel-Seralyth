@@ -330,7 +330,7 @@ namespace Seralyth.Mods
                             };
 
                             List<object> sendEventData = new List<object>();
-                            bool launchLocally = (friendSided || clientSided) && showSelf;
+                            bool launchLocally = (friendSided || clientSided);
                             if (launchLocally)
                             {
                                 projectileSendData.Add(friendProjectileScale);
@@ -344,6 +344,7 @@ namespace Seralyth.Mods
                                 sendEventData.Add(projectileSendData.ToArray());
                             } 
 
+                            
                             if (showSelf)
                                 LaunchLocalProjectile(position, velocity, projectileSource, index, true, color32, friendSided ? friendProjectileScale : 1, Throwable, VRRig.LocalRig);
                             if (!clientSided && NetworkSystem.Instance.InRoom)

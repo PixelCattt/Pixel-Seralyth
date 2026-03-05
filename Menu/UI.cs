@@ -68,7 +68,6 @@ namespace Seralyth.Menu
             g = canvas.Find("ControlUI/G").GetComponent<TMP_InputField>();
             b = canvas.Find("ControlUI/B").GetComponent<TMP_InputField>();
             textInput = canvas.Find("ControlUI/TextInput").GetComponent<TMP_InputField>();
-            LogManager.Log(canvas.Find("ControlUI/QueueButton"));
             canvas.Find("ControlUI/QueueButton").GetComponent<Button>().onClick.AddListener(() =>
             {
                 Mods.Important.QueueRoom(textInput.text);
@@ -111,7 +110,8 @@ namespace Seralyth.Menu
                 canvas.Find("ControlUI/QueueButton/Text").GetComponent<TextMeshProUGUI>(),
                 canvas.Find("ControlUI/JoinButton/Text").GetComponent<TextMeshProUGUI>(),
                 canvas.Find("ControlUI/ColorButton/Text").GetComponent<TextMeshProUGUI>(),
-                canvas.Find("ControlUI/NameButton/Text").GetComponent<TextMeshProUGUI>()
+                canvas.Find("ControlUI/NameButton/Text").GetComponent<TextMeshProUGUI>(),
+                canvas.Find("HideMessage").GetComponent<TextMeshProUGUI>()
             };
 
             imageObjects = new List<Image>

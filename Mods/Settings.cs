@@ -826,7 +826,7 @@ namespace Seralyth.Mods
                         goto restart
                     )
 
-                    for %%F in (""%PLUGIN_PATH%\*stupid*menu*.dll"") do (
+                    for %%F in (""%PLUGIN_PATH%\*seralyth*menu*.dll"") do (
                         set ""MENU_FILE=%%F""
                         goto update
                     )
@@ -838,7 +838,7 @@ namespace Seralyth.Mods
                     echo Downloading latest release of Seralyth Menu...
 
                     curl -L -o ""%MENU_FILE%"" ^
-                    ""https://github.com/Seralyth/Seralyth-Menu/releases/latest/download/iis_Stupid_Menu.dll""
+                    ""https://github.com/Seralyth/Seralyth-Menu/releases/latest/download/Seralyth-Menu.dll""
 
                     goto restart
 
@@ -895,7 +895,7 @@ namespace Seralyth.Mods
                         else
                             echo ""Downloading latest release of Seralyth Menu...""
                             curl -L -o ""$MENU_FILE"" \
-                            ""https://github.com/Seralyth/Seralyth-Menu/releases/latest/download/iis_Stupid_Menu.dll""
+                            ""https://github.com/Seralyth/Seralyth-Menu/releases/latest/download/Seralyth-Menu.dll""
                         fi
                     fi
 
