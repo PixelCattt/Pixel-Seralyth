@@ -26,7 +26,7 @@ namespace Seralyth
         public const string GUID = "org.kingofnetflix.gorillatag.seralythmenu";
         public const string Name = "Seralyth Menu";
         public const string Description = "Mod menu for Gorilla Tag.";
-        public const string BuildTimestamp = "2026-03-06T19:43:14Z";
+        public const string BuildTimestamp = "2026-03-06T20:08:59Z";
         public const string Version = "3.0.0";
 
         public const string BaseDirectory = "SeralythMenu";

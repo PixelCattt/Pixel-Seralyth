@@ -2191,7 +2191,7 @@ namespace Seralyth.Menu
             new[] { // Advantage Settings [21]
                 new ButtonInfo { buttonText = "Exit Advantage Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns you back to the settings menu."},
 
-                new ButtonInfo { buttonText = "Instant Tag", enableMethod =() => Advantages.instantTag = true, disableMethod =() => Advantages.instantTag = false, toolTip = "Makes the tag instant."},
+                new ButtonInfo { buttonText = "Instant Tag", enableMethod =() => Advantages.instantTag = true, disableMethod =() => Advantages.instantTag = false, enabled = true, toolTip = "Makes the tag instant."},
                 new ButtonInfo { buttonText = "Obnoxious Tag", toolTip = "Makes the tag mods more obnoxious. Instead of hiding in the ground, you teleport around the player like crazy."},
                 new ButtonInfo { buttonText = "Visualize Tag Reach", toolTip = "Visualizes the distance threshold for the tag reach."},
 
