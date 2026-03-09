@@ -26,7 +26,7 @@ namespace Seralyth
         public const string GUID = "org.seralyth.gorillatag.seralythmenu";
         public const string Name = "Seralyth Menu";
         public const string Description = "Community powered mod menu for Gorilla Tag.";
-        public const string BuildTimestamp = "2026-03-09T01:37:54Z";
+        public const string BuildTimestamp = "2026-03-09T01:45:11Z";
         public const string Version = "4.1.0";
 
         public const string BaseDirectory = "SeralythMenu";
