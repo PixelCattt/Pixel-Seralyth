@@ -311,10 +311,7 @@ namespace Seralyth.Menu
                     }
                 }
 
-                shouldBePC = Settings.pcBindings.Values.Any(key => UnityInput.GetKey(key))
-                            || Mouse.current.leftButton.isPressed
-                            || Mouse.current.rightButton.isPressed
-                            || arrowKeysPressed;
+                shouldBePC = !XRSettings.isDeviceActive;
             }
             catch { }
             #endregion
@@ -1737,8 +1734,15 @@ namespace Seralyth.Menu
 
                                 break;
                             default:
+                                if (Keyboard.current.backspaceKey.wasPressedThisFrame)
+                                {
+                                    if (!string.IsNullOrEmpty(keyboardInput))
+                                        keyboardInput = keyboardInput.Substring(0, keyboardInput.Length - 1);
+                                }
                                 Keyboard.current.onTextInput += c =>
                                 {
+                                    if (char.IsControl(c))
+                                        return;
                                     keyboardInput += c;
                                 };
                                 break;
@@ -4412,14 +4416,14 @@ namespace Seralyth.Menu
                 Right = GunTransform.right;
             }
 
-            Physics.Raycast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), Direction, out var Ray, 512f, overrideLayerMask ?? NoInvisLayerMask());
+                        Physics.Raycast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), Direction, out var Ray, 512f, overrideLayerMask ?? NoInvisLayerMask());
+
             if (shouldBePC)
             {
                 Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
                 Physics.Raycast(ray, out Ray, 512f, NoInvisLayerMask());
                 Direction = ray.direction;
             }
-
             Vector3 EndPosition = gunLocked ? lockTarget.transform.position : Ray.point;
 
             if (EndPosition == Vector3.zero)

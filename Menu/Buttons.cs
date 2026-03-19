@@ -1104,8 +1104,8 @@ namespace Seralyth.Menu
 
                 new ButtonInfo { buttonText = "Legacy Microphone", enableMethod =() => { RecorderPatch.enabled = false; Fun.ReloadMicrophone();  }, disableMethod =() => { RecorderPatch.enabled = true; Fun.ReloadMicrophone(); }, toolTip = "Reverts the microphone system into using the legacy input switcher. This is generally not recommended." },
                 new ButtonInfo { buttonText = "Low Quality Microphone", enableMethod =() => Fun.SetMicrophoneQuality(6000, 4000), disableMethod =() => Fun.SetMicrophoneQuality(20000, 16000), toolTip = "Makes your microphone have really bad quality."},
-                new ButtonInfo { buttonText = "High Quality Microphone", enableMethod =() => Fun.SetMicrophoneQuality(30000, 24000), disableMethod =() => Fun.SetMicrophoneQuality(20000, 16000), toolTip = "Makes your microphone have really high quality."},
-                new ButtonInfo { buttonText = "Loud Microphone", method =() => Fun.SetMicrophoneAmplification(true), disableMethod =() => Fun.SetMicrophoneAmplification(false), toolTip = "Makes your microphone really loud."},
+                new ButtonInfo { buttonText = "High Quality Microphone", enableMethod =() => Fun.SetMicrophoneQuality(30000, 48000), disableMethod =() => Fun.SetMicrophoneQuality(20000, 16000), toolTip = "Makes your microphone have really high quality."},
+                new ButtonInfo { buttonText = "Loud Microphone", method =() => Fun.SetMicrophoneAmplification(RecorderPatch.enabled ? 5f : 16f), disableMethod =() => Fun.SetMicrophoneAmplification(1), toolTip = "Makes your microphone really loud."},
 
                 new ButtonInfo { buttonText = "Mute Microphone", method =() => Fun.MuteMicrophone(true), disableMethod =() => Fun.MuteMicrophone(false), toolTip = "Disables your microphone."},
                 new ButtonInfo { buttonText = "Reload Microphone", aliases = new[] { "Restart Microphone" }, method = Fun.ReloadMicrophone, isTogglable = false,  toolTip = "Restarts / fixes your microphone."},
@@ -1833,11 +1833,11 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Material Gun", method = Overpowered.MaterialGun, toolTip = "Flashes the materials of whoever your hand desires."},
                 new ButtonInfo { buttonText = "Material All", method = Overpowered.MaterialAll, toolTip = "Flashes the materials of everyone in the room."},
 
-                new ButtonInfo { buttonText = "Grey Screen Gun", method = ()=> Overpowered.ActivateGreyZoneGun(true), toolTip = "Makes whoever your hand desires' screen grey." },
-                new ButtonInfo { buttonText = "Fix Screen Gun", method = ()=> Overpowered.ActivateGreyZoneGun(false), toolTip = "Makes whoever your hand desires' screen normal again." },
+                new ButtonInfo { buttonText = "Grey Screen Gun", method = ()=> Overpowered.ActivateGreyZoneGun(true), disableMethod =() => SerializePatch.OverrideSerialization = null,  toolTip = "Makes whoever your hand desires' screen grey." },
+                new ButtonInfo { buttonText = "Fix Screen Gun", aliases = new[] { "Ungrey Screen Gun" }, method = ()=> Overpowered.ActivateGreyZoneGun(false), toolTip = "Makes whoever your hand desires' screen normal again." },
                 new ButtonInfo { buttonText = "Grey Screen All", enableMethod = ()=> Overpowered.ActivateGreyZone(true), disableMethod =() => Overpowered.ActivateGreyZone(false), toolTip = "Makes everyone's screen grey." },
 
-                new ButtonInfo { buttonText = "Spaz Grey Screen Gun", method = Overpowered.SpazGreyZoneGun, toolTip = "Makes whoever your hand desires' screen flash grey." },
+                new ButtonInfo { buttonText = "Spaz Grey Screen Gun", method = Overpowered.SpazGreyZoneGun, disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Makes whoever your hand desires' screen flash grey." },
                 new ButtonInfo { buttonText = "Spaz Grey Screen All", method = Overpowered.SpazGreyZone, disableMethod =() => Overpowered.ActivateGreyZone(false), toolTip = "Makes everyone's screen flash grey." },
 
                 new ButtonInfo { buttonText = "Zero Gravity Gun", method = ()=> Overpowered.ActivateGreyZoneGun(true, true), toolTip = "Sets whoever your hand desires' gravity to zero." },

@@ -23,6 +23,7 @@ using HarmonyLib;
 using Photon.Voice;
 using Photon.Voice.Unity;
 using Seralyth.Mods;
+using System.Collections.Generic;
 
 namespace Seralyth.Patches.Menu
 {
@@ -31,15 +32,24 @@ namespace Seralyth.Patches.Menu
     {
         public static bool enabled;
         public static Speaker targetSpeaker;
-        public static FrameOut<float> frameOut;
+        public static List<float> SampleQueue = new List<float>();
+        public static readonly object locked = new object();
 
         static void Postfix(Speaker __instance, FrameOut<float> frame)
         {
             if (!enabled || targetSpeaker == null || __instance != targetSpeaker)
                 return;
 
-            frameOut = frame;
-            Fun.ProcessFrameBuffer(frame.Buf);
+            var src = frame.Buf;
+            if (src == null || src.Length == 0) return;
+
+            lock (locked)
+            {
+                SampleQueue.AddRange(src);
+                if (SampleQueue.Count > targetSpeaker.RemoteVoiceLink.Info.SamplingRate)
+                    SampleQueue.RemoveRange(0, SampleQueue.Count - targetSpeaker.RemoteVoiceLink.Info.SamplingRate);
+            }
         }
     }
+
 }

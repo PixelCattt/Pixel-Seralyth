@@ -470,6 +470,8 @@ namespace Seralyth.Mods
 
         public static void FixMicrophone()
         {
+            if (!PhotonNetwork.InRoom)
+                return;
             if (RecorderPatch.enabled)
             {
                 if (activeSounds != null)

@@ -2008,18 +2008,18 @@ namespace Seralyth.Mods
             }
         }
 
-        public static void SetMicrophoneAmplification(bool amplify)
+        public static void SetMicrophoneAmplification(float gain)
         {
             if (!PhotonNetwork.InRoom)
                 return;
 
             if (RecorderPatch.enabled)
-                VoiceManager.Get().Gain = amplify ? 16f : 1;
+                VoiceManager.Get().Gain = gain;
             else
             {
                 Recorder mic = NetworkSystem.Instance.VoiceConnection.PrimaryRecorder;
 
-                if (amplify)
+                if (gain > 1)
                 {
                     if (mic.gameObject.GetComponent<MicAmplifier>() != null)
                         return;
@@ -2241,6 +2241,7 @@ namespace Seralyth.Mods
 
         private static LoopbackFactory factory;
         private static float copyVoiceGunDelay;
+
         public static void CopyVoiceGun()
         {
             if (GetGunInput(false))
@@ -2248,7 +2249,7 @@ namespace Seralyth.Mods
                 var GunData = RenderGun();
                 RaycastHit Ray = GunData.Ray;
 
-                if (GetGunInput(true))
+                if (gunLocked && lockTarget != null)
                 {
                     VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
                     if (gunTarget && !gunTarget.IsLocal())
@@ -2257,17 +2258,68 @@ namespace Seralyth.Mods
                         {
                             SpeakerPatch.enabled = true;
                             SpeakerPatch.targetSpeaker = lockTarget.gameObject.GetComponent<GorillaSpeakerLoudness>().speaker;
-                            if (!VoiceManager.Get().PostProcessors.ContainsKey("CopyVoice"))
+                            if (!VoiceManager.Get().PostProcessors.ContainsKey("CopyVoice"))  // this is so shit but i need to account for channels > 1
                             {
+                                float readPos = 0f;
+
                                 VoiceManager.Get().PostProcessors["CopyVoice"] = buffer =>
                                 {
-                                    for (int i = 0; i < buffer.Length && i < SpeakerPatch.frameOut.Buf.Length; i++)
+                                    var vm = VoiceManager.Get();
+                                    int channels = vm.Channels;
+
+                                    float sourceRate = (SpeakerPatch.targetSpeaker != null && SpeakerPatch.targetSpeaker.RemoteVoiceLink.Info.SamplingRate > 0)
+                                                       ? SpeakerPatch.targetSpeaker.RemoteVoiceLink.Info.SamplingRate
+                                                       : 24000;
+
+                                    float ratio = sourceRate / vm.OutputRate;
+
+                                    lock (SpeakerPatch.locked)
                                     {
-                                        buffer[i] = SpeakerPatch.frameOut.Buf[i];
+                                        if (SpeakerPatch.SampleQueue.Count < (sourceRate * 0.04f))
+                                        {
+                                            Array.Clear(buffer, 0, buffer.Length);
+                                            return;
+                                        }
+
+                                        for (int i = 0; i < buffer.Length; i += channels)
+                                        {
+                                            int idxA = (int)readPos;
+                                            int idxB = idxA + 1;
+
+                                            if (idxB < SpeakerPatch.SampleQueue.Count)
+                                            {
+                                                float t = readPos - idxA;
+                                                float sample = Mathf.Lerp(SpeakerPatch.SampleQueue[idxA], SpeakerPatch.SampleQueue[idxB], t);
+
+                                                for (int c = 0; c < channels; c++)
+                                                {
+                                                    int targetIndex = i + c;
+                                                    if (targetIndex < buffer.Length)
+                                                    {
+                                                        buffer[targetIndex] = sample;
+                                                    }
+                                                }
+
+                                                readPos += ratio;
+                                            }
+                                            else
+                                            {
+                                                for (int c = 0; c < channels; c++)
+                                                {
+                                                    if (i + c < buffer.Length) buffer[i + c] = 0f;
+                                                }
+                                            }
+                                        }
+
+                                        int consumed = (int)readPos;
+                                        if (consumed > 0)
+                                        {
+                                            SpeakerPatch.SampleQueue.RemoveRange(0, Math.Min(consumed, SpeakerPatch.SampleQueue.Count));
+                                            readPos -= consumed;
+                                        }
                                     }
                                 };
                             }
-
                         }
                         else
                         {
@@ -2302,15 +2354,22 @@ namespace Seralyth.Mods
                         NetworkSystem.Instance.VoiceConnection.PrimaryRecorder.DebugEchoMode = true;
                     }
                 }
+                if (GetGunInput(true))
+                {
+                    VRRig gunTarget = Ray.collider.GetComponentInParent<VRRig>();
+                    if (gunTarget && !gunTarget.IsLocal())
+                    {
+                        gunLocked = true;
+                        lockTarget = gunTarget;
+                    }
+                }
             }
             else
             {
                 if (gunLocked)
-                {
                     gunLocked = false;
-
+                if (factory != null || VoiceManager.Get().PostProcessors.ContainsKey("CopyVoice"))
                     DisableCopyVoice();
-                }
             }
         }
 

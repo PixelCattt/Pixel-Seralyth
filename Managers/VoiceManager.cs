@@ -470,9 +470,9 @@ namespace Seralyth.Managers
 
                 sourcePosition += sourceStep;
 
-                microphoneBuffer[i] = left * gain;
+                buffer[i] = Mathf.Clamp(microphoneBuffer[i] + left, -1f, 1f);
                 if (Channels > 1 && i + 1 < buffer.Length)
-                    microphoneBuffer[i + 1] = right * gain;
+                    buffer[i + 1] = Mathf.Clamp(microphoneBuffer[i + 1] + right, -1f, 1f);
             }
 
             if (!PostProcessClip)
@@ -485,9 +485,14 @@ namespace Seralyth.Managers
             {
                 NextAudioClipSample(out float pushedLeft, out float pushedRight);
 
-                buffer[i] = microphoneBuffer[i] + pushedLeft;
+                float mixedLeft = microphoneBuffer[i] + pushedLeft;
+                buffer[i] = Mathf.Clamp(mixedLeft, -1f, 1f);
+
                 if (Channels > 1 && i + 1 < buffer.Length)
-                    buffer[i + 1] = microphoneBuffer[i + 1] + pushedRight;
+                {
+                    float mixedRight = microphoneBuffer[i + 1] + pushedRight;
+                    buffer[i + 1] = Mathf.Clamp(mixedRight, -1f, 1f);
+                }
             }
 
             if (PostProcessClip)

@@ -5114,6 +5114,8 @@ namespace Seralyth.Mods
 
             drec.DictationHypothesis += (text) =>
             {
+                if (AIManager.generating)
+                    return;
                 if (debugDictation)
                     LogManager.Log($"Hypothesis: {text}");
 
