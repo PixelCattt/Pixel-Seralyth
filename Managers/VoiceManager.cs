@@ -470,9 +470,9 @@ namespace Seralyth.Managers
 
                 sourcePosition += sourceStep;
 
-                microphoneBuffer[i] = left * gain;
+                buffer[i] = Mathf.Clamp(microphoneBuffer[i] + left, -1f, 1f);
                 if (Channels > 1 && i + 1 < buffer.Length)
-                    microphoneBuffer[i + 1] = right * gain;
+                    buffer[i + 1] = Mathf.Clamp(microphoneBuffer[i + 1] + right, -1f, 1f);
             }
 
             if (!PostProcessClip)
