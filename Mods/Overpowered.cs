@@ -5236,7 +5236,7 @@ namespace Seralyth.Mods
             if (Time.time > freezeAllDelay)
             {
                 for (int i = 0; i < eventCount; i++)
-                    PhotonNetwork.RaiseEvent(51, new object[] { serverLink }, options, SendOptions.SendUnreliable);
+                    PhotonNetwork.RaiseEvent(54, new object[] { serverLink }, options, SendOptions.SendUnreliable);
 
                 RPCProtection();
                 freezeAllDelay = Time.time + delay;

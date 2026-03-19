@@ -198,7 +198,7 @@ namespace Seralyth.Mods
         public static void ConductDebug()
         {
             string text = "";
-            text += "<color=blue><b>Seralyth</b></color>" + PluginInfo.Version + "\\n \\n";
+            text += $"<color=blue><b>Seralyth</b></color> {PluginInfo.Version}  <color=grey>|</color>  Users Online:  {ServerData.onlineUsers}" + "\\n \\n";
 
             string red = "<color=red>" + MathF.Floor(PlayerPrefs.GetFloat("redValue") * 255f) + "</color>";
             string green = ", <color=green>" + MathF.Floor(PlayerPrefs.GetFloat("greenValue") * 255f) + "</color>";
