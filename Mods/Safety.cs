@@ -84,11 +84,8 @@ namespace Seralyth.Mods
             if (leftPrimary)
             {
                 NoFinger();
-                GTPlayer.Instance.inOverlay = true;
-                GTPlayer.Instance.GetControllerTransform(true).localPosition = new Vector3(238f, -90f, 0f);
-                GTPlayer.Instance.GetControllerTransform(false).localPosition = new Vector3(-190f, 90f, 0f);
-                GTPlayer.Instance.GetControllerTransform(true).rotation = Camera.main.transform.rotation * Quaternion.Euler(-55f, 90f, 0f);
-                GTPlayer.Instance.GetControllerTransform(false).rotation = Camera.main.transform.rotation * Quaternion.Euler(-55f, -49f, 0f);
+                ConnectedControllerHandler.Instance.leftHandFollower.UpdatePositionRotation();
+                ConnectedControllerHandler.Instance.rightHandFollower.UpdatePositionRotation();
             }
 
             Movement.SetHandEnabled(!leftPrimary);
