@@ -374,7 +374,7 @@ namespace Seralyth.Managers
             }
             catch (Exception e)
             {
-                LogManager.LogError($"Notification failed, object probably nil due to third person ; {notificationText} {e.Message}");
+                LogManager.LogError($"Notification failed.\nNotification: {notificationText}\nException: {e.Message}");
             }
         }
 
