@@ -6729,16 +6729,6 @@ namespace Seralyth.Mods
             previousInParty = FriendshipGroupDetection.Instance.IsInParty;
         }
 
-        public static void GrabFlingGun()
-        {
-
-        }
-
-        public static void GrabFlingAll()
-        {
-
-        }
-
         private static float breakDelay;
         public static void PartyBreakNetworkTriggers()
         {

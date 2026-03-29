@@ -2130,9 +2130,6 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Auto Party Ban", method = Overpowered.AutoPartyBan, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
                 new ButtonInfo { buttonText = "Auto Party Ban", method = Overpowered.AutoPartyBan, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
 
-                new ButtonInfo { buttonText = "Grab Fling Gun", method = Overpowered.GrabFlingGun, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
-                new ButtonInfo { buttonText = "Grab Fling All", method = Overpowered.GrabFlingAll, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
-
 
                 new ButtonInfo { buttonText = "Break Audio Gun", method = Overpowered.BreakAudioGun, toolTip = "Attempts to break the audio of whoever your hand desires." },
                 new ButtonInfo { buttonText = "Break Audio All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.BreakAudioAll, toolTip = "Attempts to break everyone's audio when holding trigger." },
