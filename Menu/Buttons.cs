@@ -1903,8 +1903,8 @@ namespace Seralyth.Menu
 
                 new ButtonInfo { buttonText = "Shotgun <color=grey>[</color><color=green>G</color><color=grey>]</color>", method = Fun.Shotgun, toolTip = "Spawns you a shotgun when you press <color=green>grip</color>."},
 
-                new ButtonInfo { buttonText = "Block Crash Gun", overlapText = "Building Block Crash Gun", method = Overpowered.BlockCrashGun, toolTip = "Crashes whoever your hand desires if they are inside of the block map."},
-                new ButtonInfo { buttonText = "Block Crash All <color=grey>[</color><color=green>T</color><color=grey>]</color>", overlapText = "Building Block Crash All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.BlockCrashAll, toolTip = "Crashes everybody inside of the block map."},
+                new ButtonInfo { buttonText = "Building Block Crash Gun", method = Overpowered.BlockCrashGun, toolTip = "Crashes whoever your hand desires if they are inside of the block map."},
+                new ButtonInfo { buttonText = "Building Block Crash All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.BlockCrashAll, toolTip = "Crashes everybody inside of the block map."},
 
                 new ButtonInfo { buttonText = "Block Anti Report", enableMethod = Fun.EnableAtticAntiReport, method = Fun.AtticAntiReport, toolTip = "Automatically builds blocks around your report button."},
 
@@ -2005,19 +2005,19 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Always Guardian", method = Overpowered.AlwaysGuardian, disableMethod = Movement.EnableRig, toolTip = "Makes you always the guardian."},
                 new ButtonInfo { buttonText = "Guardian Protector", method = Overpowered.GuardianProtector, toolTip = "Pushes people away from the guardian moon if they try to approach it."},
 
-                new ButtonInfo { buttonText = "Grab Gun", overlapText = "Guardian Grab Gun", method = Overpowered.GrabGun, toolTip = "Grabs whoever your hand desires if you're the guardian."},
-                new ButtonInfo { buttonText = "Grab All <color=grey>[</color><color=green>G</color><color=grey>]</color>", overlapText = "Guardian Grab All <color=grey>[</color><color=green>G</color><color=grey>]</color>", method = Overpowered.GrabAll, toolTip = "Grabs everyone in the room if you're the guardian."},
+                new ButtonInfo { buttonText = "Guardian Grab Gun", method = Overpowered.GrabGun, toolTip = "Grabs whoever your hand desires if you're the guardian."},
+                new ButtonInfo { buttonText = "Guardian Grab All <color=grey>[</color><color=green>G</color><color=grey>]</color>", method = Overpowered.GrabAll, toolTip = "Grabs everyone in the room if you're the guardian."},
 
-                new ButtonInfo { buttonText = "Release Gun", overlapText = "Guardian Release Gun", method = Overpowered.ReleaseGun, toolTip = "Releases whoever your hand desires if you're the guardian."},
-                new ButtonInfo { buttonText = "Release All <color=grey>[</color><color=green>T</color><color=grey>]</color>", overlapText = "Guardian Release All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.ReleaseAll, toolTip = "Releases everyone in the room if you're the guardian."},
+                new ButtonInfo { buttonText = "Guardian Release Gun", method = Overpowered.ReleaseGun, toolTip = "Releases whoever your hand desires if you're the guardian."},
+                new ButtonInfo { buttonText = "Guardian Release All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.ReleaseAll, toolTip = "Releases everyone in the room if you're the guardian."},
 
-                new ButtonInfo { buttonText = "Fling Gun", overlapText = "Guardian Fling Gun", method = Overpowered.FlingGun, toolTip = "Flings whoever your hand desires."},
-                new ButtonInfo { buttonText = "Fling All <color=grey>[</color><color=green>T</color><color=grey>]</color>", overlapText = "Guardian Fling All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.FlingAll, toolTip = "Flings everyone in the room."},
+                new ButtonInfo { buttonText = "Guardian Fling Gun", method = Overpowered.FlingGun, toolTip = "Flings whoever your hand desires."},
+                new ButtonInfo { buttonText = "Guardian Fling All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.FlingAll, toolTip = "Flings everyone in the room."},
 
-                new ButtonInfo { buttonText = "Bring Gun", overlapText = "Guardian Bring Gun", method = Overpowered.BringGun, toolTip = "Brings whoever your hand desires towards you."},
-                new ButtonInfo { buttonText = "Bring All <color=grey>[</color><color=green>T</color><color=grey>]</color>", overlapText = "Guardian Bring All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.BringAll, toolTip = "Brings everyone in the room towards you."},
+                new ButtonInfo { buttonText = "Guardian Bring Gun", method = Overpowered.BringGun, toolTip = "Brings whoever your hand desires towards you."},
+                new ButtonInfo { buttonText = "Guardian Bring All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.BringAll, toolTip = "Brings everyone in the room towards you."},
 
-                new ButtonInfo { buttonText = "Bring All Gun", overlapText = "Guardian Bring All Gun", method = Overpowered.BringAllGun, toolTip = "Brings everyone in the room towards wherever your hand desires."},
+                new ButtonInfo { buttonText = "Guardian Bring All Gun", method = Overpowered.BringAllGun, toolTip = "Brings everyone in the room towards wherever your hand desires."},
 
                 new ButtonInfo { buttonText = "Guardian Bring Away Gun", method = Overpowered.BringAwayGun, toolTip = "Brings whoever your hand desires towards you."},
                 new ButtonInfo { buttonText = "Guardian Bring Away All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.BringAwayAll, toolTip = "Brings everyone in the room towards you."},
@@ -2034,23 +2034,19 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Guardian Give Fly Gun", method = Overpowered.GiveFlyGun, toolTip = "Gives whoever you want fly when they hold their right thumb down."},
                 new ButtonInfo { buttonText = "Guardian Give Fly All", method = Overpowered.GiveFlyAll, toolTip = "Gives everyone in the room fly when they hold their right thumb down."},
 
-                new ButtonInfo { buttonText = "Spaz Player Gun", overlapText = "Guardian Spaz Player Gun", method = Overpowered.SpazPlayerGun, toolTip = "Spazzes out whoever your hand desires."},
-                new ButtonInfo { buttonText = "Spaz All Players <color=grey>[</color><color=green>T</color><color=grey>]</color>", overlapText = "Guardian Spaz All Players <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.SpazAllPlayers, toolTip = "Spazzes out everyone in the room."},
+                new ButtonInfo { buttonText = "Guardian Spaz Player Gun", method = Overpowered.SpazPlayerGun, toolTip = "Spazzes out whoever your hand desires."},
+                new ButtonInfo { buttonText = "Guardian Spaz All Players <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.SpazAllPlayers, toolTip = "Spazzes out everyone in the room."},
 
-                new ButtonInfo { buttonText = "Effect Spam Hands <color=grey>[</color><color=green>G</color><color=grey>]</color>", overlapText = "Guardian Effect Spam Hands <color=grey>[</color><color=green>G</color><color=grey>]</color>", method = Overpowered.EffectSpamHands, toolTip = "Spawns effects when holding <color=green>grip</color>."},
+                new ButtonInfo { buttonText = "Guardian Effect Spam Hands <color=grey>[</color><color=green>G</color><color=grey>]</color>", method = Overpowered.EffectSpamHands, toolTip = "Spawns effects when holding <color=green>grip</color>."},
                 new ButtonInfo { buttonText = "Effect Spam Gun", method = Overpowered.EffectSpamGun, overlapText = "Guardian Effect Spam Gun", toolTip = "Spawns effects wherever your hand desires."},
 
-                new ButtonInfo { buttonText = "Physical Freeze Gun", overlapText = "Guardian Freeze Gun", method = Overpowered.PhysicalFreezeGun, toolTip = "Freezes whoever your hand desires." },
-                new ButtonInfo { buttonText = "Physical Freeze All <color=grey>[</color><color=green>T</color><color=grey>]</color>", overlapText = "Guardian Freeze All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.PhysicalFreezeAll, toolTip = "Freezes everyone in the room when holding <color=green>trigger</color>." },
+                new ButtonInfo { buttonText = "Guardian Freeze Gun", method = Overpowered.PhysicalFreezeGun, toolTip = "Freezes whoever your hand desires." },
+                new ButtonInfo { buttonText = "Guardian Freeze All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.PhysicalFreezeAll, toolTip = "Freezes everyone in the room when holding <color=green>trigger</color>." },
 
                 new ButtonInfo { buttonText = "Guardian Kick Gun", method = Overpowered.GuardianKickGun, toolTip = "Kicks whoever your hand desires." },
                 new ButtonInfo { buttonText = "Guardian Kick All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.GuardianKickAll, toolTip = "Kicks everyone in the room when holding <color=green>trigger</color>." },
 
                 new ButtonInfo { buttonText = "Guardian Crash Gun", method = Overpowered.GuardianCrashGun, toolTip = "Crashes whoever your hand desires." },
-                new ButtonInfo { buttonText = "Guardian Crash All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.GuardianCrashAll, toolTip = "Crashes everyone in the room when holding <color=green>trigger</color>." },
-
-                new ButtonInfo { buttonText = "Cache Kick Gun", method = Overpowered.CacheKickGun, disableMethod =() => Overpowered.OptimizeEvents = false, toolTip = "Kicks everyone in the room by filling up the room cache." },
-                new ButtonInfo { buttonText = "Cache Kick All", enableMethod = Overpowered.EnableCacheKickAll, method = Overpowered.CacheKickAll, disableMethod =() => Overpowered.OptimizeEvents = false, toolTip = "Kicks everyone in the room by filling up the room cache." },
 
                 new ButtonInfo { buttonText = "Delay Ban Gun", method = Overpowered.DelayBanGun, disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Delay bans whoever your hand desires."},
                 new ButtonInfo { buttonText = "Delay Ban All", enableMethod = Overpowered.DelayBanAll, disableMethod =() => SerializePatch.OverrideSerialization = null, toolTip = "Delay bans everyone in the room."},
@@ -2128,8 +2124,15 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Kick All in Party", overlapText = "Party Send All", method = Overpowered.KickAllInParty, isTogglable = false, toolTip = "Sends everyone in your party to a random room." },
                 new ButtonInfo { buttonText = "Ban All in Party", overlapText = "Party Ban All", method = Overpowered.BanAllInParty, isTogglable = false, toolTip = "Sends everyone in your party to a bannable code." },
 
-                new ButtonInfo { buttonText = "Auto Party Kick", overlapText = "Auto Party Send", method = Overpowered.AutoPartyKick, toolTip = "When you party, you will automatically send everyone in your party to a random room." },
-                new ButtonInfo { buttonText = "Auto Party Ban", overlapText = "Auto Party Ban", method = Overpowered.AutoPartyBan, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
+                new ButtonInfo { buttonText = "Auto Party Send", method = Overpowered.AutoPartyKick, toolTip = "When you party, you will automatically send everyone in your party to a random room." },
+                new ButtonInfo { buttonText = "Auto Party Ban", method = Overpowered.AutoPartyBan, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
+
+                new ButtonInfo { buttonText = "Auto Party Ban", method = Overpowered.AutoPartyBan, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
+                new ButtonInfo { buttonText = "Auto Party Ban", method = Overpowered.AutoPartyBan, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
+
+                new ButtonInfo { buttonText = "Grab Fling Gun", method = Overpowered.GrabFlingGun, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
+                new ButtonInfo { buttonText = "Grab Fling All", method = Overpowered.GrabFlingAll, toolTip = "When you party, you will automatically send everyone in your party to a bannable code." },
+
 
                 new ButtonInfo { buttonText = "Break Audio Gun", method = Overpowered.BreakAudioGun, toolTip = "Attempts to break the audio of whoever your hand desires." },
                 new ButtonInfo { buttonText = "Break Audio All <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.BreakAudioAll, toolTip = "Attempts to break everyone's audio when holding trigger." },
