@@ -6070,6 +6070,7 @@ namespace Seralyth.Mods
                 Fun.soundboardVolumeIndex.ToString(),
                 Fun.soundboardSpeedIndex.ToString(),
                 SoundManager.DefaultSoundpack,
+                Sound.disableLocalSoundboard.ToString(),
             };
 
             string settingstext = string.Join(seperator, settings);
@@ -6357,6 +6358,8 @@ namespace Seralyth.Mods
 
                 SoundManager.DefaultSoundpack = data[71];
                 Buttons.GetIndex("Change Menu Soundpack").overlapText = $"Change Menu Soundpack <color=grey>[</color><color=green>{SoundManager.DefaultSoundpack}</color><color=grey>]</color>";
+
+                Sound.disableLocalSoundboard = bool.Parse(data[72]);
             }
             catch { LogManager.Log("Save file out of date"); }
 
