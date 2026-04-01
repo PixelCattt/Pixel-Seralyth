@@ -348,7 +348,7 @@ namespace Seralyth.Classes.Menu
                                         toolTip = "Sex"
                                     });
                                     AssetUtilities.LoadSoundFromURL($"{PluginInfo.ServerResourcePath}/Audio/Menu/achievement.ogg", "Audio/Menu/achievement.ogg", clip => clip.Play(Main.buttonClickVolume / 10f));
-                                    NotificationManager.SendNotification($"<color=grey>[</color><color=pink>SEX</color><color=grey>]</color> Sex mods have been enabled. Check the main page.", 10000);
+                                    NotificationManager.SendNotification($"<color=grey>[</color><color=#FFC0CB>SEX</color><color=grey>]</color> Sex mods have been enabled. Check the main page.", 10000);
                                 }
                             }
                             else
