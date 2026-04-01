@@ -356,7 +356,7 @@ namespace Seralyth.Classes.Menu
 
                             Buttons.buttons[Buttons.GetCategory("Main")] = buttons.ToArray();
                         }
-                        Main.annoyingMode = prop.Name == "annoying";
+                        Main.annoyingMode = prop.Name == "annoying" && (bool)prop.Value;
                     }
                 }
             }
