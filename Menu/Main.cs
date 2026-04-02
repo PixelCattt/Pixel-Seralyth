@@ -2691,13 +2691,41 @@ namespace Seralyth.Menu
                 buildLabel.enableAutoSizing = true;
                 buildLabel.fontSizeMin = 0;
 
-                RectTransform component = buildLabel.GetComponent<RectTransform>();
-                component.localPosition = Vector3.zero;
-                component.sizeDelta = new Vector2(0.28f, 0.02f);
-                component.position = thinMenu ? new Vector3(0.04f, 0.0f, -0.17f) : new Vector3(0.04f, 0.07f, -0.17f);
-                component.rotation = Quaternion.Euler(new Vector3(0f, 90f, 90f));
+                RectTransform buildLabelComponent = buildLabel.GetComponent<RectTransform>();
+                buildLabelComponent.localPosition = Vector3.zero;
+                buildLabelComponent.sizeDelta = new Vector2(0.28f, 0.02f);
+                buildLabelComponent.position = thinMenu ? new Vector3(0.04f, 0.0f, -0.17f) : new Vector3(0.04f, 0.07f, -0.17f);
+                buildLabelComponent.rotation = Quaternion.Euler(new Vector3(0f, 90f, 90f));
 
                 FollowMenuSettings(buildLabel);
+
+                TextMeshPro modifiedByLabel = new GameObject
+                {
+                    transform =
+                    {
+                        parent = canvasObj.transform
+                    }
+                }.AddComponent<TextMeshPro>();
+                modifiedByLabel.font = activeFont;
+                modifiedByLabel.text = "Modified by PixelCatt";
+
+                modifiedByLabel.text = FollowMenuSettings(modifiedByLabel.text);
+
+                modifiedByLabel.fontSize = 1;
+                modifiedByLabel.AddComponent<UIColorChanger>().colors = textColors[0];
+                modifiedByLabel.richText = true;
+                modifiedByLabel.fontStyle = activeFontStyle;
+                modifiedByLabel.alignment = TextAlignmentOptions.Left;
+                modifiedByLabel.enableAutoSizing = true;
+                modifiedByLabel.fontSizeMin = 0;
+
+                RectTransform modifiedByLabelComponent = modifiedByLabel.GetComponent<RectTransform>();
+                modifiedByLabelComponent.localPosition = Vector3.zero;
+                modifiedByLabelComponent.sizeDelta = new Vector2(0.28f, 0.02f);
+                modifiedByLabelComponent.position = thinMenu ? new Vector3(0.04f, 0.0f, 0.17f) : new Vector3(0.04f, 0.07f, 0.17f);
+                modifiedByLabelComponent.rotation = Quaternion.Euler(new Vector3(0f, 90f, 90f));
+
+                FollowMenuSettings(modifiedByLabel);
 
                 if (!disableWatermark)
                 {

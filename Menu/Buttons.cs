@@ -104,6 +104,9 @@ namespace Seralyth.Menu
             new[] { // Menu Settings [2]
                 new ButtonInfo { buttonText = "Exit Menu Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Returns you back to the settings menu."},
 
+                new ButtonInfo { buttonText = "Hide GUI on PC", enableMethod = UI.Instance.DisableGUI, disableMethod = UI.Instance.EnableGUI, toolTip = "Hides the GUI on the PC Screen."},
+                new ButtonInfo { buttonText = "Only Room Code on PC", enableMethod = UI.Instance.EnableOnlyCodeGUI, disableMethod = UI.Instance.DisableOnlyCodeGUI, toolTip = "Only shows the Room Code on the PC Screen."},
+
                 new ButtonInfo { buttonText = "Right Hand", enableMethod = Settings.RightHand, disableMethod = Settings.LeftHand, toolTip = "Puts the menu on your right hand."},
                 new ButtonInfo { buttonText = "Both Hands", enableMethod =() => bothHands = true, disableMethod =() => bothHands = false, toolTip = "Puts the menu on your both of your hands."},
 
@@ -560,8 +563,13 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Anti Name Ban", enableMethod =() => BanPatches.enabled = true, method = Safety.AntiNameBan, disableMethod =() => BanPatches.enabled = false, toolTip = "Prevents you from getting banned for setting your name to bad things."},
                 new ButtonInfo { buttonText = "Anti Stump Kick", enableMethod =() => GroupPatch.enabled = true, disableMethod =() => GroupPatch.enabled = false, toolTip = "Stops people from group kicking you."},
                 new ButtonInfo { buttonText = "Auto Clear Cache", method = Safety.AutoClearCache, toolTip = "Automatically clears your game's cache (garbage collector) every minute to prevent memory leaks."},
-                new ButtonInfo { buttonText = "Anti Moderator", method = Safety.AntiModerator, toolTip = "When someone with the stick joins, you get disconnected and their player ID and room code gets saved to a file."},
-                new ButtonInfo { buttonText = "Anti Content Creator", method = Safety.AntiContentCreator, toolTip = "When a content creator joins, you get disconnected and their player ID and room code gets saved to a file."},
+
+                new ButtonInfo { buttonText = "Anti Moderator <color=grey>[</color><color=green>Disconnect</color><color=grey>]</color>", method = Safety.AntiModeratorDisconnect, toolTip = "When someone with the stick joins, you get disconnected and their player ID and room code gets saved to a file."},
+                new ButtonInfo { buttonText = "Anti Moderator <color=grey>[</color><color=green>Notify</color><color=grey>]</color>", method = Safety.AntiModeratorNotify, toolTip = "Tells you, when someone with the stick joins."},
+
+                new ButtonInfo { buttonText = "Anti Content Creator <color=grey>[</color><color=green>Disconnect</color><color=grey>]</color>", method = Safety.AntiContentCreatorDisconnect, toolTip = "When a content creator joins, you get disconnected and their player ID and room code gets saved to a file."},
+                new ButtonInfo { buttonText = "Anti Content Creator <color=grey>[</color><color=green>Notify</color><color=grey>]</color>", method = Safety.AntiContentCreatorNotify, toolTip = "Tells you, when a content creator joins."},
+
                 new ButtonInfo { buttonText = "Cosmetic Notifications", method = Safety.CosmeticNotifications, toolTip = "Sends you a notification if there is a Finger Painter, Illustrator, Administrator, Stick, Forest Guide, or Another Axiom Creator in your room."},
                 new ButtonInfo { buttonText = "Steam Detector", method = Important.SteamDetector, toolTip = "Detects when a player in your room is on Steam."},
 
@@ -1367,6 +1375,9 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Rain Entities", method = Overpowered.RainEntities, toolTip = "Makes random entities fall around you like rain."},
                 new ButtonInfo { buttonText = "Entity Aura", method = Overpowered.EntityAura, toolTip = "Creates a ball of random entities around you."},
                 new ButtonInfo { buttonText = "Entity Fountain", method = Overpowered.EntityFountain, toolTip = "Spurts random entities out of your head like a fountain."},
+
+                new ButtonInfo { buttonText = "Select GR Object", method = Overpowered.LoadSelectObject, isTogglable = false, toolTip = "Select which Ghost Reactor Object you want to Spawn."},
+                new ButtonInfo { buttonText = "Selected Object Gun", method = Overpowered.SpamSelectedObjectGun, toolTip = "Spawn your selected GR Object at wherever your hand desires."},
 
                 new ButtonInfo { buttonText = "Ghost Reactor Text Gun", enableMethod =() => PromptText("What text would you like to show?", () => Overpowered.textToRender = keyboardInput.ToUpper(), null, "Done", "Cancel"), method = Overpowered.GhostReactorTextGun, toolTip = "Spawns entities in the shape of the text you desire in the ghost reactor."},
                 new ButtonInfo { buttonText = "Ghost Reactor Draw Gun", method = Overpowered.GhostReactorDrawGun, toolTip = "Allows you to draw with entities in ghost reactor."},
@@ -2714,6 +2725,11 @@ namespace Seralyth.Menu
             new[] // Sound Properties [50]
             {
                 new ButtonInfo { buttonText = "Exit Sound's Properties", method = () => CurrentCategoryName = "Soundboard", isTogglable = false, toolTip = "Returns you back to the Soundboard page." }
+            },
+
+            new[] // Select GR Object [51]
+            {
+                new ButtonInfo { buttonText = "Exit Select GR Object", method =() => currentCategoryName = "Fun Mods", isTogglable = false, toolTip = "Returns you back to the fun mods."}
             }
         };
 
@@ -2768,7 +2784,8 @@ namespace Seralyth.Menu
             "Patreon Mods",
             "Patreon Settings",
             "Voice Changers",
-            "Sound Properties"
+            "Sound Properties",
+            "Select GR Object"
         };
 
         public static int _currentCategoryIndex;

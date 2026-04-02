@@ -1515,6 +1515,41 @@ namespace Seralyth.Mods
             CreateItem(RpcTarget.All, objectIds[Random.Range(0, objectIds.Length)], VRRig.LocalRig.transform.position + Vector3.up * 3f, Quaternion.identity, RandomVector3(15f), Vector3.zero);
         }
 
+        public static String selectedObjectName = null;
+
+        public static void LoadSelectObject()
+        {
+            Buttons.CurrentCategoryName = "Select GR Object";
+
+            List<ButtonInfo> objectButtons = new List<ButtonInfo>();
+
+            objectButtons.Add(new ButtonInfo { buttonText = "Exit Select GR Object", method = () => Buttons.CurrentCategoryName = "Fun Mods", isTogglable = false, toolTip = "Returns you back to the Fun Mods." });
+
+            foreach (var obj in Overpowered.ObjectByName)
+            {
+                string objectName = obj.Key;
+
+                objectButtons.Add(new ButtonInfo
+                {
+                    buttonText = objectName,
+                    overlapText = objectName,
+                    method = () => Overpowered.selectedObjectName = objectName,
+                    isTogglable = false,
+                    toolTip = $"Spawns {objectName} wherever your Hand desires."
+                });
+            }
+
+            Buttons.buttons[51] = objectButtons.ToArray();
+        }
+
+        public static void SpamSelectedObjectGun()
+        {
+            if (selectedObjectName != null)
+                SpamObjectGun(Overpowered.ObjectByName[selectedObjectName]);
+            else
+                NotificationManager.SendNotification("<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> No GR Object Selected.", 1000);
+        }
+
         public static Dictionary<string, bool[][]> Letters = new Dictionary<string, bool[][]> {
             { "A", new[]
             {
