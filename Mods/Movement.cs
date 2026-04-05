@@ -4500,6 +4500,12 @@ namespace Seralyth.Mods
             }
         }
 
+        public static void LowFPSMovement()
+        {
+            GTPlayer.Instance.velocityHistorySize = 12;
+            GTPlayer.Instance.InitializeValues();
+        }
+
         private static float preBounciness;
         private static PhysicsMaterialCombine whateverthisis = PhysicsMaterialCombine.Maximum;
         private static float preFrictiness;
