@@ -31,6 +31,7 @@ using GorillaTag.Rendering;
 using GorillaTagScripts;
 using GorillaTagScripts.Builder;
 using Ionic.Zlib;
+using Modio.Mods;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice;
@@ -2400,6 +2401,13 @@ namespace Seralyth.Mods
         public static DictationRecognizer drec;
         public static void MaskVoice()
         {
+            ButtonInfo mod = Buttons.GetIndex("AI Assistant");
+
+            if (Application.platform == RuntimePlatform.WindowsPlayer && Environment.OSVersion.Version.Major < 10)
+                PromptSingle("Your version of Windows is too old for this mod to run.", () => mod.enabled = false);
+            else if (Application.platform != RuntimePlatform.WindowsPlayer)
+                PromptSingle("You must be on Windows 10 or greater for this mod to run.", () => mod.enabled = false);
+
             drec = new DictationRecognizer();
             drec.DictationResult += (text, confidence) =>
             {
@@ -2426,6 +2434,12 @@ namespace Seralyth.Mods
             {
                 if (Settings.debugDictation)
                     LogManager.LogError($"Dictation error: {error}; HResult = {hresult}.");
+                if (error.Contains("Dictation support is not enabled on this device"))
+                {
+                    DisableMaskVoice();
+                    NotificationManager.SendNotification($"<color=grey>[</color><color=red>ERROR</color><color=grey>]</color> Online Speech Recognition is not enabled on this device. Either open the menu to enable it, or check your internet connection.", 3000);
+                    Prompt("Online Speech Recognition is not enabled on your device. Would you like to open the Settings page to enable it?", () => { Process.Start("ms-settings:privacy-speech"); PromptSingle("Once you enable Online Speech Recognition, turn this mod back on!", () => mod.enabled = false, "Ok"); }, () => PromptSingle("You will not be able to use this mod until you enable Online Speech Recognition.", () => mod.enabled = false, "Ok"));
+                }
             };
             drec.DictationHypothesis += (text) =>
             {
