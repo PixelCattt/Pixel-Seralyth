@@ -200,7 +200,7 @@ namespace Seralyth.Managers
 
         public static string DefaultSoundpack = "None";
 
-        public static void Play(string sound, string outputPath = null, Action<AudioClip> action = null, string buttonText = null, bool overlapHand = false, bool leftOverlap = false)
+        public static void Play(string sound, string outputPath = null, Action<AudioClip> action = null, string buttonText = null, bool overlapHand = false, bool leftOverlap = false, bool global = false)
         {
             if (string.IsNullOrEmpty(sound)) return;
 
@@ -239,7 +239,7 @@ namespace Seralyth.Managers
                         LoadSoundFromURL($"{PluginInfo.ServerResourcePath}/{s}", outputPath ?? s,
                             action ?? (clip =>
                             {
-                                if (shouldBePC)
+                                if (shouldBePC || global)
                                     AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, buttonClickVolume / 10f);
                                 else
                                     audioSource.PlayOneShot(clip, buttonClickVolume / 10f);

@@ -3309,7 +3309,7 @@ namespace Seralyth.Menu
             catch { }
 
             if (dynamicSounds)
-                SoundManager.Play(SoundManager.DefaultSounds["Open"]);
+                SoundManager.Play(SoundManager.DefaultSounds["Open"], global: true);
 
             CreateMenu();
 
