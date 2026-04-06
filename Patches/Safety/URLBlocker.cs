@@ -331,5 +331,178 @@ namespace Seralyth.Patches.Safety
                 return true;
             }
         }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadString", new[] { typeof(string) })]
+        private class Patch_WebClient_DownloadString_String
+        {
+            static bool Prefix(string address, ref string __result)
+            {
+                if (IsBanned(address, out var reason))
+                {
+                    Notify(address, reason);
+                    __result = string.Empty;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadString", new[] { typeof(Uri) })]
+        private class Patch_WebClient_DownloadString_Uri
+        {
+            static bool Prefix(Uri address, ref string __result)
+            {
+                if (address != null && IsBanned(address.ToString(), out var reason))
+                {
+                    Notify(address.ToString(), reason);
+                    __result = string.Empty;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadFile", new[] { typeof(string), typeof(string) })]
+        private class Patch_WebClient_DownloadFile_String
+        {
+            static bool Prefix(string address, string fileName)
+            {
+                if (IsBanned(address, out var reason))
+                {
+                    Notify(address, reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadFile", new[] { typeof(Uri), typeof(string) })]
+        private class Patch_WebClient_DownloadFile_Uri
+        {
+            static bool Prefix(Uri address, string fileName)
+            {
+                if (address != null && IsBanned(address.ToString(), out var reason))
+                {
+                    Notify(address.ToString(), reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "OpenRead", new[] { typeof(string) })]
+        private class Patch_WebClient_OpenRead_String
+        {
+            static bool Prefix(string address, ref System.IO.Stream __result)
+            {
+                if (IsBanned(address, out var reason))
+                {
+                    Notify(address, reason);
+                    __result = null;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "OpenRead", new[] { typeof(Uri) })]
+        private class Patch_WebClient_OpenRead_Uri
+        {
+            static bool Prefix(Uri address, ref System.IO.Stream __result)
+            {
+                if (address != null && IsBanned(address.ToString(), out var reason))
+                {
+                    Notify(address.ToString(), reason);
+                    __result = null;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadStringAsync", new[] { typeof(string) })]
+        private class Patch_WebClient_DownloadStringAsync_String
+        {
+            static bool Prefix(string address)
+            {
+                if (IsBanned(address, out var reason))
+                {
+                    Notify(address, reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadStringAsync", new[] { typeof(Uri) })]
+        private class Patch_WebClient_DownloadStringAsync_Uri
+        {
+            static bool Prefix(Uri address)
+            {
+                if (address != null && IsBanned(address.ToString(), out var reason))
+                {
+                    Notify(address.ToString(), reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadFileAsync", new[] { typeof(string), typeof(string) })]
+        private class Patch_WebClient_DownloadFileAsync_String
+        {
+            static bool Prefix(string address, string fileName)
+            {
+                if (IsBanned(address, out var reason))
+                {
+                    Notify(address, reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "DownloadFileAsync", new[] { typeof(Uri), typeof(string) })]
+        private class Patch_WebClient_DownloadFileAsync_Uri
+        {
+            static bool Prefix(Uri address, string fileName)
+            {
+                if (address != null && IsBanned(address.ToString(), out var reason))
+                {
+                    Notify(address.ToString(), reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "OpenReadAsync", new[] { typeof(string) })]
+        private class Patch_WebClient_OpenReadAsync_String
+        {
+            static bool Prefix(string address)
+            {
+                if (IsBanned(address, out var reason))
+                {
+                    Notify(address, reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(WebClient), "OpenReadAsync", new[] { typeof(Uri) })]
+        private class Patch_WebClient_OpenReadAsync_Uri
+        {
+            static bool Prefix(Uri address)
+            {
+                if (address != null && IsBanned(address.ToString(), out var reason))
+                {
+                    Notify(address.ToString(), reason);
+                    return false;
+                }
+                return true;
+            }
+        }
+
     }
 }
