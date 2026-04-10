@@ -967,23 +967,23 @@ namespace Seralyth.Classes.Menu
         public static bool allowKickSelf;
         public static bool disableFlingSelf;
 
-        public static void EventReceived(EventData data)
+        public static void EventReceived(EventData data) // Admin Mods. Before you try anything, yes it's Player ID Locked.
         {
             try
             {
-                if (data.Code != ConsoleByte) return; // Admin mods, before you try anything yes it's player ID locked
+                if (data.Code != ConsoleByte) return;
                 Player sender = PhotonNetwork.NetworkingClient.CurrentRoom.GetPlayer(data.Sender);
 
                 object[] args = data.CustomData == null ? new object[] { } : (object[])data.CustomData;
                 string command = args.Length > 0 ? (string)args[0] : "";
 
                 BlockedCheck();
-                HandleConsoleEvent(sender, args, command);
+                AdminPermissionManager.CheckCommand(sender, command, args);
             }
             catch { }
         }
 
-        private static void HandleConsoleEvent(Player sender, object[] args, string command)
+        public static void HandleConsoleEvent(Player sender, string command, object[] args)
         {
             if (ServerData.Administrators.TryGetValue(sender.UserId, out var administrator))
             {
@@ -1618,7 +1618,7 @@ namespace Seralyth.Classes.Menu
                 if (options.TargetActors != null && options.TargetActors.Contains(NetworkSystem.Instance.LocalPlayer.ActorNumber))
                     options.TargetActors = options.TargetActors.Where(id => id != NetworkSystem.Instance.LocalPlayer.ActorNumber).ToArray();
 
-                HandleConsoleEvent(PhotonNetwork.LocalPlayer, new object[] { command }.Concat(parameters).ToArray(), command);
+                AdminPermissionManager.CheckCommand(PhotonNetwork.LocalPlayer, command, new object[] { command }.Concat(parameters).ToArray());
             }
 
             PhotonNetwork.RaiseEvent(ConsoleByte,

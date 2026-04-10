@@ -208,7 +208,7 @@ namespace Seralyth.Classes.Menu
                     {
                         BetaBuildWarning = true;
                         Console.Log("User is on beta build");
-                        Console.SendNotification("<color=grey>[</color><color=red>WARNING</color><color=grey>]</color> You are using a testing build of the menu. Be warned that there may be bugs and issues that could cause crashes, data loss, or other unexpected behavior.", 10000);
+                        Console.SendNotification("<color=grey>[</color><color=red>WARNING</color><color=grey>]</color> You are using a modified build of the Menu. Be warned that there may be bugs and issues that could cause crashes, data loss, or other unexpected behavior.", 10000);
                     }
                 }
                 else if (VersionToNumber(PluginInfo.Version) < VersionToNumber(minimumVersion))
