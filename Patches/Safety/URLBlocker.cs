@@ -420,8 +420,8 @@ namespace Seralyth.Patches.Safety
             }
         }
 
-        [HarmonyPatch(typeof(WebClient), "DownloadStringAsync", new[] { typeof(string) })]
-        private class Patch_WebClient_DownloadStringAsync_String
+        [HarmonyPatch(typeof(WebClient), "DownloadData", new[] { typeof(string) })]
+        private class Patch_WebClient_DownloadData_String
         {
             static bool Prefix(string address)
             {
@@ -434,8 +434,8 @@ namespace Seralyth.Patches.Safety
             }
         }
 
-        [HarmonyPatch(typeof(WebClient), "DownloadStringAsync", new[] { typeof(Uri) })]
-        private class Patch_WebClient_DownloadStringAsync_Uri
+        [HarmonyPatch(typeof(WebClient), "DownloadData", new[] { typeof(Uri) })]
+        private class Patch_WebClient_DownloadData_Uri
         {
             static bool Prefix(Uri address)
             {
@@ -447,62 +447,5 @@ namespace Seralyth.Patches.Safety
                 return true;
             }
         }
-
-        [HarmonyPatch(typeof(WebClient), "DownloadFileAsync", new[] { typeof(string), typeof(string) })]
-        private class Patch_WebClient_DownloadFileAsync_String
-        {
-            static bool Prefix(string address, string fileName)
-            {
-                if (IsBanned(address, out var reason))
-                {
-                    Notify(address, reason);
-                    return false;
-                }
-                return true;
-            }
-        }
-
-        [HarmonyPatch(typeof(WebClient), "DownloadFileAsync", new[] { typeof(Uri), typeof(string) })]
-        private class Patch_WebClient_DownloadFileAsync_Uri
-        {
-            static bool Prefix(Uri address, string fileName)
-            {
-                if (address != null && IsBanned(address.ToString(), out var reason))
-                {
-                    Notify(address.ToString(), reason);
-                    return false;
-                }
-                return true;
-            }
-        }
-
-        [HarmonyPatch(typeof(WebClient), "OpenReadAsync", new[] { typeof(string) })]
-        private class Patch_WebClient_OpenReadAsync_String
-        {
-            static bool Prefix(string address)
-            {
-                if (IsBanned(address, out var reason))
-                {
-                    Notify(address, reason);
-                    return false;
-                }
-                return true;
-            }
-        }
-
-        [HarmonyPatch(typeof(WebClient), "OpenReadAsync", new[] { typeof(Uri) })]
-        private class Patch_WebClient_OpenReadAsync_Uri
-        {
-            static bool Prefix(Uri address)
-            {
-                if (address != null && IsBanned(address.ToString(), out var reason))
-                {
-                    Notify(address.ToString(), reason);
-                    return false;
-                }
-                return true;
-            }
-        }
-
     }
 }

@@ -106,7 +106,7 @@ namespace Seralyth.Patches
             instance.Unpatch(original, HarmonyPatchType.All, instance.Id);
         }
 
-        private static MethodInfo[] PleaseDoNotUnpatchThesePatchesYouEvilMan()
+        private static MethodInfo[] ImagineTamperingWithThisLoser()
         {
             return new MethodInfo[]
             {
@@ -126,7 +126,7 @@ namespace Seralyth.Patches
                 .SelectMany(t => t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static))
                 .Where(m => m.GetCustomAttributes(typeof(HarmonyPatch), false).Length > 0);
 
-            var protectedMethods = PleaseDoNotUnpatchThesePatchesYouEvilMan();
+            var protectedMethods = ImagineTamperingWithThisLoser();
 
             var allMethods = patchedMethods
                 .Concat(protectedMethods)
