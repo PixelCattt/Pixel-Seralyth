@@ -6596,7 +6596,7 @@ namespace Seralyth.Mods
         }
 
         private static float greyZoneDelay;
-        public static void ActivateGreyZoneGun(bool status, bool zeroGravity = false)
+        public static void ActivateGreyZoneGun(bool status)
         {
             if (GetGunInput(false))
             {
@@ -6609,7 +6609,7 @@ namespace Seralyth.Mods
                     if (gunTarget && !gunTarget.IsLocal() && Time.time > greyZoneDelay)
                     {
                         greyZoneDelay = Time.time + 0.1f;
-                        ActivateGreyZone(status, gunTarget.GetPhotonPlayer(), zeroGravity);
+                        ActivateGreyZone(status, gunTarget.GetPhotonPlayer());
                     }
                 }
             }
@@ -6624,7 +6624,7 @@ namespace Seralyth.Mods
             wipeOverride = null;
         }
 
-        public static void ActivateGreyZone(bool status, Player target, bool zeroGravity = false)
+        public static void ActivateGreyZone(bool status, Player target)
         {
             if (!NetworkSystem.Instance.IsMasterClient)
             {
@@ -6645,13 +6645,10 @@ namespace Seralyth.Mods
             GreyZoneManager.Instance.photonConnectedDuringActivation = PhotonNetwork.InRoom;
             GreyZoneManager.Instance.greyZoneActivationTime = (GreyZoneManager.Instance.photonConnectedDuringActivation ? PhotonNetwork.Time : ((double)Time.time));
 
-            if (zeroGravity)
-                GreyZoneManager.Instance.gravityFactorOptionSelection = int.MaxValue;
-
             SendSerialize(GreyZoneManager.Instance.photonView, new RaiseEventOptions { TargetActors = new[] { target.ActorNumber } });
         }
 
-        public static void ActivateGreyZone(bool status, bool zeroGravity = false)
+        public static void ActivateGreyZone(bool status)
         {
             if (NetworkSystem.Instance.InRoom)
             {
@@ -6663,10 +6660,6 @@ namespace Seralyth.Mods
 
                 if (status)
                 {
-                    if (zeroGravity)
-                        GreyZoneManager.Instance.gravityFactorOptionSelection = int.MaxValue;
-                    else
-                        GreyZoneManager.Instance.gravityFactorOptionSelection = 0;
 
                     GreyZoneManager.Instance.ActivateGreyZoneAuthority();
                 }
