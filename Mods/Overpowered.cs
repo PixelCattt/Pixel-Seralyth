@@ -7071,6 +7071,9 @@ namespace Seralyth.Mods
         public static void DestroyPlayer(NetPlayer player) =>
             PhotonNetwork.OpRemoveCompleteCacheOfPlayer(player.ActorNumber);
 
+        public static void ChangeLavaState(InfectionLavaController.RisingLavaState state) =>
+            InfectionLavaController.ActiveControllers.FirstOrDefault().reliableState.state = state;
+
         public static void TargetSpam()
         {
             if (NetworkSystem.Instance.IsMasterClient)

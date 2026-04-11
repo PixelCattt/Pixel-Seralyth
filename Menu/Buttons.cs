@@ -1911,8 +1911,17 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Super Infection Crash Gun", method = Overpowered.SuperInfectionCrashGun, toolTip = "Crashes whoever your hand desires in the Super Infection gamemode."},
                 new ButtonInfo { buttonText = "Super Infection Crash All", method = Overpowered.SuperInfectionCrashAll, toolTip = "Crashes everyone in the Super Infection gamemode."},
 
-                new ButtonInfo { buttonText = "Super Infection Break Audio Gun", method = Overpowered.SuperInfectionBreakAudioGun, toolTip = "Breaks the audio of whoever your hand desires in the Super Infection gamemode."},
+                new ButtonInfo { buttonText = "Super Infection Break Audio Gun", method = Overpowered.SuperInfectionBreakAudioGun, toolTip = "Breaks the audio of whoever your hand desires in the Super Infection gamemode."}, 
                 new ButtonInfo { buttonText = "Super Infection Break Audio All", method = Overpowered.SuperInfectionBreakAudioAll, toolTip = "Breaks the audio of everyone in the Super Infection gamemode."},
+
+                new ButtonInfo { buttonText = "Rise Lava", method =() => Overpowered.ChangeLavaState(InfectionLavaController.RisingLavaState.Rising), isTogglable = false, toolTip = "Raises the lava in the forest lava map."},
+                new ButtonInfo { buttonText = "Flood Lava", method =() => Overpowered.ChangeLavaState(InfectionLavaController.RisingLavaState.Full), isTogglable = false, toolTip = "Makes the lava in the forest lava map at the top."},
+                new ButtonInfo { buttonText = "Drain Lava", method =() => Overpowered.ChangeLavaState(InfectionLavaController.RisingLavaState.Draining), isTogglable = false, toolTip = "Drains the lava in the forest lava map."},
+                new ButtonInfo { buttonText = "Empty Lava", method =() => Overpowered.ChangeLavaState(InfectionLavaController.RisingLavaState.Drained), isTogglable = false, toolTip = "Makes the lava in the forest lava map drained."},
+                new ButtonInfo { buttonText = "Erupt Lava", method =() => Overpowered.ChangeLavaState(InfectionLavaController.RisingLavaState.Erupting), isTogglable = false, toolTip = "Erupts the lava in the forest lava map."},
+
+                new ButtonInfo { buttonText = "Lava Swim Gun", method = Overpowered.LavaSwimGun, toolTip = "Allows whoever your hand desires to swim in lava."},
+                new ButtonInfo { buttonText = "Lava Swim All", method = Overpowered.LavaSwimGun, toolTip = "Makes everyone swim in lava."},
 
                 new ButtonInfo { buttonText = "Kill Self", method =() => Fun.SetStateSelf(1), isTogglable = false, toolTip = "Turns you into a ghost."},
                 new ButtonInfo { buttonText = "Kill Gun", method =() => Fun.SetStateGun(1), toolTip = "Turns whoever your hand desires into a ghost."},
