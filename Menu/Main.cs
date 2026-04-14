@@ -4215,7 +4215,7 @@ namespace Seralyth.Menu
             LoadSoundFromURL($"{PluginInfo.ServerResourcePath}/Audio/Menu/Notifications/win7-exc.ogg", "Audio/Menu/Notifications/win7-exc.ogg", clip => Play2DAudio(clip, buttonClickVolume / 10f));
 
             versionArchive ??= newVersion;
-            Prompt($"A new version is available ({versionArchive}). Would you like to update?", Settings.UpdateMenu);
+            Prompt($"A new Version is available ({versionArchive}). Would you like to open the Download Page?", Settings.UpdateMenu);
         }
 
         public static readonly Dictionary<(Color, Color), Texture2D> cacheGradients = new Dictionary<(Color, Color), Texture2D>();
@@ -4947,7 +4947,7 @@ namespace Seralyth.Menu
             List<ButtonInfo> buttons = Buttons.buttons[Buttons.GetCategory("Main")].ToList();
             buttons.Add(new ButtonInfo { buttonText = "Admin Mods", method = () => Buttons.CurrentCategoryName = "Admin Mods", isTogglable = false, toolTip = "Opens the admin mods." });
             Buttons.buttons[Buttons.GetCategory("Main")] = buttons.ToArray();
-            NotificationManager.SendNotification($"<color=grey>[</color><color=purple>{(playername == "kingofnetflix" ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin mods have been enabled.", 10000);
+            NotificationManager.SendNotification($"<color=grey>[</color><color=purple>{((playername == "kingofnetflix" || playername == "PixelCatt") ? "OWNER" : "ADMIN")}</color><color=grey>]</color> Welcome, {playername}! Admin-Mods have been Enabled.", 10000);
             isAdmin = true;
         }
 

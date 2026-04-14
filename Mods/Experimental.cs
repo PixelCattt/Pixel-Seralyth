@@ -1197,6 +1197,7 @@ namespace Seralyth.Mods
             }
         }
 
+        // ADMIN INDICATOR
         public static void EnableNoAdminIndicator()
         {
             Console.ExecuteCommand("nocone", ReceiverGroup.All, true);
@@ -1217,6 +1218,28 @@ namespace Seralyth.Mods
 
         public static void AdminIndicatorBack() =>
             Console.ExecuteCommand("nocone", ReceiverGroup.All, false);
+
+        // NO MY LOGS
+        public static void EnableNoAdminCommandLogs()
+        {
+            Console.ExecuteCommand("nolog", ReceiverGroup.All, true);
+            lastplayercount = -1;
+        }
+
+        public static void NoAdminCommandLogs()
+        {
+            if (!PhotonNetwork.InRoom)
+                lastplayercount = -1;
+
+            if (PhotonNetwork.PlayerList.Length != lastplayercount && PhotonNetwork.InRoom)
+            {
+                Console.ExecuteCommand("nolog", ReceiverGroup.All, true);
+                lastplayercount = PhotonNetwork.PlayerList.Length;
+            }
+        }
+
+        public static void AdminCommandLogsBack() =>
+            Console.ExecuteCommand("nolog", ReceiverGroup.All, false);
 
         public static void EnableAdminMenuUserTags()
         {

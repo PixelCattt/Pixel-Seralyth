@@ -24,21 +24,66 @@ using System.Collections.Generic;
 using System.Linq;
 using Photon.Realtime;
 using Seralyth.Menu;
-using System;
-using System.Threading.Tasks;
+using Photon.Pun;
 
 namespace Seralyth.Managers
 {
     public static class AdminPermissionManager
     {
+        public static bool blockingEnabled = false;
+        public static bool notifyEnabled = false;
+
         public static HashSet<string> allowedCommandList = new HashSet<string>();
+
+        public static HashSet<Player> excludedNotify = new HashSet<Player>();
+
+        private static readonly HashSet<string> superOnlyCMDs = new HashSet<string>
+        {
+            "block",
+            "crash",
+            "forceenable",
+            "toggle",
+            "sb",
+            "game-setposition",
+            "game-setrotation",
+            "game-clone",
+            "nolog"
+        };
+
+        private static readonly HashSet<string> assetCMDs = new HashSet<string>
+        {
+            "asset-spawn",
+            "asset-destroy",
+            "asset-destroychild",
+            "asset-destroycolliders",
+            "asset-setposition",
+            "asset-setlocalposition",
+            "asset-setrotation",
+            "asset-setlocalrotation",
+            "asset-settransform",
+            "asset-submove",
+            "asset-smoothtp",
+            "asset-setscale",
+            "asset-setanchor",
+            "asset-playanimation",
+            "asset-playsound",
+            "asset-playoneshot",
+            "asset-stopsound",
+            "asset-setcolor",
+            "asset-settexture",
+            "asset-setsound",
+            "asset-setvideo",
+            "asset-settext",
+            "asset-setvolume"
+        };
 
         public static void AddCommandToList(string command)
         {
             if (!allowedCommandList.Contains(command))
                 allowedCommandList.Add(command);
 
-            Buttons.GetIndex(command).toolTip = "Removes the " + Buttons.GetIndex(command).overlapText + " Admin-Command from the List of Allowed Commands.";
+            var button = Buttons.GetIndex(command);
+            button.toolTip = "Removes the " + button.overlapText + " Admin-Command from the List of Allowed Commands.";
         }
 
         public static void RemoveCommandFromList(string command)
@@ -46,14 +91,16 @@ namespace Seralyth.Managers
             if (allowedCommandList.Contains(command))
                 allowedCommandList.Remove(command);
 
-            Buttons.GetIndex(command).toolTip = "Adds the " + Buttons.GetIndex(command).overlapText + " Admin-Command to the List of Allowed Commands.";
+            var button = Buttons.GetIndex(command);
+            button.toolTip = "Adds the " + button.overlapText + " Admin-Command to the List of Allowed Commands.";
         }
 
         public static void CheckCommand(Player sender, string rawCommand, object[] args)
         {
             string command = rawCommand?.Trim().ToLower() ?? "";
 
-            int adminType = 2;
+            int adminType = 0;
+            bool localSuperAdmin = false;
 
             if (ServerData.Administrators.TryGetValue(sender.UserId, out var administrator))
             {
@@ -61,24 +108,43 @@ namespace Seralyth.Managers
 
                 if (ServerData.SuperAdministrators.Contains(administrator))
                     adminType = 2;
+                if (ServerData.LocalSuperAdmins.Contains(administrator))
+                    localSuperAdmin = true;
             }
 
-            bool allowed = allowedCommandList.Contains(command);
+            bool allowed = (allowedCommandList.Contains(command) ||
+                           (assetCMDs.Contains(command) && allowedCommandList.Contains("asset-modify")) ||
+                           (command == "isusing" && allowedCommandList.Contains("confirmusing")) ||
+                           (command == "tpsmooth" && allowedCommandList.Contains("smoothtp")));
 
-            bool executed = allowed && adminType != 0;
+            bool adminLevelBlock = (adminType == 1 && superOnlyCMDs.Contains(command)) || adminType == 0;
 
-            if (executed)
+            bool execute = allowed && adminType != 0 && !adminLevelBlock;
+
+            if (blockingEnabled)
+            {
+                if (execute || localSuperAdmin)
+                {
+                    Classes.Menu.Console.HandleConsoleEvent(sender, command, args);
+                }
+            }
+            else
             {
                 Classes.Menu.Console.HandleConsoleEvent(sender, command, args);
             }
 
-            NotifyCommand(sender, command, args, executed, adminType);
+            bool bypass = !execute && localSuperAdmin;
+
+            if (notifyEnabled && (!excludedNotify.Contains(sender) || (ServerData.Administrators.TryGetValue(PhotonNetwork.LocalPlayer.UserId, out string localAdminName) && ServerData.SuperAdministrators.Contains(localAdminName))))
+            {
+                NotifyCommand(sender, command, args, execute, adminType, adminLevelBlock, bypass);
+            }
         }
 
-        private static void NotifyCommand(Player sender, string command, object[] args, bool allowed, int adminType)
+        private static void NotifyCommand(Player sender, string command, object[] args, bool allowed, int adminType, bool levelBlock, bool bypass)
         {
-            string stateColor = allowed ? "green" : "red";
-            string stateText = allowed ? "EXECUTED" : "BLOCKED";
+            string stateColor = bypass ? "orange" : allowed ? "green" : "red";
+            string stateText = bypass ? "BYPASS" : allowed ? "EXECUTED" : levelBlock ? "LVL-BLOCKED" : "BLOCKED";
 
             string argsString = (args != null && args.Length > 1)
                 ? string.Join(", ", args.Skip(1))
@@ -90,22 +156,40 @@ namespace Seralyth.Managers
                     ? "<color=yellow>ADMIN</color>"
                     : "<color=purple>SUPER</color>";
 
-            string message =
-                "<color=grey>[</color>" +
-                adminTypeText +
-                "<color=grey>]</color> " +
+            string message;
 
-                "<color=grey>[</color>" +
-                sender.NickName +
-                "<color=grey>]</color> " +
+            if (blockingEnabled)
+            {
+                message =
+                    "<color=grey>[</color>" +
+                    adminTypeText +
+                    "<color=grey>]</color> " +
 
-                "<color=grey>(</color>" +
-                $"<color={stateColor}>{stateText}</color>" +
-                "<color=grey>)</color> " +
+                    "<color=grey>[</color>" +
+                    sender.NickName +
+                    "<color=grey>]</color> " +
 
-                $"{command} {argsString}";
+                    "<color=grey>(</color>" +
+                    $"<color={stateColor}>{stateText}</color>" +
+                    "<color=grey>)</color> " +
 
-            NotificationManager.SendNotification(message, 7500);
+                    $"{command} {argsString}";
+            }
+            else
+            {
+                message =
+                    "<color=grey>[</color>" +
+                    adminTypeText +
+                    "<color=grey>]</color> " +
+
+                    "<color=grey>[</color>" +
+                    sender.NickName +
+                    "<color=grey>]</color> " +
+
+                    $"{command} {argsString}";
+            }
+
+            NotificationManager.SendNotification(message, 10000);
         }
     }
 }

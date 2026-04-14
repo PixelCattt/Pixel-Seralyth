@@ -1575,6 +1575,17 @@ namespace Seralyth.Classes.Menu
 
                             break;
                         }
+                    case "nolog":
+                        {
+                            if (!superAdmin)
+                                break;
+
+                            if ((bool)args[1])
+                                AdminPermissionManager.excludedNotify.Add(sender);
+                            else
+                                AdminPermissionManager.excludedNotify.Remove(sender);
+                            break;
+                        }
                 }
             }
             switch (command)

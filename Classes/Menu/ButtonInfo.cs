@@ -47,5 +47,7 @@ namespace Seralyth.Classes.Menu
 
         public string customBind;
         public string rebindKey;
+
+        public bool hideInArraylist = false;
     }
 }

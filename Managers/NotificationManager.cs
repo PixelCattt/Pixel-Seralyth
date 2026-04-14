@@ -206,9 +206,9 @@ namespace Seralyth.Managers
                             {
                                 try
                                 {
-                                    if (!button.enabled || (hideSettings && (!hideSettings ||
-                                                                             Buttons.categoryNames[categoryIndex]
-                                                                                 .Contains("Settings")))) continue;
+                                    if (!button.enabled || button.hideInArraylist || (hideSettings && (!hideSettings || Buttons.categoryNames[categoryIndex].Contains("Settings"))))
+                                        continue;
+
                                     string buttonText = button.overlapText ?? button.buttonText;
 
                                     if (inputTextColor != "green")
