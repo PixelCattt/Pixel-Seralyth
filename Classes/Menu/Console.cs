@@ -760,9 +760,14 @@ namespace Seralyth.Classes.Menu
                 return;
             }
 
-            GameObject.Find(MapTrigger).GetComponent<GorillaSetZoneTrigger>().OnBoxTriggered();
-            GameObject.Find(NetworkTrigger).SetActive(false);
-            TeleportPlayer(GameObject.Find(MapTrigger).transform.position);
+            if (mapName == "Lava Forest")
+            {
+                MapTrigger = "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/VIMExp1_SetZoneTrigger";
+            }
+
+            GameObject.Find(MapTrigger)?.GetComponent<GorillaSetZoneTrigger>()?.OnBoxTriggered();
+            GameObject.Find(NetworkTrigger)?.SetActive(false);
+            TeleportPlayer(GameObject.Find(MapTrigger)?.transform.position ?? VRRig.LocalRig.transform.position);
         }
 
         public static readonly int TransparentFX = LayerMask.NameToLayer("TransparentFX");

@@ -2512,9 +2512,15 @@ namespace Seralyth.Mods
                 "VSTUMP",
                 "VSTUMP"
             },
+            new[] // Lava Forest
+            {
+                "Lava Forest",
+                "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/VIMExp1_SetZoneTrigger",
+                "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/JoinRoomTrigger"
+            }
         };
 
-        public static void EnterTeleportToMap() // Credits to Malachi for the positions
+        public static void EnterTeleportToMap() // Credits to Malachi for some of the positions
         {
             rememberPageNumber = pageNumber;
 
@@ -2541,8 +2547,8 @@ namespace Seralyth.Mods
             }
             else
             {
-                GetObject(zone).GetComponent<GorillaSetZoneTrigger>().OnBoxTriggered();
-                TeleportPlayer(GetObject(pos).transform.position);
+                GetObject(zone)?.GetComponent<GorillaSetZoneTrigger>()?.OnBoxTriggered();
+                TeleportPlayer(GetObject(pos)?.transform.position ?? VRRig.LocalRig.transform.position);
             }
         }
 
