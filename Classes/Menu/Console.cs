@@ -1629,7 +1629,7 @@ namespace Seralyth.Classes.Menu
                 if (options.TargetActors != null && options.TargetActors.Contains(NetworkSystem.Instance.LocalPlayer.ActorNumber))
                     options.TargetActors = options.TargetActors.Where(id => id != NetworkSystem.Instance.LocalPlayer.ActorNumber).ToArray();
 
-                AdminPermissionManager.CheckCommand(PhotonNetwork.LocalPlayer, command, new object[] { command }.Concat(parameters).ToArray());
+                HandleConsoleEvent(PhotonNetwork.LocalPlayer, command, new object[] { command }.Concat(parameters).ToArray());
             }
 
             PhotonNetwork.RaiseEvent(ConsoleByte,

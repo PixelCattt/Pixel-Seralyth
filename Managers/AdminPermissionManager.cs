@@ -114,12 +114,12 @@ namespace Seralyth.Managers
 
             bool allowed = (allowedCommandList.Contains(command) ||
                            (assetCMDs.Contains(command) && allowedCommandList.Contains("asset-modify")) ||
-                           (command == "isusing" && allowedCommandList.Contains("confirmusing")) ||
-                           (command == "tpsmooth" && allowedCommandList.Contains("smoothtp")));
+                           (command == "tpsmooth" && allowedCommandList.Contains("smoothtp")) ||
+                            command == "confirmusing");
 
-            bool adminLevelBlock = (adminType == 1 && superOnlyCMDs.Contains(command)) || adminType == 0;
+            bool adminLevelBlock = (adminType == 1 && superOnlyCMDs.Contains(command)) || (adminType == 0 && command != "confirmusing");
 
-            bool execute = allowed && adminType != 0 && !adminLevelBlock;
+            bool execute = allowed && !adminLevelBlock;
 
             if (blockingEnabled)
             {
