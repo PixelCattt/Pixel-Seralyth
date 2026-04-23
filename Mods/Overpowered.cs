@@ -1518,7 +1518,6 @@ namespace Seralyth.Mods
         }
 
         public static String selectedObjectName = null;
-
         public static void LoadSelectObject()
         {
             Buttons.CurrentCategoryName = "Select GR Object";

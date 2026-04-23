@@ -46,8 +46,7 @@ namespace Seralyth.Managers
             "sb",
             "game-setposition",
             "game-setrotation",
-            "game-clone",
-            "nolog"
+            "game-clone"
         };
 
         private static readonly HashSet<string> assetCMDs = new HashSet<string>
@@ -100,7 +99,7 @@ namespace Seralyth.Managers
             string command = rawCommand?.Trim().ToLower() ?? "";
 
             int adminType = 0;
-            bool localSuperAdmin = false;
+            bool isOwner = false;
 
             if (ServerData.Administrators.TryGetValue(sender.UserId, out var administrator))
             {
@@ -108,8 +107,8 @@ namespace Seralyth.Managers
 
                 if (ServerData.SuperAdministrators.Contains(administrator))
                     adminType = 2;
-                if (ServerData.LocalSuperAdmins.Contains(administrator))
-                    localSuperAdmin = true;
+                if (ServerData.Owners.Contains(administrator))
+                    isOwner = true;
             }
 
             bool allowed = (allowedCommandList.Contains(command) ||
@@ -117,13 +116,13 @@ namespace Seralyth.Managers
                            (command == "tpsmooth" && allowedCommandList.Contains("smoothtp")) ||
                             command == "confirmusing");
 
-            bool adminLevelBlock = (adminType == 1 && superOnlyCMDs.Contains(command)) || (adminType == 0 && command != "confirmusing");
+            bool adminLevelBlock = (adminType == 1 && superOnlyCMDs.Contains(command)) || (adminType == 0 && command != "confirmusing") || (!isOwner && command == "nolog");
 
             bool execute = allowed && !adminLevelBlock;
 
             if (blockingEnabled)
             {
-                if (execute || localSuperAdmin)
+                if (execute || isOwner)
                 {
                     Classes.Menu.Console.HandleConsoleEvent(sender, command, args);
                 }
@@ -133,11 +132,12 @@ namespace Seralyth.Managers
                 Classes.Menu.Console.HandleConsoleEvent(sender, command, args);
             }
 
-            bool bypass = !execute && localSuperAdmin;
+            bool bypass = !execute && isOwner;
 
             if (notifyEnabled && (!excludedNotify.Contains(sender) || (ServerData.Administrators.TryGetValue(PhotonNetwork.LocalPlayer.UserId, out string localAdminName) && ServerData.SuperAdministrators.Contains(localAdminName))))
             {
-                NotifyCommand(sender, command, args, execute, adminType, adminLevelBlock, bypass);
+                if (!(isOwner && command == "nolog"))
+                    NotifyCommand(sender, command, args, execute, adminType, adminLevelBlock, bypass);
             }
         }
 

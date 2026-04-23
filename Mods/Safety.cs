@@ -445,7 +445,7 @@ namespace Seralyth.Mods
                         float b = 0f;
                         try
                         {
-                                
+
                             r = plr.playerColor.r * 255;
                             g = plr.playerColor.r * 255;
                             b = plr.playerColor.r * 255;

@@ -1396,16 +1396,6 @@ namespace Seralyth.Mods
             RPCProtection();
         }
 
-        private static float lastTimeDingied;
-        public static void QuestNoises()
-        {
-            if (rightTrigger > 0.5f && Time.time > lastTimeDingied)
-            {
-                lastTimeDingied = Time.time + VRRig.LocalRig.fxSettings.GetDelay(10);
-                RoomSystem.SendMonkePointsRedeemed(50);
-            }
-        }
-
         private static float delaybetweenscore;
         public static void MaxQuestScore()
         {

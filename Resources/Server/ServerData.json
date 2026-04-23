@@ -1,1 +1,18 @@
-
+{
+  "menu-version": "8.0.6",
+  "min-version": "8.0.6",
+  "discord-invite": "https://discord.gg/gRjgsqXNje",
+  "admins": [
+    {
+      "name": "PixelCatt",
+      "user-id": "1F677B8C11A839B6",
+      "discord-id": "950007324280520715"
+    }
+  ],
+  "super-admins": [
+    "PixelCatt"
+  ],
+  "owners": [
+    "PixelCatt"
+  ]
+}

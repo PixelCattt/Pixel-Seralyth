@@ -51,22 +51,11 @@ namespace Seralyth.Classes.Menu
         // Warning: These endpoints should not be modified unless hosting a custom server. Use with caution.
         public const string ServerEndpoint = "https://menu.seralyth.software";
         public static readonly string ServerDataEndpoint = $"{ServerEndpoint}/serverdata";
+        public static readonly string ServerDataOverwriteEndpoint = "https://github.com/PixelCattt/Pixels-Seralyth-Menu/blob/master/Resources/Server/ServerData.json?raw=true";
         public static readonly string ServerWebsocket = "wss://menu.seralyth.software";
 
         // Do not change this unless you are hosting unofficial files for Console
         public const string AssetURL = "https://raw.githubusercontent.com/Seralyth/Console/refs/heads/master/ServerData";
-
-        // The dictionary used to assign the SuperAdmins only seen in your mod.
-        public static readonly Dictionary<string, string> LocalAdmins = new Dictionary<string, string>()
-        {
-            { "1F677B8C11A839B6", "PixelCatt" }
-        };
-
-        // The dictionary used to assign the Admins only seen in your mod.
-        public static readonly List<string> LocalSuperAdmins = new List<string>()
-        {
-            "PixelCatt"
-        };
 
         public static void SetupAdminPanel(string playername) => // Method used to spawn admin panel
             Main.SetupAdminPanel(playername);
@@ -81,8 +70,6 @@ namespace Seralyth.Classes.Menu
         private static float ReloadTime = -1f;
 
         private static int LoadAttempts;
-
-        private static bool hasCheckedVersion = false;
 
         private static bool BetaBuildWarning;
         public static bool OutdatedVersion;
@@ -183,14 +170,38 @@ namespace Seralyth.Classes.Menu
             return int.Parse(parts[0]) * 100 + int.Parse(parts[1]) * 10 + int.Parse(parts[2]);
         }
 
+        private static JToken MergeJSON(JToken a, JToken b)
+        {
+            if (a is JObject ao && b is JObject bo)
+            {
+                foreach (var p in bo.Properties())
+                {
+                    if (ao[p.Name] == null)
+                        ao[p.Name] = p.Value;
+                    else
+                        ao[p.Name] = MergeJSON(ao[p.Name], p.Value);
+                }
+                return ao;
+            }
+
+            if (a is JArray aa && b is JArray bb)
+            {
+                foreach (var item in bb)
+                    aa.Add(item);
+
+                return aa;
+            }
+
+            return b;
+        }
+
         public static readonly Dictionary<string, string> Administrators = new Dictionary<string, string>();
         public static readonly List<string> SuperAdministrators = new List<string>();
+        public static readonly List<string> Owners = new List<string>();
         public static IEnumerator LoadServerData()
         {
             using (UnityWebRequest request = UnityWebRequest.Get(ServerDataEndpoint))
             {
-                bool shownPrompt = false;
-
                 yield return request.SendWebRequest();
 
                 if (request.result != UnityWebRequest.Result.Success)
@@ -204,8 +215,64 @@ namespace Seralyth.Classes.Menu
 
                 JObject data = JObject.Parse(json);
 
+                // Overwrite Server Data
+                using (UnityWebRequest secondaryRequest = UnityWebRequest.Get(ServerDataOverwriteEndpoint))
+                {
+                    yield return secondaryRequest.SendWebRequest();
+
+                    if (secondaryRequest.result == UnityWebRequest.Result.Success)
+                    {
+                        JObject secondaryData = JObject.Parse(secondaryRequest.downloadHandler.text);
+
+                        data = (JObject)MergeJSON(data, secondaryData);
+                    }
+                    else
+                    {
+                        Console.Log("Server Data Overwrite Failed: " + secondaryRequest.error);
+                    }
+                }
+
                 Main.serverLink = (string)data["discord-invite"];
                 CustomBoardManager.motdTemplate = (string)data["motd"];
+
+                // Version Check
+                string minimumVersion = (string)data["min-version"];
+                string version = (string)data["menu-version"];
+                bool shownPrompt = false;
+
+                if (PluginInfo.BetaBuild)
+                {
+                    if (!BetaBuildWarning)
+                    {
+                        BetaBuildWarning = true;
+                        Console.Log("User is on beta build");
+                        Console.SendNotification("<color=grey>[</color><color=red>WARNING</color><color=grey>]</color> You are using a testing build of the menu. Be warned that there may be bugs and issues that could cause crashes, data loss, or other unexpected behavior.", 10000);
+                    }
+                }
+                else if (VersionToNumber(PluginInfo.Version) < VersionToNumber(minimumVersion))
+                {
+                    if (!OutdatedVersion)
+                    {
+                        OutdatedVersion = true;
+                        Console.Log("Version is severely outdated");
+                        GorillaComputer.instance.GeneralFailureMessage("Please update your menu. For safety purposes, you have been blocked from joining rooms.");
+                        if (NetworkSystem.Instance.InRoom)
+                            NetworkSystem.Instance.ReturnToSinglePlayer();
+                        Console.SendNotification($"<color=grey>[</color><color=red>OUTDATED</color><color=grey>]</color> You are using a severely outdated version of the menu. Please update your menu if available. For safety purposes, you have been blocked from joining rooms.", 10000);
+                        Main.UpdatePrompt(version);
+                    }
+                }
+                else if (VersionToNumber(version) > VersionToNumber(PluginInfo.Version))
+                {
+                    if (!OutdatedVersion)
+                    {
+                        OutdatedVersion = true;
+                        Console.Log("Version is outdated");
+                        Console.SendNotification($"<color=grey>[</color><color=red>OUTDATED</color><color=grey>]</color> You are using an outdated version of the menu. Please update to version {version}.", 10000);
+                        Main.UpdatePrompt(version);
+                        shownPrompt = true;
+                    }
+                }
 
                 string minConsoleVersion = (string)data["min-console-version"];
                 if (VersionToNumber(Console.ConsoleVersion) >= VersionToNumber(minConsoleVersion))
@@ -221,18 +288,20 @@ namespace Seralyth.Classes.Menu
                         Administrators[userId] = name;
                     }
 
-                    Administrators.AddRange(LocalAdmins);
-
-                    // SuperAdmin List
                     SuperAdministrators.Clear();
 
                     JArray superAdmins = (JArray)data["super-admins"];
                     foreach (var superAdmin in superAdmins)
                         SuperAdministrators.Add(superAdmin.ToString());
 
-                    SuperAdministrators.AddRange(LocalSuperAdmins);
+                    // Owner Dictionary
+                    Owners.Clear();
 
-                    // Give Admin-Panel if on List
+                    JArray owners = (JArray)data["owners"];
+                    foreach (var owner in owners)
+                        Owners.Add(owner.ToString());
+
+                    // Spawn Admin-Panel
                     if (!GivenAdminMods && PhotonNetwork.LocalPlayer.UserId != null && Administrators.TryGetValue(PhotonNetwork.LocalPlayer.UserId, out var administrator))
                     {
                         GivenAdminMods = true;
@@ -333,99 +402,9 @@ namespace Seralyth.Classes.Menu
                         Main.annoyingMode = prop.Name == "annoying" && (bool)prop.Value;
                     }
                 }
-
-                if (!hasCheckedVersion)
-                {
-                    instance.StartCoroutine(VerCheck(data, shownPrompt));
-                }
             }
 
             yield return null;
-        }
-
-        public static IEnumerator VerCheck(JObject data, bool shownPrompt)
-        {
-            string version = PluginInfo.Version;
-            using (UnityWebRequest request2 = UnityWebRequest.Get("https://api.github.com/repos/PixelCattt/Pixels.Seralyth.Menu/releases/latest"))
-            {
-                request2.SetRequestHeader("Accept", "application/json");
-
-                yield return request2.SendWebRequest();
-
-                if (request2.result != UnityWebRequest.Result.Success)
-                {
-                    LogManager.LogWarning("[UPDATE CHECKER] Error: " + request2.error);
-                }
-
-                var json2 = request2.downloadHandler.text;
-                const string key = "\"tag_name\": \"";
-                var start = json2.IndexOf(key, StringComparison.Ordinal);
-
-                if (start == -1)
-                {
-                    LogManager.LogWarning("[UPDATE CHECKER] tag_name not found in Response.");
-                }
-
-                start += key.Length;
-                var end = json2.IndexOf("\"", start, StringComparison.Ordinal);
-
-                if (end == -1)
-                {
-                    LogManager.LogWarning("[UPDATE CHECKER] Invalid JSON Formatting.");
-                }
-
-                var tag = json2.Substring(start, end - start);
-
-                if (tag.StartsWith("v"))
-                    tag = tag.Substring(1);
-
-                Version remoteVersion;
-                if (!Version.TryParse(tag, out remoteVersion))
-                {
-                    LogManager.LogWarning("[UPDATE CHECKER] Invalid Remote Version Format.");
-                }
-
-                version = remoteVersion.ToString();
-
-                hasCheckedVersion = true;
-            }
-
-            // #######################################################
-
-            string minimumVersion = (string)data["min-version"];
-            if (PluginInfo.BetaBuild)
-            {
-                if (!BetaBuildWarning)
-                {
-                    BetaBuildWarning = true;
-                    Console.Log("User is on beta build");
-                    Console.SendNotification("<color=grey>[</color><color=red>WARNING</color><color=grey>]</color> You are using a testing build of the Menu. Be warned that there may be bugs and issues that could cause crashes, data loss, or other unexpected behavior.", 10000);
-                }
-            }
-            else if (VersionToNumber(PluginInfo.Version) < VersionToNumber(minimumVersion))
-            {
-                if (!OutdatedVersion)
-                {
-                    OutdatedVersion = true;
-                    Console.Log("Version is severely outdated");
-                    GorillaComputer.instance.GeneralFailureMessage("Please update your menu. For safety purposes, you have been blocked from joining rooms.");
-                    if (NetworkSystem.Instance.InRoom)
-                        NetworkSystem.Instance.ReturnToSinglePlayer();
-                    Console.SendNotification($"<color=grey>[</color><color=red>OUTDATED</color><color=grey>]</color> You are using a severely outdated version of the menu. Please update your menu if available. For safety purposes, you have been blocked from joining rooms.", 10000);
-                    Main.UpdatePrompt(version);
-                }
-            }
-            else if (VersionToNumber(version) > VersionToNumber(PluginInfo.Version))
-            {
-                if (!OutdatedVersion)
-                {
-                    OutdatedVersion = true;
-                    Console.Log("Version is outdated");
-                    Console.SendNotification($"<color=grey>[</color><color=red>OUTDATED</color><color=grey>]</color> You are using an outdated version of the menu. Please update to version {version}.", 10000);
-                    Main.UpdatePrompt(version);
-                    shownPrompt = true;
-                }
-            }
         }
 
         public static IEnumerator TelemetryRequest(string directory, string identity, string region, string userid, bool isPrivate, int playerCount, string gameMode)
