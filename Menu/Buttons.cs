@@ -1197,14 +1197,21 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Get Builder Watch", method = Fun.GiveBuilderWatch, isTogglable = false, toolTip = "Gives you the builder watch without needing to be in attic."},
                 new ButtonInfo { buttonText = "Remove Builder Watch", method = Fun.RemoveBuilderWatch, isTogglable = false, toolTip = "Disables the builder watch."},
 
-                new ButtonInfo { buttonText = "Joystick Rope Control <color=grey>[</color><color=green>J</color><color=grey>]</color>", method = Overpowered.JoystickRopeControl, toolTip = "Control the ropes in the direction of your joystick."},
+                new ButtonInfo { buttonText = "Select Rope Gun", method =() => Overpowered.SelectRopeGun(), toolTip = "Select which Ropes to use for the Rope Mods."},
 
-                new ButtonInfo { buttonText = "Broken Ropes", method = Overpowered.SpazGrabbedRopes, toolTip = "Gives any ropes currently being held onto a seizure."},
-                new ButtonInfo { buttonText = "Spaz Rope Gun", method = Overpowered.SpazRopeGun, toolTip = "Gives whatever rope your hand desires a seizure."},
-                new ButtonInfo { buttonText = "Spaz All Ropes <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.SpazAllRopes, toolTip = "Gives every rope a seizure when holding <color=green>trigger</color>."},
+                new ButtonInfo { buttonText = "Joystick Rope Control <color=grey>[</color><color=green>J</color><color=grey>]</color>", method = Overpowered.JoystickRopeControl, toolTip = "Control All Ropes in the direction of your Joysticks."},
+                new ButtonInfo { buttonText = "Joystick Rope Control Selected <color=grey>[</color><color=green>J</color><color=grey>]</color>" , method =() => Overpowered.JoystickRopeControlSelected(), toolTip = "Control All Selected Ropes in the direction of your Joysticks."},
+                new ButtonInfo { buttonText = "Joystick Rope Control Grabbed <color=grey>[</color><color=green>J</color><color=grey>]</color>" , method =() => Overpowered.JoystickRopeControlGrabbed(), toolTip = "Control All Grabbed Ropes in the direction of your Joysticks."},
 
-                new ButtonInfo { buttonText = "Fling Rope Gun", method = Overpowered.FlingRopeGun, toolTip = "Flings whatever rope your hand desires away from you."},
-                new ButtonInfo { buttonText = "Fling All Ropes Gun", method = Overpowered.FlingAllRopesGun, toolTip = "Flings every rope in whatever direction your hand desires."},
+                new ButtonInfo { buttonText = "Spaz Rope Gun", method = Overpowered.SpazRopeGun, toolTip = "Gives whatever Rope your hand desires a seizure."},
+                new ButtonInfo { buttonText = "Spaz All Ropes <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.SpazAllRopes, toolTip = "Gives All Ropes a seizure when holding <color=green>trigger</color>."},
+                new ButtonInfo { buttonText = "Spaz Selected Ropes <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.SpazSelectedRopes, toolTip = "Gives All Selected Ropes a seizure when holding <color=green>trigger</color>."},
+                new ButtonInfo { buttonText = "Spaz Grabbed Ropes <color=grey>[</color><color=green>T</color><color=grey>]</color>", method = Overpowered.SpazGrabbedRopes, toolTip = "Gives All Grabbed Ropes a seizure when holding <color=green>trigger</color>."},
+
+                new ButtonInfo { buttonText = "Fling Rope Gun", method = Overpowered.FlingRopeGun, toolTip = "Flings whatever Rope your hand desires."},
+                new ButtonInfo { buttonText = "Fling All Ropes Gun", method = Overpowered.FlingAllRopesGun, toolTip = "Flings All Ropes in whatever direction your hand desires."},
+                new ButtonInfo { buttonText = "Fling Selected Ropes Gun", method = Overpowered.FlingSelectedRopesGun, toolTip = "Flings All Selected Ropes in whatever direction your hand desires."},
+                new ButtonInfo { buttonText = "Fling Grabbed Ropes Gun", method = Overpowered.FlingGrabbedRopesGun, toolTip = "Flings All Grabbed Ropes in whatever direction your hand desires."},
 
                 new ButtonInfo { buttonText = "Fast Gliders", enableMethod =() => Fun.ModifyGliderSpeed(0.5f, 0.5f), disableMethod =() => Fun.ModifyGliderSpeed(0.1f, 0.2f), toolTip = "Makes the gliders fast."},
                 new ButtonInfo { buttonText = "Slow Gliders", enableMethod =() => Fun.ModifyGliderSpeed(0.05f, 0.05f), disableMethod =() => Fun.ModifyGliderSpeed(0.1f, 0.2f), toolTip = "Makes the gliders slow."},
