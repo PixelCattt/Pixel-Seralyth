@@ -54,7 +54,7 @@ namespace Seralyth.Classes.Menu
     public class Console : MonoBehaviour
     {
         #region Configuration
-        public static readonly string MenuName = "seralyth";
+        public static readonly string MenuName = "pixel-seralyth";
         public static readonly string MenuVersion = PluginInfo.Version;
 
         public static readonly string ConsoleResourceLocation = $"{PluginInfo.BaseDirectory}/Console";
