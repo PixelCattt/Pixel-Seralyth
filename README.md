@@ -12,6 +12,6 @@
   </a>
 
   <a href="https://github.com/PixelCattt/Pixels-Seralyth-Menu/releases/tag/v5.1.2">
-    <img src="https://img.shields.io/github/downloads/PixelCattt/Pixels-Seralyth-Menu/v5.1.2/Flummis-Stupid-Menu.dll?style=for-the-badge&label=Downloads%20v9.0.0&color=lime"</img>
+    <img src="https://img.shields.io/github/downloads/PixelCattt/Pixels-Seralyth-Menu/v5.1.2/Flummis-Stupid-Menu.dll?style=for-the-badge&label=Downloads%20v5.1.2&color=lime"</img>
   </a>
 </div>
