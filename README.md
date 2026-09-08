@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Flummi's Stupid Menu</h1>
+  <h1>Pixel's Stupid Menu</h1>
 
   My Modified Version of <b>ii's Stupid Menu</b>
 
@@ -12,6 +12,6 @@
   </a>
 
   <a href="https://github.com/PixelCattt/Pixelyth-Menu/releases/tag/v8.0.1">
-    <img src="https://img.shields.io/github/downloads/PixelCattt/Pixelyth-Menu/v8.0.1/Flummis-Stupid-Menu.dll?style=for-the-badge&label=Downloads%20v8.0.1&color=lime"</img>
+    <img src="https://img.shields.io/github/downloads/PixelCattt/Pixelyth-Menu/v8.0.1/Pixels-Stupid-Menu.dll?style=for-the-badge&label=Downloads%20v8.0.1&color=lime"</img>
   </a>
 </div>
