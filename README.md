@@ -1,13 +1,17 @@
 <div align="center">
   <h1>Pixel's Seralyth Menu</h1>
 
-  My Modified Version of <b>Seralyth Menu</b> (ii's Stupid Menu)
+  My Modified Version of <b>Seralyth Menu</b> (Formerly ii's Stupid Menu)
 
-  <a href="https://github.com/Seralyth/Seralyth-Menu/compare/d728f36...master">
+  <a href="https://github.com/PixelCattt/Pixelyth-Menu/compare/d728f36...8.0.9">
     <img src="https://img.shields.io/badge/view-changes-lime?style=for-the-badge"</img>
   </a>
 
-  <a href="https://github.com/PixelCattt/Pixels-Seralyth-Menu/releases">
-    <img src="https://img.shields.io/github/downloads/PixelCattt/Pixels-Seralyth-Menu/v8.0.9/Pixels-Seralyth-Menu.dll?style=for-the-badge&label=Downloads&color=lime"</img>
+  <a href="https://github.com/PixelCattt/Pixelyth-Menu/releases">
+    <img src="https://img.shields.io/github/downloads/PixelCattt/Pixelyth-Menu/total?style=for-the-badge&label=Downloads%20Total&color=lime"</img>
+  </a>
+
+  <a href="https://github.com/PixelCattt/Pixelyth-Menu/releases/tag/v8.0.9">
+    <img src="https://img.shields.io/github/downloads/PixelCattt/Pixelyth-Menu/v8.0.9/Pixels-Seralyth-Menu.dll?style=for-the-badge&label=Downloads%20v8.0.9&color=lime"</img>
   </a>
 </div>
