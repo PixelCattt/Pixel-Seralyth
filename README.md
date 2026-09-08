@@ -3,7 +3,7 @@
 
   My Modified Version of <b>Seralyth Menu</b> (Formerly ii's Stupid Menu)
 
-  <a href="https://github.com/PixelCattt/Pixelyth-Menu/compare/bdd5bf4...8.0.7">
+  <a href="https://github.com/PixelCattt/Pixelyth-Menu/compare/f706aa8...8.0.7">
     <img src="https://img.shields.io/badge/view-changes-lime?style=for-the-badge"</img>
   </a>
 
