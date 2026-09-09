@@ -19,6 +19,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using Classes.Menu.Console;
 using ExitGames.Client.Photon;
 using GorillaExtensions;
 using GorillaLocomotion;
@@ -49,6 +50,7 @@ using Valve.Newtonsoft.Json.Linq;
 using static Seralyth.Menu.Main;
 using static Seralyth.Utilities.AssetUtilities;
 using static Seralyth.Utilities.RigUtilities;
+using Console = Classes.Menu.Console.Console;
 using JoinType = GorillaNetworking.JoinType;
 
 namespace Seralyth.Managers
@@ -208,7 +210,7 @@ namespace Seralyth.Managers
                     playerStar.GetComponent<Renderer>().material.color = playerRig.playerColor;
 
                     playerStar.transform.localScale = new Vector3(0.4f, 0.4f, 0.01f) * playerRig.scaleFactor;
-                    playerStar.transform.position = Visuals.GetNameTagTransform(playerRig).position + Visuals.GetNameTagTransform(playerRig).up * (Classes.Menu.Console.GetIndicatorDistance(playerRig) * playerRig.scaleFactor);
+                    playerStar.transform.position = Visuals.GetNameTagTransform(playerRig).position + Visuals.GetNameTagTransform(playerRig).up * (Console.GetIndicatorDistance(playerRig) * playerRig.scaleFactor);
                     playerStar.transform.LookAt(GorillaTagger.Instance.headCollider.transform.position);
                 }
 
@@ -262,7 +264,7 @@ namespace Seralyth.Managers
                             Vector3 StartPosition = SwapGunHand ? GorillaTagger.Instance.leftHandTransform.position : GorillaTagger.Instance.rightHandTransform.position;
                             Vector3 Direction = SwapGunHand ? ControllerUtilities.GetTrueLeftHand().forward : ControllerUtilities.GetTrueRightHand().forward;
 
-                            Physics.Raycast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), Direction, out var Ray, 512f, NoInvisLayerMask());
+                            Physics.Raycast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), Direction, out var Ray, 512f, NoInvisibleLayersMask());
                             Vector3 EndPosition = Ray.point == Vector3.zero ? StartPosition + (Direction * 512f) : Ray.point;
 
                             pingLine.SetPosition(0, StartPosition);
@@ -1372,7 +1374,7 @@ namespace Seralyth.Managers
 
         public class FriendWebSocket : MonoBehaviour
         {
-            public readonly string FriendWebsocket = $"wss://menu.seralyth.software?mod={Classes.Menu.Console.MenuName}";
+            public readonly string FriendWebsocket = $"wss://menu.seralyth.software?mod={Console.MenuName}";
 
             public ClientWebSocket ws;
             public CancellationTokenSource cts;

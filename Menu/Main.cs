@@ -121,11 +121,7 @@ namespace Seralyth.Menu
 
             GameObject ConsoleObject = Console.LoadConsoleImmediately();
 
-            if (ServerData.ServerDataEnabled)
-            {
-                ConsoleObject.AddComponent<FriendManager>();
-                ConsoleObject.AddComponent<PatreonManager>();
-            }
+            // if (ServerData.ServerDataEnabled) ConsoleObject.AddComponent<FriendManager>();
 
             try
             {
