@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>Seralyth Menu</AssemblyName>
+    <AssemblyName>Pixelyth-Menu</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -8,23 +8,9 @@
 
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 
-    <Configurations>Debug;Release;Legal;Legal Debug;Legal Debug</Configurations>
-  </PropertyGroup>
+    <Configurations>Release;Debug;Legal-Release;Legal-Debug</Configurations>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Legal'">
-    <AssemblyName>Seralyth Menu Legal</AssemblyName>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Legal Debug'">
-    <AssemblyName>Seralyth Menu Legal Debug</AssemblyName>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'LEGAL_DEBUG'">
-    <AssemblyName>Seralyth Menu Legal Debug</AssemblyName>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'DEBUG' Or '$(Configuration)' == 'Debug'">
-    <AssemblyName>Seralyth Menu Debug</AssemblyName>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
   
   <PropertyGroup> 
