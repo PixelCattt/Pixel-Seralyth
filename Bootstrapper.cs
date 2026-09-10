@@ -1,34 +1,36 @@
 /*
- * Seralyth Menu  Bootstrapper.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-using Seralyth.Classes.Menu;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Patches;
-using Seralyth.Patches.Menu;
+** Pixelyth-Menu - Bootstrapper.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
+
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Patches;
+using Pixelyth.Patches.Menu;
 using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-namespace Seralyth
+
+namespace Pixelyth
 {
     internal static class Bootstrapper
     {
@@ -64,9 +66,9 @@ namespace Seralyth
                     Directory.CreateDirectory(target);
             }
             PatchHandler.PatchAll(true);
-            if (File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_Preferences.txt"))
+            if (File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_Preferences.txt"))
             {
-                if (File.ReadAllLines($"{PluginInfo.BaseDirectory}/Seralyth_Preferences.txt")[0]
+                if (File.ReadAllLines($"{PluginInfo.BaseDirectory}/Pixelyth_Preferences.txt")[0]
                     .Split(";;")
                     .Contains("Accept TOS"))
                 {
@@ -79,7 +81,7 @@ namespace Seralyth
         private static void LoadMenu()
         {
             PatchHandler.PatchAll();
-            Loader = new GameObject("Seralyth_Loader");
+            Loader = new GameObject("Pixelyth_Loader");
             CoroutineManager coroutineManager = Loader.AddComponent<CoroutineManager>();
             Loader.AddComponent<NotificationManager>();
             Loader.AddComponent<CustomBoardManager>();

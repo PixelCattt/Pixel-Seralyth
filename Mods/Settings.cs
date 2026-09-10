@@ -1,34 +1,36 @@
 /*
- * Seralyth Menu  Mods/Settings.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Mods/Settings.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using GorillaExtensions;
 using GorillaLocomotion;
 using Photon.Pun;
 using Photon.Realtime;
-using Seralyth.Classes.Menu;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Patches.Menu;
-using Seralyth.Utilities;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Classes.Menu.ConsoleScripts;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Patches.Menu;
+using Pixelyth.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +38,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -45,14 +46,14 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.Windows.Speech;
 using UnityEngine.XR;
-using static Seralyth.Menu.Main;
-using static Seralyth.Utilities.AssetUtilities;
-using static Seralyth.Utilities.RigUtilities;
-using Console = Seralyth.Classes.Menu.Console;
+using static Pixelyth.Menu.Main;
+using static Pixelyth.Utilities.AssetUtilities;
+using static Pixelyth.Utilities.RigUtilities;
+using Console = Pixelyth.Classes.Menu.ConsoleScripts.Console;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Seralyth.Mods
+namespace Pixelyth.Mods
 {
     public static class Settings
     {
@@ -268,7 +269,7 @@ namespace Seralyth.Mods
 
             if (TutorialSelector == null)
             {
-                TutorialSelector = new GameObject("Seralyth_TutorialSelector").AddComponent<LineRenderer>();
+                TutorialSelector = new GameObject("Pixelyth_TutorialSelector").AddComponent<LineRenderer>();
                 TutorialSelector.material.shader = Shader.Find("Sprites/Default");
 
                 TutorialSelector.startWidth = 0.01f;
@@ -283,11 +284,11 @@ namespace Seralyth.Mods
             TutorialSelector.endColor = BrightenColor(new Color32(255, 102, 0, 128));
 
             Vector3 Direction = ControllerUtilities.GetTrueRightHand().forward;
-            Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position + Direction / 4f, Direction, out var Ray, 512f, NoInvisLayerMask());
+            Physics.Raycast(GorillaTagger.Instance.rightHandTransform.position + Direction / 4f, Direction, out var Ray, 512f, NoInvisibleLayersMask());
             if (!XRSettings.isDeviceActive)
             {
                 Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-                Physics.Raycast(ray, out Ray, 512f, NoInvisLayerMask());
+                Physics.Raycast(ray, out Ray, 512f, NoInvisibleLayersMask());
             }
 
             TutorialSelector.SetPosition(0, GorillaTagger.Instance.rightHandTransform.position);
@@ -339,7 +340,7 @@ namespace Seralyth.Mods
             string version = PluginInfo.Version;
             if (PluginInfo.BetaBuild) version = "<color=blue>Beta</color> " + version;
             Buttons.AddButton(category, new ButtonInfo { buttonText = "Exit Info Screen", method = () => Toggle("Info Screen"), isTogglable = false, toolTip = "Returns you back to the main page." });
-            Buttons.AddButton(category, new ButtonInfo { buttonText = "DebugMenuName", overlapText = "<color=grey><b>Seralyth Menu </b></color>" + version, label = true });
+            Buttons.AddButton(category, new ButtonInfo { buttonText = "DebugMenuName", overlapText = "<color=grey><b>Pixelyth Menu </b></color>" + version, label = true });
             Buttons.AddButton(category, new ButtonInfo { buttonText = "DebugColor", overlapText = "Loading...", label = true });
             Buttons.AddButton(category, new ButtonInfo { buttonText = "DebugName", overlapText = "Loading...", label = true });
             Buttons.AddButton(category, new ButtonInfo { buttonText = "DebugId", overlapText = "Loading...", label = true });
@@ -700,7 +701,7 @@ namespace Seralyth.Mods
         {
             CleanupSpectateCamera();
 
-            spectateCameraObject = new GameObject("Seralyth_SpectateCamera");
+            spectateCameraObject = new GameObject("Pixelyth_SpectateCamera");
             spectateRenderTexture = new RenderTexture(512, 512, 16);
             spectateCameraObject.AddComponent<Camera>().targetTexture = spectateRenderTexture;
             spectateCameraObject.transform.SetParent(rig.headMesh.transform, false);
@@ -873,7 +874,7 @@ namespace Seralyth.Mods
 
         public static void UpdateMenu()
         {
-            Process.Start("https://github.com/PixelCattt/Pixels-Seralyth-Menu/releases/latest");
+            Process.Start("https://github.com/PixelCattt/Pixels-Pixelyth-Menu/releases/latest");
         }
 
         public static void JoystickMenuOff()
@@ -962,7 +963,7 @@ namespace Seralyth.Mods
         {
             new ThemeDefinition
             {
-                Name = "Seralyth",
+                Name = "Pixelyth",
                 Background = () => new ExtGradient
                 {
                     colors = ExtGradient.GetSolidGradient(new Color32(118, 6, 252, 128))
@@ -3928,18 +3929,18 @@ namespace Seralyth.Mods
                 {
                     PromptSingleText("What would you like to set the menu name to?", () =>
                     {
-                        File.WriteAllText($"{PluginInfo.BaseDirectory}/Seralyth_CustomMenuName.txt", keyboardInput);
+                        File.WriteAllText($"{PluginInfo.BaseDirectory}/Pixelyth_CustomMenuName.txt", keyboardInput);
                         Apply();
-                        PromptSingle("You can always change this again by re-enabling the mod or changing it in the SeralythMenu folder! (located in the Gorilla Tag installation folder)");
+                        PromptSingle("You can always change this again by re-enabling the mod or changing it in the PixelythMenu folder! (located in the Gorilla Tag installation folder)");
                     });
                 }, Apply);
 
                 static void Apply()
                 {
                     doCustomName = true;
-                    if (!File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_CustomMenuName.txt"))
-                        File.WriteAllText($"{PluginInfo.BaseDirectory}/Seralyth_CustomMenuName.txt", "Your Text Here");
-                    customMenuName = File.ReadAllText($"{PluginInfo.BaseDirectory}/Seralyth_CustomMenuName.txt");
+                    if (!File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_CustomMenuName.txt"))
+                        File.WriteAllText($"{PluginInfo.BaseDirectory}/Pixelyth_CustomMenuName.txt", "Your Text Here");
+                    customMenuName = File.ReadAllText($"{PluginInfo.BaseDirectory}/Pixelyth_CustomMenuName.txt");
                 }
                 Apply();
             }
@@ -3958,13 +3959,13 @@ namespace Seralyth.Mods
 
         private static KeywordRecognizer mainPhrases;
         private static KeywordRecognizer modPhrases;
-        private static string[] keyWords = { "jarvis", "seralyth", "seralith", "sarolith", "siri", "google", "alexa", "dummy", "computer", "stinky", "silly", "stupid", "console", "go go gadget", "monika", "wikipedia", "gideon", "a i", "ai", "a.i", "chat gpt", "chatgpt", "grok", "grock", "groq", "garmin" };
+        private static string[] keyWords = { "jarvis", "Pixelyth", "seralith", "sarolith", "siri", "google", "alexa", "dummy", "computer", "stinky", "silly", "stupid", "console", "go go gadget", "monika", "wikipedia", "gideon", "a i", "ai", "a.i", "chat gpt", "chatgpt", "grok", "grock", "groq", "garmin" };
         private static readonly string[] cancelKeywords = { "nevermind", "cancel", "never mind", "stop", "i hate you", "die" };
         public static void VoiceRecognitionOn()
         {
-            if (!File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt"))
-                File.WriteAllLines($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt", keyWords);
-            keyWords = File.ReadAllLines($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt");
+            if (!File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt"))
+                File.WriteAllLines($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt", keyWords);
+            keyWords = File.ReadAllLines($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt");
             mainPhrases = new KeywordRecognizer(keyWords);
             mainPhrases.OnPhraseRecognized += ModRecognition;
             mainPhrases.Start();
@@ -4125,9 +4126,9 @@ namespace Seralyth.Mods
             else if (PhraseRecognitionSystem.Status != SpeechSystemStatus.Stopped)
                 PromptSingle("You can not use AI Assistant while you have another voice-related mod on.", () => mod.SetEnabled(false), "Ok");
 
-            if (!File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt"))
-                File.WriteAllLines($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt", keyWords);
-            keyWords = File.ReadAllLines($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt");
+            if (!File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt"))
+                File.WriteAllLines($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt", keyWords);
+            keyWords = File.ReadAllLines($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt");
 
             while (PhraseRecognitionSystem.Status != SpeechSystemStatus.Stopped)
                 yield return null;
@@ -4742,7 +4743,7 @@ namespace Seralyth.Mods
 
                 if (clickGuiLine == null)
                 {
-                    clickGuiLine = new GameObject("Seralyth_ClickGUILine")
+                    clickGuiLine = new GameObject("Pixelyth_ClickGUILine")
                         .GetOrAddComponent<LineRenderer>();
 
                     clickGuiLine.material = new Material(Shader.Find("GUI/Text Shader"));
@@ -4891,7 +4892,7 @@ namespace Seralyth.Mods
                 if (canSelect)
                 {
                     if (selectObject == null)
-                        selectObject = new GameObject("Seralyth_PingLine");
+                        selectObject = new GameObject("Pixelyth_PingLine");
 
                     Color targetColor = Buttons.GetIndex("Swap GUI Colors").enabled ? buttonColors[1].GetCurrentColor() : backgroundColor.GetCurrentColor();
                     Color lineColor = targetColor;
@@ -4914,7 +4915,7 @@ namespace Seralyth.Mods
                     Vector3 StartPosition = leftHand ? GorillaTagger.Instance.leftHandTransform.position : GorillaTagger.Instance.rightHandTransform.position;
                     Vector3 Direction = forward;
 
-                    Physics.SphereCast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), 0.15f, Direction, out var Ray, 512f, NoInvisLayerMask());
+                    Physics.SphereCast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), 0.15f, Direction, out var Ray, 512f, NoInvisibleLayersMask());
                     Vector3 EndPosition = Ray.point == Vector3.zero ? StartPosition + (Direction * 512f) : Ray.point;
 
                     pingLine.SetPosition(0, StartPosition);
@@ -5068,14 +5069,14 @@ namespace Seralyth.Mods
 
         public static void ResetVoiceCommandsKeywords()
         {
-            if (!File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt"))
-                File.WriteAllLines($"{PluginInfo.BaseDirectory}/Seralyth_Keywords.txt", keyWords);
+            if (!File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt"))
+                File.WriteAllLines($"{PluginInfo.BaseDirectory}/Pixelyth_Keywords.txt", keyWords);
         }
 
         public static void ResetSystemPrompt()
         {
-            if (!File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_SystemPrompt.txt"))
-                File.WriteAllText($"{PluginInfo.BaseDirectory}/Seralyth_SystemPrompt.txt", AIManager.SystemPrompt);
+            if (!File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_SystemPrompt.txt"))
+                File.WriteAllText($"{PluginInfo.BaseDirectory}/Pixelyth_SystemPrompt.txt", AIManager.SystemPrompt);
         }
 
         public static string SavePreferencesToText()
@@ -5609,7 +5610,7 @@ namespace Seralyth.Mods
 
         public static void LoadPCControls()
         {
-            string fileName = $"{PluginInfo.BaseDirectory}/Seralyth_PCControls.txt";
+            string fileName = $"{PluginInfo.BaseDirectory}/Pixelyth_PCControls.txt";
 
             if (File.Exists(fileName))
             {

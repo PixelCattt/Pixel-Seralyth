@@ -1,23 +1,24 @@
 /*
- * Seralyth Menu  Mods/Projectiles.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Mods/Projectiles.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using ExitGames.Client.Photon;
 using GorillaExtensions;
@@ -26,11 +27,12 @@ using GorillaNetworking;
 using GorillaTag.CosmeticSystem;
 using Photon.Pun;
 using Photon.Realtime;
-using Seralyth.Classes.Menu;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Patches.Menu;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Classes.Menu.ConsoleScripts;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Patches.Menu;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,14 +40,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static Seralyth.Extensions.VRRigExtensions;
-using static Seralyth.Menu.Main;
-using static Seralyth.Utilities.RandomUtilities;
-using static Seralyth.Utilities.RigUtilities;
+using static Pixelyth.Extensions.VRRigExtensions;
+using static Pixelyth.Menu.Main;
+using static Pixelyth.Utilities.RandomUtilities;
+using static Pixelyth.Utilities.RigUtilities;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Seralyth.Mods
+namespace Pixelyth.Mods
 {
     public static class Projectiles
     {
@@ -769,7 +771,7 @@ namespace Seralyth.Mods
                         if (Mouse.current.leftButton.isPressed)
                         {
                             Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-                            if (Physics.Raycast(ray, out var hit, 512f, NoInvisLayerMask()))
+                            if (Physics.Raycast(ray, out var hit, 512f, NoInvisibleLayersMask()))
                             {
                                 charvel = (hit.point - hands[i].position).normalized * ShootStrength * 2f;
                             }
@@ -807,7 +809,7 @@ namespace Seralyth.Mods
                         if (Mouse.current.leftButton.isPressed)
                         {
                             Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-                            Physics.Raycast(ray, out var hit, 512f, NoInvisLayerMask());
+                            Physics.Raycast(ray, out var hit, 512f, NoInvisibleLayersMask());
                             charvel = hit.point - GorillaTagger.Instance.rightHandTransform.transform.position;
                             charvel.Normalize();
                             charvel *= ShootStrength * 2f;
@@ -835,7 +837,7 @@ namespace Seralyth.Mods
                     if (Mouse.current.leftButton.isPressed)
                     {
                         Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-                        Physics.Raycast(ray, out var hit, 512f, NoInvisLayerMask());
+                        Physics.Raycast(ray, out var hit, 512f, NoInvisibleLayersMask());
                         charvel = hit.point - GorillaTagger.Instance.rightHandTransform.transform.position;
                         charvel.Normalize();
                         charvel *= ShootStrength * 2f;
@@ -1354,7 +1356,7 @@ namespace Seralyth.Mods
                 if (Mouse.current.leftButton.isPressed)
                 {
                     Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-                    Physics.Raycast(ray, out var hit, 512f, NoInvisLayerMask());
+                    Physics.Raycast(ray, out var hit, 512f, NoInvisibleLayersMask());
                     velocity = hit.point - GorillaTagger.Instance.rightHandTransform.transform.position;
                     velocity.Normalize();
                     velocity *= ShootStrength * 2f;

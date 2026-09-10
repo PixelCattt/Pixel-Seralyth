@@ -1,36 +1,38 @@
 /*
- * Seralyth Menu  Menu/Buttons.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Menu/Buttons.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using GorillaLocomotion;
 using GorillaNetworking;
 using GorillaTagScripts;
 using GorillaTagScripts.ObstacleCourse;
 using Photon.Pun;
-using Seralyth.Classes.Menu;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Mods;
-using Seralyth.Patches.Menu;
-using Seralyth.Patches.Safety;
-using Seralyth.Utilities;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Classes.Menu.ConsoleScripts;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Mods;
+using Pixelyth.Patches.Menu;
+using Pixelyth.Patches.Safety;
+using Pixelyth.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,13 +40,13 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using static Seralyth.Menu.Main;
-using static Seralyth.Utilities.RandomUtilities;
-using static Seralyth.Utilities.RigUtilities;
-using Console = Seralyth.Classes.Menu.Console;
+using static Pixelyth.Menu.Main;
+using static Pixelyth.Utilities.RandomUtilities;
+using static Pixelyth.Utilities.RigUtilities;
+using Console = Pixelyth.Classes.Menu.ConsoleScripts.Console;
 using Random = UnityEngine.Random;
 
-namespace Seralyth.Menu
+namespace Pixelyth.Menu
 {
     public static class Buttons
     {
@@ -52,7 +54,7 @@ namespace Seralyth.Menu
         {
             new[] { // Main [0]
 
-                new ButtonInfo { buttonText = "Join Discord", method = Important.JoinDiscord, isTogglable = false, toolTip = "Invites you to join the <b>Seralyth</b> Discord server.", legal = true},
+                new ButtonInfo { buttonText = "Join Discord", method = Important.JoinDiscord, isTogglable = false, toolTip = "Invites you to join the <b>Pixelyth</b> Discord server.", legal = true},
 
                 new ButtonInfo { buttonText = "Settings", method =() => CurrentCategoryName = "Settings", isTogglable = false, toolTip = "Opens the settings tab.", legal = true},
                 // new ButtonInfo { buttonText = "Friends", method =() => CurrentCategoryName = "Friends", isTogglable = false, toolTip = "Opens the friends tab.", legal = true},
@@ -98,7 +100,6 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Overpowered Settings", method =() => CurrentCategoryName = "Overpowered Settings", isTogglable = false, toolTip = "Opens the settings for the overpowered mods."},
                 new ButtonInfo { buttonText = "Detected Settings", method =() => CurrentCategoryName = "Detected Settings", isTogglable = false, toolTip = "Opens the settings for the detected mods."},
                 new ButtonInfo { buttonText = "Projectile Settings", method =() => CurrentCategoryName = "Projectile Settings", isTogglable = false, toolTip = "Opens the settings for the projectiles."},
-                new ButtonInfo { buttonText = "Patreon Settings", method =() => CurrentCategoryName = "Patreon Settings", isTogglable = false, toolTip = "Opens the settings for the Patreon mods."},
             },
 
             new[] { // Menu Settings [2]
@@ -147,7 +148,7 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Menu Collisions", enableMethod =() => menuCollisions = true, disableMethod =() => menuCollisions = false, toolTip = "Gives the menu collisions when dropping it.", legal = true},
                 new ButtonInfo { buttonText = "Player Scale Menu", enableMethod =() => scaleWithPlayer = true, disableMethod =() => scaleWithPlayer = false, toolTip = "Scales the menu with your player scale.", legal = true},
                 new ButtonInfo { buttonText = "Alphabetize Menu", toolTip = "Alphabetizes the entire menu.", legal = true},
-                new ButtonInfo { buttonText = "Custom Menu Name", enableMethod = Settings.CustomMenuName, disableMethod =() => doCustomName = false, toolTip = $"Changes the name of the menu to whatever. You can change the text inside of your Gorilla Tag files ({PluginInfo.BaseDirectory}/Seralyth_CustomMenuName.txt).", legal = true},
+                new ButtonInfo { buttonText = "Custom Menu Name", enableMethod = Settings.CustomMenuName, disableMethod =() => doCustomName = false, toolTip = $"Changes the name of the menu to whatever. You can change the text inside of your Gorilla Tag files ({PluginInfo.BaseDirectory}/Pixelyth_CustomMenuName.txt).", legal = true},
                 new ButtonInfo { buttonText = "Menu Trail", enableMethod =() => menuTrail = true, disableMethod =() => menuTrail = false, toolTip = "Gives the menu a trail when you drop.", legal = true},
 
                 new ButtonInfo { buttonText = "Dynamic Animations", enableMethod =() => dynamicAnimations = true, disableMethod =() => dynamicAnimations = false, toolTip = "Adds more animations to the menu, giving you a better sense of control.", legal = true},
@@ -207,7 +208,7 @@ namespace Seralyth.Menu
                 ButtonHelper.CreateNumeric("Change Arrow Type", 0, arrowTypes.Length - 1, arrowType, Settings.ApplyArrowType, toolTip: "Changes the type of arrows on the page buttons.", legal: true),
                 ButtonHelper.CreateNumeric("Change Font Type", 0, 14, fontCycle, Settings.ApplyFontType, toolTip: "Changes the type of font.", legal: true),
                 new ButtonInfo { buttonText = "Rapid Font Changer", method = Settings.ChangeFontRapid, toolTip = "Changes the type of font every menu refresh.", legal = true},
-                new ButtonInfo { buttonText = "Custom Font Type", enableMethod = Settings.CustomFontType, method = Settings.PersistCustomFont, disableMethod = Settings.DisableCustomFont, toolTip = $"Changes the font type on the menu to a custom font. You can change the photo inside of your Gorilla Tag files ({PluginInfo.BaseDirectory}/Seralyth_CustomWatermark.txt).", legal = true},
+                new ButtonInfo { buttonText = "Custom Font Type", enableMethod = Settings.CustomFontType, method = Settings.PersistCustomFont, disableMethod = Settings.DisableCustomFont, toolTip = $"Changes the font type on the menu to a custom font. You can change the photo inside of your Gorilla Tag files ({PluginInfo.BaseDirectory}/Pixelyth_CustomWatermark.txt).", legal = true},
                 ButtonHelper.CreateNumeric("Change Font Style Type", 0, 3, Settings.fontStyleType, Settings.ApplyFontStyleType, toolTip: "Changes the style of the font.", legal: true),
                 ButtonHelper.Create("Change Input Text Color", () => Settings.InputColorNames, Settings.inputTextColorInt, Settings.ApplyInputTextColor, "Changes the color of the input indicator next to the buttons.", legal: true),
                 new ButtonInfo { buttonText = "Vibrant Text Colors", enableMethod =() => vibrantColors = true, disableMethod =() => vibrantColors = false, toolTip = "Makes certain green and purple colors more vibrant.", legal = true},
@@ -273,10 +274,10 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "No Prefix Narration", enableMethod =() => NotificationManager.noPrefix = true, disableMethod =() => NotificationManager.noPrefix = false, toolTip = "Stops the prefix on notifications from narrating itself.", legal = true},
                 new ButtonInfo { buttonText = "Hide Notification Brackets", enableMethod =() => hideBrackets = true, disableMethod =() => hideBrackets = false, toolTip = "Hides brackets on all notifications.", legal = true},
 
-                new ButtonInfo { buttonText = "Conduct Notifications", enableMethod =() => { GetObject("Environment Objects/LocalObjects_Prefab/TreeRoom/CodeOfConductHeadingText").GetComponent<TextMeshPro>().text = "Seralyth Menu"; GetObject("Environment Objects/LocalObjects_Prefab/TreeRoom/COCBodyText_TitleData").GetComponent<TextMeshPro>().richText = true; }, method =() => GetObject("Environment Objects/LocalObjects_Prefab/TreeRoom/COCBodyText_TitleData").GetComponent<TextMeshPro>().text = NotificationManager.notificationText.text, toolTip = "Shows notifications on the code of conduct instead.", legal = true},
+                new ButtonInfo { buttonText = "Conduct Notifications", enableMethod =() => { GetObject("Environment Objects/LocalObjects_Prefab/TreeRoom/CodeOfConductHeadingText").GetComponent<TextMeshPro>().text = "Pixelyth Menu"; GetObject("Environment Objects/LocalObjects_Prefab/TreeRoom/COCBodyText_TitleData").GetComponent<TextMeshPro>().richText = true; }, method =() => GetObject("Environment Objects/LocalObjects_Prefab/TreeRoom/COCBodyText_TitleData").GetComponent<TextMeshPro>().text = NotificationManager.notificationText.text, toolTip = "Shows notifications on the code of conduct instead.", legal = true},
                 new ButtonInfo { buttonText = "Disable Notification Rich Text", enableMethod =() => NotificationManager.noRichText = true, disableMethod =() => NotificationManager.noRichText = false, toolTip = "Removes rich text from notifications.", legal = true},
 
-                new ButtonInfo { buttonText = "Disable RPC Protection", enableMethod =() => Seralyth.Patches.Safety.RPCProtection.OpRaiseEventPatch.enabled = false, disableMethod =() => Seralyth.Patches.Safety.RPCProtection.OpRaiseEventPatch.enabled = true, toolTip = "Disables the client-side protection limiting you to sending 500 RPCs a second.", legal = true},
+                new ButtonInfo { buttonText = "Disable RPC Protection", enableMethod =() => Pixelyth.Patches.Safety.RPCProtection.OpRaiseEventPatch.enabled = false, disableMethod =() => Pixelyth.Patches.Safety.RPCProtection.OpRaiseEventPatch.enabled = true, toolTip = "Disables the client-side protection limiting you to sending 500 RPCs a second.", legal = true},
                 new ButtonInfo { buttonText = "Disable Notifications", enableMethod =() => disableNotifications = true, disableMethod =() => disableNotifications = false, toolTip = "Disables all notifications.", legal = true},
                 new ButtonInfo { buttonText = "Disable Master Client Notifications", enableMethod =() => disableMasterClientNotifications = true, disableMethod =() => disableMasterClientNotifications = false, toolTip = "Disables all notifications regarding master client.", legal = true},
                 new ButtonInfo { buttonText = "Disable Room Notifications", enableMethod =() => disableRoomNotifications = true, disableMethod =() => disableRoomNotifications = false, toolTip = "Disables all notifications regarding the room.", legal = true},
@@ -449,7 +450,7 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Create Private", method =() => Important.CreateRoom(Important.RandomRoomName(), false), isTogglable = false, toolTip = "Creates a private room.", legal = true},
 
                 new ButtonInfo { buttonText = "Fast Disconnect", method =() => SinglePlayerPatch.enabled = true, disableMethod =() =>  SinglePlayerPatch.enabled = false, toolTip = "Uses the fastest method of disconnecting possible.", legal = true},
-                new ButtonInfo { buttonText = "Join Menu Room", method =() => PhotonNetworkController.Instance.AttemptToJoinSpecificRoom($"<$SERALYTH_{PluginInfo.Version}>", JoinType.Solo), isTogglable = false, toolTip = "Connects you to a room that is exclusive to <b>Seralyth Menu</b> users.", legal = true},
+                new ButtonInfo { buttonText = "Join Menu Room", method =() => PhotonNetworkController.Instance.AttemptToJoinSpecificRoom($"<$Pixelyth_{PluginInfo.Version}>", JoinType.Solo), isTogglable = false, toolTip = "Connects you to a room that is exclusive to <b>Pixelyth Menu</b> users.", legal = true},
 
                 new ButtonInfo { buttonText = "Bypass Join Room Type", enableMethod =() => JoinedRoomPatch.enabled = true, disableMethod =() => JoinedRoomPatch.enabled = false, toolTip = "Bypasses the immediate disconnection when trying to join a room that is in another map."},
 
@@ -498,7 +499,7 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Restart Gorilla Tag", aliases = new[] { "Restart Game", "Restart App" }, method = () => Prompt("Are you sure you want to restart Gorilla Tag?", Important.RestartGame), isTogglable = false, toolTip = "Restarts Gorilla Tag.", legal = true},
                 new ButtonInfo { buttonText = "Open Gorilla Tag Folder", method = Important.OpenGorillaTagFolder, isTogglable = false, toolTip = "Opens the folder in which your game is located.", legal = true},
 
-                new ButtonInfo { buttonText = "Discord RPC", aliases = new[] { "Self Tracker" }, method = Important.DiscordRPC, disableMethod = Important.DisableDiscordRPC, toolTip = "Gives you a indicator on Discord that you are using Seralyth Menu.", legal = true},
+                new ButtonInfo { buttonText = "Discord RPC", aliases = new[] { "Self Tracker" }, method = Important.DiscordRPC, disableMethod = Important.DisableDiscordRPC, toolTip = "Gives you a indicator on Discord that you are using Pixelyth Menu.", legal = true},
                 new ButtonInfo { buttonText = "Media Integration", aliases = new[] { "Spotify" }, enableMethod = Important.EnsureIntegrationProgram, method = Important.MediaIntegration, disableMethod = Important.DisableMediaIntegration, toolTip = "Shows you what media you are watching/listening to in the top left. To switch media, open the menu and use your left joystick.", legal = true},
 
                 new ButtonInfo { buttonText = "Anti Hand Tap", enableMethod =() => HandTapPatch.enabled = true, disableMethod =() => HandTapPatch.enabled = false, toolTip = "Stops all hand tap sounds from being played."},
@@ -2499,8 +2500,8 @@ namespace Seralyth.Menu
 
                 new ButtonInfo { buttonText = "Admin Remove All Assets", method =() => AdminMods.RemoveAllAssets(), isTogglable = false, toolTip = "Removes all Console Assets."},
 
-                new ButtonInfo { buttonText = "Admin Self-Notify Commands", enableMethod = () => AdminPermissionManager.logOwnCommands = true, disableMethod = () => AdminPermissionManager.logOwnCommands = false, toolTip = "Notifies you about every Command you Execute." },
-                new ButtonInfo { buttonText = "Admin Hide Command Debug Info", enableMethod = () => AdminPermissionManager.hideCommandDebugInfo = true, disableMethod = () => AdminPermissionManager.hideCommandDebugInfo = false, toolTip = "Hides the Debug Info of all executed Commands from thier Notifications." },
+                new ButtonInfo { buttonText = "Admin Self-Notify Commands", enableMethod = () => PermissionManager.debugNotifySelf = true, disableMethod = () => PermissionManager.debugNotifySelf = false, toolTip = "Notifies you about every Command you Execute." },
+                new ButtonInfo { buttonText = "Admin Hide Command Debug Info", enableMethod = () => PermissionManager.debugHideCommandDetails = true, disableMethod = () => PermissionManager.debugHideCommandDetails = false, toolTip = "Hides the Debug Info of all executed Commands from thier Notifications." },
             },
 
             new[] { // Enabled Mods [24]
@@ -2511,7 +2512,7 @@ namespace Seralyth.Menu
                 new ButtonInfo { buttonText = "Search", method = Settings.Search, isTogglable = false, toolTip = "Lets you search for specific mods.", legal = true},
                 new ButtonInfo { buttonText = "Global Return", method = Settings.GlobalReturn, isTogglable = false, toolTip = "Returns you to the previous category.", legal = true},
                 new ButtonInfo { buttonText = "Info Screen", method = Settings.Debug, enableMethod = Settings.ShowDebug, disableMethod = Settings.HideDebug, toolTip = "Shows game and modding related information.", legal = true},
-                new ButtonInfo { buttonText = "Donate Button", method =() => { NotificationManager.ClearAllNotifications(); acceptedDonations = true; File.WriteAllText($"{PluginInfo.BaseDirectory}/Seralyth_HideDonationButton.txt", "true"); Prompt($"If you like this menu and would like to support, you should join our Patreon! ", () => Process.Start("https://patreon.com/Seralyth")); }, isTogglable = false, toolTip = "An advertisement for Seralyth's Patreon.", legal = true},
+                new ButtonInfo { buttonText = "Donate Button", method =() => { NotificationManager.ClearAllNotifications(); acceptedDonations = true; File.WriteAllText($"{PluginInfo.BaseDirectory}/Pixelyth_HideDonationButton.txt", "true"); Prompt($"If you like this menu and would like to support, you should join our Patreon! ", () => Process.Start("https://patreon.com/Pixelyth")); }, isTogglable = false, toolTip = "An advertisement for Pixelyth's Patreon.", legal = true},
                 new ButtonInfo { buttonText = "Update Button", method =() => UpdatePrompt(), isTogglable = false, toolTip = "Prompts you to update the menu.", legal = true },
 
                 new ButtonInfo { buttonText = "Accept Prompt", method =() => { NotificationManager.ClearAllNotifications(); if (inTextInput) Settings.DestroyKeyboard(); CurrentPrompt.AcceptAction?.Invoke(); Settings.StopCurrentPrompt(); }, isTogglable = false, legal = true},
@@ -2682,8 +2683,8 @@ namespace Seralyth.Menu
             new[] { // Credits [38]
                 new ButtonInfo { buttonText = "Exit Credits", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page.", legal = true},
 
-                new ButtonInfo { buttonText = "Multifactor", method =() => Process.Start("https://github.com/multifactorrr"), isTogglable = false, toolTip = "Multifactor is the current owner of Seralyth and Seralyth Menu, previously a developer of Seralyth." },
-                new ButtonInfo { buttonText = "Kingofnetflix", isTogglable = false, toolTip = "Kingofnetflix is the creator of <b>Seralyth (Menu)</b>, and was a developer for ii's <b>Stupid</b> Menu. Quit modding and the modding community August 2026." },
+                new ButtonInfo { buttonText = "Multifactor", method =() => Process.Start("https://github.com/multifactorrr"), isTogglable = false, toolTip = "Multifactor is the current owner of Pixelyth and Pixelyth Menu, previously a developer of Pixelyth." },
+                new ButtonInfo { buttonText = "Kingofnetflix", isTogglable = false, toolTip = "Kingofnetflix is the creator of <b>Pixelyth (Menu)</b>, and was a developer for ii's <b>Stupid</b> Menu. Quit modding and the modding community August 2026." },
                 new ButtonInfo { buttonText = "iiDk", method =() => Process.Start("https://github.com/iiDk-the-actual"), isTogglable = false, toolTip = "iiDk is the creator of ii's <b>Stupid</b> Menu (which this menu is forked from), and was working on it since 2023. He was also the owner of ii's Stupid Mods. Both have shut down ever since 2/24/2026.", legal = true},
                 new ButtonInfo { buttonText = "Twigcore", method =() => Process.Start("https://github.com/Twigcore"), isTogglable = false, toolTip = "Twigcore is one of the main owners of Console, the admin system in the menu. He helps with asset ideas, moderate users, contributed to the menu, and much more."},
 
@@ -2839,12 +2840,10 @@ namespace Seralyth.Menu
 
             new[] { // Patreon Mods [47]
                 new ButtonInfo { buttonText = "Exit Patreon Mods", method = () => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page.", legal = true},
-                new ButtonInfo { buttonText = "No Patreon Indicator", enableMethod =() => PatreonManager.ShowIndicator(true), method = PatreonManager.ConstantHideIndicator, disableMethod =() => PatreonManager.ShowIndicator(false), toolTip = "Disables the membership that appears above your head to others with the menu."}
             },
 
             new[] { // Patreon Settings [48]
                 new ButtonInfo { buttonText = "Exit Patreon Settings", method =() => CurrentCategoryName = "Main", isTogglable = false, toolTip = "Returns you back to the main page.", legal = true},
-                new ButtonInfo { buttonText = "Disable Patreon Indicators", enableMethod =() => PatreonManager.IndicatorsEnabled = false, disableMethod =() => PatreonManager.IndicatorsEnabled = true, toolTip = "Disables the memberships that appear above people's head with the menu."}
             },
 
             new[] { // Voice Changers [49]
@@ -2869,61 +2868,61 @@ namespace Seralyth.Menu
             new[] { // Admin-Command Blocker Settings [52]
                 new ButtonInfo { buttonText = "Exit Admin-Command Blocker Settings", method =() => CurrentCategoryName = "Safety Settings", isTogglable = false, toolTip = "Returns you back to the safety settings."},
 
-                new ButtonInfo { buttonText = "Admin-Command Blocker", enableMethod = () => AdminPermissionManager.blockingEnabled = true, disableMethod = () => AdminPermissionManager.blockingEnabled = false, toolTip = "Blocks all Admin-Commands that have not been Allowed below." },
-                new ButtonInfo { buttonText = "Admin-Command Notifier", enableMethod = () => AdminPermissionManager.notifyEnabled = true, disableMethod = () => AdminPermissionManager.notifyEnabled = false, toolTip = "Sends you a Notification everytime an Admin executes a Command." },
+                new ButtonInfo { buttonText = "Admin-Command Blocker", enableMethod = () => PermissionManager.blockingEnabled = true, disableMethod = () => PermissionManager.blockingEnabled = false, toolTip = "Blocks all Admin-Commands that have not been Allowed below." },
+                new ButtonInfo { buttonText = "Admin-Command Notifier", enableMethod = () => PermissionManager.debugNotify = true, disableMethod = () => PermissionManager.debugNotify = false, toolTip = "Sends you a Notification everytime an Admin executes a Command." },
 
-                new ButtonInfo { buttonText = "Hide Command Arguments", enableMethod = () => AdminPermissionManager.hideCommandArgs = true, disableMethod = () => AdminPermissionManager.hideCommandArgs = false, toolTip = "Hides the arguments of all executed Commands from thier Notifications." },
+                new ButtonInfo { buttonText = "Hide Command Arguments", enableMethod = () => PermissionManager.debugHideCommandArgs = true, disableMethod = () => PermissionManager.debugHideCommandArgs = false, toolTip = "Hides the arguments of all executed Commands from thier Notifications." },
 
-                new ButtonInfo { buttonText = "isusing", overlapText = "Check Using", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("isusing"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("isusing"), toolTip = "Adds the Check Using Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "isusing", overlapText = "Check Using", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("isusing"), disableMethod = () => PermissionManager.RemoveCommandFromList("isusing"), toolTip = "Adds the Check Using Admin-Command to the List of Allowed Commands." },
 
-                new ButtonInfo { buttonText = "kick", overlapText = "Kick Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("kick"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("kick"), toolTip = "Adds the Kick Player Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "silkick", overlapText = "Silent Kick", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("silkick"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("silkick"), toolTip = "Adds the Silent Kick Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "join", overlapText = "Join Room", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("join"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("join"), toolTip = "Adds the Join Room Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "kickall", overlapText = "Kick All Players", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("kickall"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("kickall"), toolTip = "Adds the Kick All Players Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "block", overlapText = "Block User", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("block"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("block"), toolTip = "Adds the Block User Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "crash", overlapText = "Crash Game", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("crash"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("crash"), toolTip = "Adds the Crash Game Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "sleep", overlapText = "Freeze Game", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("sleep"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("sleep"), toolTip = "Adds the Freeze Game Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "kick", overlapText = "Kick Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("kick"), disableMethod = () => PermissionManager.RemoveCommandFromList("kick"), toolTip = "Adds the Kick Player Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "silkick", overlapText = "Silent Kick", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("silkick"), disableMethod = () => PermissionManager.RemoveCommandFromList("silkick"), toolTip = "Adds the Silent Kick Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "join", overlapText = "Join Room", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("join"), disableMethod = () => PermissionManager.RemoveCommandFromList("join"), toolTip = "Adds the Join Room Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "kickall", overlapText = "Kick All Players", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("kickall"), disableMethod = () => PermissionManager.RemoveCommandFromList("kickall"), toolTip = "Adds the Kick All Players Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "block", overlapText = "Block User", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("block"), disableMethod = () => PermissionManager.RemoveCommandFromList("block"), toolTip = "Adds the Block User Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "crash", overlapText = "Crash Game", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("crash"), disableMethod = () => PermissionManager.RemoveCommandFromList("crash"), toolTip = "Adds the Crash Game Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "sleep", overlapText = "Freeze Game", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("sleep"), disableMethod = () => PermissionManager.RemoveCommandFromList("sleep"), toolTip = "Adds the Freeze Game Admin-Command to the List of Allowed Commands." },
 
-                new ButtonInfo { buttonText = "vibrate", overlapText = "Controller Vibration", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("vibrate"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("vibrate"), toolTip = "Adds the Controller Vibration Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "forceenable", overlapText = "Force Enable Mod", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("forceenable"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("forceenable"), toolTip = "Adds the Force Enable Mod Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "toggle", overlapText = "Toggle Mod", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("toggle"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("toggle"), toolTip = "Adds the Toggle Mod Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "togglemenu", overlapText = "Disable Menu", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("togglemenu"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("togglemenu"), toolTip = "Adds the Disable Menu Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "vibrate", overlapText = "Controller Vibration", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("vibrate"), disableMethod = () => PermissionManager.RemoveCommandFromList("vibrate"), toolTip = "Adds the Controller Vibration Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "forceenable", overlapText = "Force Enable Mod", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("forceenable"), disableMethod = () => PermissionManager.RemoveCommandFromList("forceenable"), toolTip = "Adds the Force Enable Mod Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "toggle", overlapText = "Toggle Mod", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("toggle"), disableMethod = () => PermissionManager.RemoveCommandFromList("toggle"), toolTip = "Adds the Toggle Mod Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "togglemenu", overlapText = "Disable Menu", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("togglemenu"), disableMethod = () => PermissionManager.RemoveCommandFromList("togglemenu"), toolTip = "Adds the Disable Menu Admin-Command to the List of Allowed Commands." },
 
-                new ButtonInfo { buttonText = "tp", overlapText = "Teleport Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("tp"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("tp"), toolTip = "Adds the Teleport Player Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "map", overlapText = "Teleport To Map", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("map"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("map"), toolTip = "Adds the Teleport To Map Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "nocone", overlapText = "No Cone Toggle", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("nocone"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("nocone"), toolTip = "Adds the No Cone Toggle Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "vel", overlapText = "Set Velocity", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("vel"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("vel"), toolTip = "Adds the Set Velocity Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "controller", overlapText = "Simulate Controller Input", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("controller"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("controller"), toolTip = "Adds the Simulate Controller Input Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "smoothtp", overlapText = "Smooth Teleport", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("smoothtp"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("smoothtp"), toolTip = "Adds the Smooth Teleport Alt Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "shake", overlapText = "Screen Shake", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("shake"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("shake"), toolTip = "Adds the Screen Shake Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "tpnv", overlapText = "Teleport No Velocity", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("tpnv"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("tpnv"), toolTip = "Adds the Teleport No Velocity Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "scale", overlapText = "Scale Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("scale"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("scale"), toolTip = "Adds the Scale Player Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "tp", overlapText = "Teleport Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("tp"), disableMethod = () => PermissionManager.RemoveCommandFromList("tp"), toolTip = "Adds the Teleport Player Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "map", overlapText = "Teleport To Map", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("map"), disableMethod = () => PermissionManager.RemoveCommandFromList("map"), toolTip = "Adds the Teleport To Map Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "nocone", overlapText = "No Cone Toggle", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("nocone"), disableMethod = () => PermissionManager.RemoveCommandFromList("nocone"), toolTip = "Adds the No Cone Toggle Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "vel", overlapText = "Set Velocity", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("vel"), disableMethod = () => PermissionManager.RemoveCommandFromList("vel"), toolTip = "Adds the Set Velocity Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "controller", overlapText = "Simulate Controller Input", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("controller"), disableMethod = () => PermissionManager.RemoveCommandFromList("controller"), toolTip = "Adds the Simulate Controller Input Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "smoothtp", overlapText = "Smooth Teleport", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("smoothtp"), disableMethod = () => PermissionManager.RemoveCommandFromList("smoothtp"), toolTip = "Adds the Smooth Teleport Alt Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "shake", overlapText = "Screen Shake", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("shake"), disableMethod = () => PermissionManager.RemoveCommandFromList("shake"), toolTip = "Adds the Screen Shake Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "tpnv", overlapText = "Teleport No Velocity", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("tpnv"), disableMethod = () => PermissionManager.RemoveCommandFromList("tpnv"), toolTip = "Adds the Teleport No Velocity Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "scale", overlapText = "Scale Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("scale"), disableMethod = () => PermissionManager.RemoveCommandFromList("scale"), toolTip = "Adds the Scale Player Admin-Command to the List of Allowed Commands." },
 
-                new ButtonInfo { buttonText = "cosmetic", overlapText = "Add Cosmetic", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("cosmetic"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("cosmetic"), toolTip = "Adds the Add Cosmetic Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "cosmetics", overlapText = "Add Cosmetic Batch", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("cosmetics"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("cosmetics"), toolTip = "Adds the Add Cosmetic Batch Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "strike", overlapText = "Lightning Strike", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("strike"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("strike"), toolTip = "Adds the Lightning Strike Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "laser", overlapText = "Laser Effect", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("laser"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("laser"), toolTip = "Adds the Laser Effect Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "notify", overlapText = "Send Notification", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("notify"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("notify"), toolTip = "Adds the Send Notification Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "lr", overlapText = "Draw Line", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("lr"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("lr"), toolTip = "Adds the Draw Line Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "platf", overlapText = "Spawn Platform", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("platf"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("platf"), toolTip = "Adds the Spawn Platform Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "muteall", overlapText = "Mute All", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("muteall"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("muteall"), toolTip = "Adds the Mute All Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "unmuteall", overlapText = "Un-Mute All", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("unmuteall"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("unmuteall"), toolTip = "Adds the Un-Mute All Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "mute", overlapText = "Mute Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("mute"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("mute"), toolTip = "Adds the Mute Player Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "unmute", overlapText = "Un-Mute Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("unmute"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("unmute"), toolTip = "Adds the Un-Mute Player Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "rigposition", overlapText = "Force Set Rig Position", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("rigposition"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("rigposition"), toolTip = "Adds the Force Set Rig Position Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "sb", overlapText = "Sound Broadcast", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("sb"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("sb"), toolTip = "Adds the Sound Broadcast Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "time", overlapText = "Set Time", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("time"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("time"), toolTip = "Adds the Set Time Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "weather", overlapText = "Weather Toggle", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("weather"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("weather"), toolTip = "Adds the Weather Toggle Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "setfog", overlapText = "Set Fog", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("setfog"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("setfog"), toolTip = "Adds the Set Fog Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "resetfog", overlapText = "Reset Fog", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("resetfog"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("resetfog"), toolTip = "Adds the Reset Fog Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "spatial", overlapText = "Adjust Spatial Voice-Audio Settings", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("spatial"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("spatial"), toolTip = "Adds the Adjust Spatial Voice-Audio Settings Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "setmaterial", overlapText = "Set Material", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("setmaterial"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("setmaterial"), toolTip = "Adds the Set Material Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "cosmetic", overlapText = "Add Cosmetic", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("cosmetic"), disableMethod = () => PermissionManager.RemoveCommandFromList("cosmetic"), toolTip = "Adds the Add Cosmetic Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "cosmetics", overlapText = "Add Cosmetic Batch", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("cosmetics"), disableMethod = () => PermissionManager.RemoveCommandFromList("cosmetics"), toolTip = "Adds the Add Cosmetic Batch Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "strike", overlapText = "Lightning Strike", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("strike"), disableMethod = () => PermissionManager.RemoveCommandFromList("strike"), toolTip = "Adds the Lightning Strike Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "laser", overlapText = "Laser Effect", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("laser"), disableMethod = () => PermissionManager.RemoveCommandFromList("laser"), toolTip = "Adds the Laser Effect Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "notify", overlapText = "Send Notification", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("notify"), disableMethod = () => PermissionManager.RemoveCommandFromList("notify"), toolTip = "Adds the Send Notification Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "lr", overlapText = "Draw Line", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("lr"), disableMethod = () => PermissionManager.RemoveCommandFromList("lr"), toolTip = "Adds the Draw Line Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "platf", overlapText = "Spawn Platform", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("platf"), disableMethod = () => PermissionManager.RemoveCommandFromList("platf"), toolTip = "Adds the Spawn Platform Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "muteall", overlapText = "Mute All", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("muteall"), disableMethod = () => PermissionManager.RemoveCommandFromList("muteall"), toolTip = "Adds the Mute All Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "unmuteall", overlapText = "Un-Mute All", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("unmuteall"), disableMethod = () => PermissionManager.RemoveCommandFromList("unmuteall"), toolTip = "Adds the Un-Mute All Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "mute", overlapText = "Mute Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("mute"), disableMethod = () => PermissionManager.RemoveCommandFromList("mute"), toolTip = "Adds the Mute Player Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "unmute", overlapText = "Un-Mute Player", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("unmute"), disableMethod = () => PermissionManager.RemoveCommandFromList("unmute"), toolTip = "Adds the Un-Mute Player Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "rigposition", overlapText = "Force Set Rig Position", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("rigposition"), disableMethod = () => PermissionManager.RemoveCommandFromList("rigposition"), toolTip = "Adds the Force Set Rig Position Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "sb", overlapText = "Sound Broadcast", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("sb"), disableMethod = () => PermissionManager.RemoveCommandFromList("sb"), toolTip = "Adds the Sound Broadcast Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "time", overlapText = "Set Time", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("time"), disableMethod = () => PermissionManager.RemoveCommandFromList("time"), toolTip = "Adds the Set Time Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "weather", overlapText = "Weather Toggle", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("weather"), disableMethod = () => PermissionManager.RemoveCommandFromList("weather"), toolTip = "Adds the Weather Toggle Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "setfog", overlapText = "Set Fog", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("setfog"), disableMethod = () => PermissionManager.RemoveCommandFromList("setfog"), toolTip = "Adds the Set Fog Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "resetfog", overlapText = "Reset Fog", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("resetfog"), disableMethod = () => PermissionManager.RemoveCommandFromList("resetfog"), toolTip = "Adds the Reset Fog Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "spatial", overlapText = "Adjust Spatial Voice-Audio Settings", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("spatial"), disableMethod = () => PermissionManager.RemoveCommandFromList("spatial"), toolTip = "Adds the Adjust Spatial Voice-Audio Settings Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "setmaterial", overlapText = "Set Material", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("setmaterial"), disableMethod = () => PermissionManager.RemoveCommandFromList("setmaterial"), toolTip = "Adds the Set Material Admin-Command to the List of Allowed Commands." },
 
-                new ButtonInfo { buttonText = "asset-modify", overlapText = "Add/Modify/Remove Assets", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("asset-modify"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("asset-modify"), toolTip = "Adds the Add/Modify/Remove Assets Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "asset-modify", overlapText = "Add/Modify/Remove Assets", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("asset-modify"), disableMethod = () => PermissionManager.RemoveCommandFromList("asset-modify"), toolTip = "Adds the Add/Modify/Remove Assets Admin-Command to the List of Allowed Commands." },
 
-                new ButtonInfo { buttonText = "game-setposition", overlapText = "Set GameObject Position", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("game-setposition"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("game-setposition"), toolTip = "Adds the Set GameObject Position Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "game-setrotation", overlapText = "Set GameObject Rotation", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("game-setrotation"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("game-setrotation"), toolTip = "Adds the Set GameObject Rotation Admin-Command to the List of Allowed Commands." },
-                new ButtonInfo { buttonText = "game-clone", overlapText = "Clone GameObject", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => AdminPermissionManager.AddCommandToList("game-clone"), disableMethod = () => AdminPermissionManager.RemoveCommandFromList("game-clone"), toolTip = "Adds the Clone GameObject Admin-Command to the List of Allowed Commands." }
+                new ButtonInfo { buttonText = "game-setposition", overlapText = "Set GameObject Position", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("game-setposition"), disableMethod = () => PermissionManager.RemoveCommandFromList("game-setposition"), toolTip = "Adds the Set GameObject Position Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "game-setrotation", overlapText = "Set GameObject Rotation", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("game-setrotation"), disableMethod = () => PermissionManager.RemoveCommandFromList("game-setrotation"), toolTip = "Adds the Set GameObject Rotation Admin-Command to the List of Allowed Commands." },
+                new ButtonInfo { buttonText = "game-clone", overlapText = "Clone GameObject", hideFromArraylist = true, hideFromEnabled = true, hideFromSearch = true, enableMethod = () => PermissionManager.AddCommandToList("game-clone"), disableMethod = () => PermissionManager.RemoveCommandFromList("game-clone"), toolTip = "Adds the Clone GameObject Admin-Command to the List of Allowed Commands." }
             },
 
             new[] { // Admin Video Selector [53]

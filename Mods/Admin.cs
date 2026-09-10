@@ -1,55 +1,54 @@
 /*
- * Seralyth Menu  Mods/Admin.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Mods/Admin.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using ExitGames.Client.Photon;
 using GorillaLocomotion;
 using GorillaNetworking;
 using Photon.Pun;
 using Photon.Realtime;
-using Seralyth.Classes.Menu;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Utilities;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using Newtonsoft.Json.Linq;
+using Valve.Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using static Seralyth.Menu.Main;
-using static Seralyth.Utilities.RandomUtilities;
-using static Seralyth.Utilities.RigUtilities;
-using Console = Seralyth.Classes.Menu.Console;
+using static Pixelyth.Menu.Main;
+using static Pixelyth.Utilities.RandomUtilities;
+using static Pixelyth.Utilities.RigUtilities;
+using Console = Pixelyth.Classes.Menu.ConsoleScripts.Console;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using System.IO;
-using static Bindings;
-using Seralyth.Managers.DiscordRPC;
-using UnityEngine.UIElements;
+using Pixelyth.Classes.Menu.ConsoleScripts;
 
-namespace Seralyth.Mods
+namespace Pixelyth.Mods
 {
     public static class AdminMods
     {
@@ -773,7 +772,7 @@ namespace Seralyth.Mods
 
                 if (kick)
                 {
-                    Physics.Raycast(GorillaTagger.Instance.headCollider.transform.position + new Vector3(Random.Range(-10f, 10f), 10f, Random.Range(-10f, 10f)), Vector3.down, out var Ray, 512f, NoInvisLayerMask());
+                    Physics.Raycast(GorillaTagger.Instance.headCollider.transform.position + new Vector3(Random.Range(-10f, 10f), 10f, Random.Range(-10f, 10f)), Vector3.down, out var Ray, 512f, NoInvisibleLayersMask());
                     VRRig hitRig = Ray.collider.GetComponentInParent<VRRig>();
                     if (hitRig && !hitRig.IsLocal())
                     {
@@ -915,17 +914,15 @@ namespace Seralyth.Mods
                                 VRRig vrrig = GetVRRigFromPlayer(sender);
                                 if (!nametags.TryGetValue(vrrig, out var nametag))
                                 {
-                                    GameObject go = new GameObject("Seralyth_MenuUserNametag");
+                                    GameObject go = new GameObject("Pixelyth_MenuUserNametag");
                                     go.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                                     TextMeshPro textMesh = go.AddComponent<TextMeshPro>();
                                     textMesh.fontSize = 4.8f;
                                     textMesh.alignment = TextAlignmentOptions.Center;
 
-                                    Color userColor = Color.red;
-                                    if (args.Length > 2)
-                                        userColor = Console.GetMenuTypeName((string)args[2]);
+									Color userColor = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
 
-                                    textMesh.color = userColor;
+									textMesh.color = userColor;
                                     textMesh.text = ToTitleCase((string)args[2]);
 
                                     nametags.Add(vrrig, go);
@@ -934,11 +931,9 @@ namespace Seralyth.Mods
                                 {
                                     TextMeshPro textMesh = nametag.GetComponent<TextMeshPro>();
 
-                                    Color userColor = Color.red;
-                                    if (args.Length > 2)
-                                        userColor = Console.GetMenuTypeName((string)args[2]);
+									Color userColor = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
 
-                                    if (Visuals.nameTagChams)
+									if (Visuals.nameTagChams)
                                         textMesh.Chams();
                                     textMesh.color = userColor;
                                     textMesh.text = ToTitleCase((string)args[2]);
@@ -1035,17 +1030,15 @@ namespace Seralyth.Mods
                                 VRRig vrrig = GetVRRigFromPlayer(sender);
                                 if (!nametags.TryGetValue(vrrig, out var nametag))
                                 {
-                                    GameObject go = new GameObject("Seralyth_Nametag");
+                                    GameObject go = new GameObject("Pixelyth_Nametag");
                                     go.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                                     TextMeshPro textMesh = go.AddComponent<TextMeshPro>();
                                     textMesh.fontSize = 48;
                                     textMesh.alignment = TextAlignmentOptions.Center;
 
-                                    Color userColor = Color.red;
-                                    if (args.Length > 2)
-                                        userColor = Console.GetMenuTypeName((string)args[2]);
+									Color userColor = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
 
-                                    textMesh.color = userColor;
+									textMesh.color = userColor;
                                     textMesh.text = ToTitleCase((string)args[2]);
 
                                     nametags.Add(vrrig, go);
@@ -1054,11 +1047,9 @@ namespace Seralyth.Mods
                                 {
                                     TextMeshPro textMesh = nametag.GetComponent<TextMeshPro>();
 
-                                    Color userColor = Color.red;
-                                    if (args.Length > 2)
-                                        userColor = Console.GetMenuTypeName((string)args[2]);
+									Color userColor = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
 
-                                    textMesh.color = userColor;
+									textMesh.color = userColor;
                                     textMesh.text = ToTitleCase((string)args[2]);
                                 }
                             }
@@ -1095,9 +1086,9 @@ namespace Seralyth.Mods
                 if (playerRig.isLocal)
                     continue;
 
-                Color lineColor = Console.GetMenuTypeName(userData.Value);
+                Color lineColor = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
 
-                LineRenderer line = Visuals.GetLineRender();
+				LineRenderer line = Visuals.GetLineRender();
 
                 if (followMenuTheme)
                     lineColor = menuColor;
@@ -1121,7 +1112,7 @@ namespace Seralyth.Mods
                 Console.ExecuteCommand("isusing", ReceiverGroup.All);
 
             string conductText = "";
-            conductText += "<color=red>" + PhotonNetwork.LocalPlayer.NickName + " - " + ToTitleCase(Console.MenuName) + "</color>\\n";
+            conductText += "<color=red>" + PhotonNetwork.LocalPlayer.NickName + " - " + ToTitleCase(Console.ModName) + "</color>\\n";
             foreach (KeyValuePair<string, string> item in onConduct)
             {
                 if (GetPlayerFromID(item.Key) == null)
@@ -1247,7 +1238,7 @@ namespace Seralyth.Mods
                 Vector3 startPos = (rightPrimary ? VRRig.LocalRig.rightHandTransform.position : VRRig.LocalRig.leftHandTransform.position) + dir * 0.1f;
                 try
                 {
-                    Physics.Raycast(startPos + dir / 3f, dir, out var Ray, 512f, NoInvisLayerMask());
+                    Physics.Raycast(startPos + dir / 3f, dir, out var Ray, 512f, NoInvisibleLayersMask());
                     VRRig laserTarget = Ray.collider.GetComponentInParent<VRRig>();
                     if (laserTarget && !laserTarget.IsLocal() && kick)
                         Console.ExecuteCommand("silkick", ReceiverGroup.All, GetPlayerFromVRRig(laserTarget).UserId);
@@ -1684,7 +1675,7 @@ namespace Seralyth.Mods
                 direction,
                 out RaycastHit Ray,
                 512f,
-                NoInvisLayerMask()
+                NoInvisibleLayersMask()
             );
 
             Vector3 position = Ray.point;
@@ -1847,7 +1838,7 @@ namespace Seralyth.Mods
         private static bool weaponVelTooHigh = false;
         private static bool lastWeaponVelTooHigh = false;
         private static float swingWeaponDelay = 0f;
-        public static async Task SwingWeapon()
+        public static void SwingWeapon()
         {
             weaponVelTooHigh = (GTPlayer.Instance.RightHand.velocityTracker.GetAverageVelocity(true, 0) - GorillaTagger.Instance.rigidbody.linearVelocity).magnitude > 10f;
 

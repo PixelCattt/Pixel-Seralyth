@@ -1,27 +1,28 @@
 /*
- * Seralyth Menu  Managers/AIManager.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Managers/AIManager.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
-using Seralyth.Classes.Menu;
-using Seralyth.Menu;
-using Seralyth.Mods;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Menu;
+using Pixelyth.Mods;
 using System;
 using System.Collections;
 using System.IO;
@@ -29,19 +30,19 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
-using static Seralyth.Utilities.AssetUtilities;
+using static Pixelyth.Utilities.AssetUtilities;
 
-namespace Seralyth.Managers
+namespace Pixelyth.Managers
 {
     public class AIManager
     {
-        public static string SystemPrompt = @"NAME: Seralyth's Voice Assistant
+        public static string SystemPrompt = @"NAME: Pixelyth's Voice Assistant
         MENU VERSION: {2}
         MOD COUNT: {0}
 
-        You are a voice assistant for a Gorilla Tag mod menu called ""Seralyth Menu"". You are not Seralyth, but represent the menu.
-        GitHub: https://github.com/Seralyth
-        Seralyth's Discord Server: {1}
+        You are a voice assistant for a Gorilla Tag mod menu called ""Pixelyth Menu"". You are not Pixelyth, but represent the menu.
+        GitHub: https://github.com/Pixelyth
+        Pixelyth's Discord Server: {1}
 
         Speak using simple 7th grade vocabulary. Limit all responses to 2 sentences and 300 characters. No emojis, em-dashes, markdown, or questions. Do not advertise other menus, mods, or AI unless asked.
 
@@ -83,7 +84,7 @@ namespace Seralyth.Managers
         public static IEnumerator AskAI(string text)
         {
             generating = true;
-            string filePath = $"{PluginInfo.BaseDirectory}/Seralyth_SystemPrompt.txt";
+            string filePath = $"{PluginInfo.BaseDirectory}/Pixelyth_SystemPrompt.txt";
             if (!File.Exists(filePath))
                 File.WriteAllText(filePath, SystemPrompt);
             else if (customPrompt)
@@ -97,7 +98,7 @@ namespace Seralyth.Managers
 
             text = URLEncode(text);
             string prompt = URLEncode(string.Format(SystemPrompt, Main.fullModAmount, Main.serverLink, PluginInfo.Version));
-            string api = "https://menu.seralyth.software/ai";
+            string api = "https://menu.Pixelyth.software/ai";
 
             var payload = new
             {

@@ -1,13 +1,35 @@
-﻿using Seralyth.Managers.DiscordRPC.Events;
-using Seralyth.Managers.DiscordRPC.Exceptions;
-using Seralyth.Managers.DiscordRPC.IO;
-using Seralyth.Managers.DiscordRPC.Logging;
-using Seralyth.Managers.DiscordRPC.Message;
-using Seralyth.Managers.DiscordRPC.RPC;
-using Seralyth.Managers.DiscordRPC.RPC.Commands;
+/*
+** Pixelyth-Menu - Managers/DiscordRPC/DiscordRpcClient.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
+
+using Pixelyth.Managers.DiscordRPC.Entities;
+using Pixelyth.Managers.DiscordRPC.Exceptions;
+using Pixelyth.Managers.DiscordRPC.IO;
+using Pixelyth.Managers.DiscordRPC.Logging;
+using Pixelyth.Managers.DiscordRPC.Message;
+using Pixelyth.Managers.DiscordRPC.RPC;
+using Pixelyth.Managers.DiscordRPC.RPC.Commands;
 using System;
 
-namespace Seralyth.Managers.DiscordRPC
+namespace Pixelyth.Managers.DiscordRPC
 {
 
     /// <summary>
@@ -617,7 +639,7 @@ namespace Seralyth.Managers.DiscordRPC
         /// <returns>Updated Rich Presence</returns>
         public RichPresence UpdateLargeAsset(string key = null, string tooltip = null) => Update(p =>
         {
-            p.Assets ??= new Assets();
+            p.Assets ??= new Entities.Assets();
 
             p.Assets.LargeImageKey = key ?? p.Assets.LargeImageKey;
             p.Assets.LargeImageText = tooltip ?? p.Assets.LargeImageText;
@@ -631,7 +653,7 @@ namespace Seralyth.Managers.DiscordRPC
         /// <returns>Updated Rich Presence</returns>
         public RichPresence UpdateSmallAsset(string key = null, string tooltip = null) => Update(p =>
         {
-            p.Assets ??= new Assets();
+            p.Assets ??= new Entities.Assets();
 
             p.Assets.SmallImageKey = key ?? p.Assets.SmallImageKey;
             p.Assets.SmallImageText = tooltip ?? p.Assets.SmallImageText;

@@ -1,30 +1,31 @@
 /*
- * Seralyth Menu  Mods/Presets.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Mods/Presets.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
-using Seralyth.Managers;
+using Pixelyth.Managers;
 using System;
 using System.IO;
-using static Seralyth.Menu.Main;
+using static Pixelyth.Menu.Main;
 
-namespace Seralyth.Mods
+namespace Pixelyth.Mods
 {
     public static class Presets
     {
@@ -50,9 +51,9 @@ namespace Seralyth.Mods
             pageButtonType = 1;
             fontCycle = -1;
 
-            Seralyth.Menu.Buttons.GetIndex("Change Menu Theme").cycleValue(true);
-            Seralyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
-            Seralyth.Menu.Buttons.GetIndex("Change Font Type").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Menu Theme").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Font Type").cycleValue(true);
 
             Settings.Panic();
 
@@ -144,9 +145,9 @@ namespace Seralyth.Mods
             pageButtonType = 1;
             fontCycle = 0;
 
-            Seralyth.Menu.Buttons.GetIndex("Change Menu Theme").cycleValue(true);
-            Seralyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
-            Seralyth.Menu.Buttons.GetIndex("Change Font Type").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Menu Theme").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Font Type").cycleValue(true);
 
             Settings.Panic();
 
@@ -172,9 +173,9 @@ namespace Seralyth.Mods
             pageButtonType = 1;
             fontCycle = 0;
 
-            Seralyth.Menu.Buttons.GetIndex("Change Menu Theme").cycleValue(true);
-            Seralyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
-            Seralyth.Menu.Buttons.GetIndex("Change Font Type").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Menu Theme").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Font Type").cycleValue(true);
 
             Settings.Panic();
 
@@ -194,7 +195,7 @@ namespace Seralyth.Mods
             };
 
             pageButtonType = 2;
-            Seralyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
+            Pixelyth.Menu.Buttons.GetIndex("Change Page Type").cycleValue(true);
 
             foreach (string mod in presetMods)
                 Toggle(mod);

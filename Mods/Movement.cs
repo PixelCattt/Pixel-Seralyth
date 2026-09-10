@@ -1,23 +1,24 @@
-﻿/*
- * Seralyth Menu  Mods/Movement.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+/*
+** Pixelyth-Menu - Mods/Movement.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using ExitGames.Client.Photon;
 using GorillaExtensions;
@@ -27,13 +28,13 @@ using GorillaLocomotion.Swimming;
 using GorillaNetworking;
 using Photon.Pun;
 using Photon.Realtime;
-using Seralyth.Classes.Menu;
-using Seralyth.Classes.Mods;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Patches.Menu;
-using Seralyth.Utilities;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Classes.Mods;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Patches.Menu;
+using Pixelyth.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -47,14 +48,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.XR;
 using Valve.Newtonsoft.Json.Linq;
-using static Seralyth.Menu.Main;
-using static Seralyth.Utilities.AssetUtilities;
-using static Seralyth.Utilities.RandomUtilities;
-using static Seralyth.Utilities.RigUtilities;
+using static Pixelyth.Menu.Main;
+using static Pixelyth.Utilities.AssetUtilities;
+using static Pixelyth.Utilities.RandomUtilities;
+using static Pixelyth.Utilities.RigUtilities;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Seralyth.Mods
+namespace Pixelyth.Mods
 {
     public static class Movement
     {
@@ -3329,7 +3330,7 @@ namespace Seralyth.Mods
         {
             foreach (VRRig rig in VRRigExtensions.ActiveRigs.Where(rig => !rig.IsLocal()))
             {
-                if (Physics.SphereCast(rig.headMesh.transform.position + (rig.headMesh.transform.forward * 0.25f), 0.25f, rig.headMesh.transform.forward, out _, 512f, NoInvisLayerMask()))
+                if (Physics.SphereCast(rig.headMesh.transform.position + (rig.headMesh.transform.forward * 0.25f), 0.25f, rig.headMesh.transform.forward, out _, 512f, NoInvisibleLayersMask()))
                 {
                     VRRig.LocalRig.head.rigTarget.LookAt(rig.headMesh.transform.position);
                     break;
@@ -3755,7 +3756,7 @@ namespace Seralyth.Mods
                             if (vrrig.rightIndex.calcT < 0.5f && vrrig.rightMiddle.calcT > 0.5f)
                             {
                                 Vector3 dir = vrrig.transform.Find("rig/hand.R").up;
-                                Physics.SphereCast(vrrig.rightHandTransform.position + dir * 0.1f, 0.3f, dir, out var Ray, 512f, NoInvisLayerMask());
+                                Physics.SphereCast(vrrig.rightHandTransform.position + dir * 0.1f, 0.3f, dir, out var Ray, 512f, NoInvisibleLayersMask());
                                 {
                                     VRRig sithLordTarget = Ray.collider.GetComponentInParent<VRRig>();
                                     if (sithLordTarget && sithLordTarget.isLocal)
@@ -3769,7 +3770,7 @@ namespace Seralyth.Mods
                             if (vrrig.leftIndex.calcT < 0.5f && vrrig.leftMiddle.calcT > 0.5f)
                             {
                                 Vector3 dir = vrrig.transform.Find("rig/hand.L").up;
-                                Physics.SphereCast(vrrig.leftHandTransform.position + dir * 0.1f, 0.3f, dir, out var Ray, 512f, NoInvisLayerMask());
+                                Physics.SphereCast(vrrig.leftHandTransform.position + dir * 0.1f, 0.3f, dir, out var Ray, 512f, NoInvisibleLayersMask());
                                 {
                                     VRRig sithLordTarget = Ray.collider.GetComponentInParent<VRRig>();
                                     if (sithLordTarget && sithLordTarget.isLocal)
@@ -5554,100 +5555,6 @@ namespace Seralyth.Mods
 
                 return false;
             };
-        }
-
-        public static void PromptForSex()
-        {
-            Prompt("You have to be age verified to use this mod. Would you like to proceed to the age verification process?", () =>
-            {
-                NotificationManager.SendNotification($"<color=grey>[</color><color=red>SEX</color><color=grey>]</color> A browser tab has been opened on your computer.");
-                PromptSingle("A browser tab has been opened on your computer. Please go and verify your age.", null, "Ok frick off buddy");
-                Application.OpenURL("https://seralyth.software/age_verification");
-
-                CoroutineManager.instance.StartCoroutine(Sex());
-            });
-        }
-
-        public static IEnumerator Sex()
-        {
-            while (Application.isFocused)
-                yield return null;
-            float time = Time.time + 5f;
-            while (!Application.isFocused && time > Time.time)
-                yield return null;
-
-            GameObject sex = LoadObject<GameObject>("sex");
-            sex.layer = 8;
-            Rigidbody rb = sex.GetComponent<Rigidbody>();
-
-            rb.useGravity = false;
-
-            sex.transform.position = VRRig.LocalRig.headMesh.transform.position + VRRig.LocalRig.headMesh.transform.forward * 1.5f;
-            sex.transform.LookAt(VRRig.LocalRig.headMesh.transform);
-
-            AudioClip clip = null;
-            bool loaded = false;
-
-            LoadSoundFromURL($"{PluginInfo.ServerResourcePath}/Audio/Mods/Fun/sex.ogg", "Audio/Mods/Fun/sex.ogg", c =>
-            {
-                clip = c;
-                loaded = true;
-            });
-
-            while (!loaded)
-                yield return null;
-
-            AudioSource ausrc = audioManager.GetComponent<AudioSource>();
-            ausrc.volume = 1f;
-            ausrc.PlayOneShot(clip);
-
-            yield return new WaitForSeconds(clip.length);
-
-            rb.useGravity = true;
-
-            float grabRadius = 0.3f;
-
-            Transform activeHand = null;
-            Vector3 velocity = Vector3.zero;
-
-            while (true)
-            {
-                Transform rightHand = GTPlayer.Instance.rightHand.controllerTransform;
-                Transform leftHand = GTPlayer.Instance.leftHand.controllerTransform;
-
-                bool rightHolding = activeHand == rightHand && rightGrab;
-                bool leftHolding = activeHand == leftHand && leftGrab;
-
-                if (activeHand != null)
-                {
-                    if (rightHolding || leftHolding)
-                    {
-                        velocity = activeHand.position;
-                        sex.transform.SetPositionAndRotation(activeHand.position, activeHand.rotation);
-
-                        if (rb != null)
-                            rb.isKinematic = true;
-                    }
-                    else
-                    {
-                        if (rb != null)
-                        {
-                            rb.isKinematic = false;
-                            rb.linearVelocity = (activeHand.position - velocity) / Time.deltaTime;
-                        }
-                        activeHand = null;
-                    }
-                }
-                else
-                {
-                    if (rightGrab && rightHand != null && Vector3.Distance(sex.transform.position, rightHand.position) <= grabRadius)
-                        activeHand = rightHand;
-                    else if (leftGrab && leftHand != null && Vector3.Distance(sex.transform.position, leftHand.position) <= grabRadius)
-                        activeHand = leftHand;
-                }
-
-                yield return null;
-            }
         }
 
         public static void HeadGun()

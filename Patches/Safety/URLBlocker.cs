@@ -1,27 +1,28 @@
-﻿/*
- * Seralyth Menu  Managers/URLBlocker.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+/*
+** Pixelyth-Menu - Patches/Safety/URLBlocker.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 // The purpose of this class is to block known malicious URLs from being accessed by the game or mods
 using HarmonyLib;
-using Seralyth.Managers;
+using Pixelyth.Managers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,7 +34,7 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 using Valve.Newtonsoft.Json;
 
-namespace Seralyth.Patches.Safety
+namespace Pixelyth.Patches.Safety
 {
     public class URLBlocker
     {
@@ -54,17 +55,16 @@ namespace Seralyth.Patches.Safety
             {
                 try
                 {
-                    using (HttpClient client = new HttpClient())
-                    {
-                        string json = await client.GetStringAsync("https://menu.seralyth.software/banned_urls");
-                        var parsed = JsonConvert.DeserializeObject<BanResponse>(json);
+                    using HttpClient client = new HttpClient();
 
-                        if (parsed?.banned != null)
+                    string json = await client.GetStringAsync("https://menu.Pixelyth.software/banned_urls");
+                    var parsed = JsonConvert.DeserializeObject<BanResponse>(json);
+
+                    if (parsed?.banned != null)
+                    {
+                        lock (locker)
                         {
-                            lock (locker)
-                            {
-                                banned = parsed.banned;
-                            }
+                            banned = parsed.banned;
                         }
                     }
                 }
@@ -120,7 +120,7 @@ namespace Seralyth.Patches.Safety
                 shouldLog = notifiedAssemblies.Add(assemblyName);
 
             if (shouldLog)
-                LogManager.Log($"HEY!! Seralyth Menu blocked a potentionally DANGEROUS REQUEST to: {url} | Reason: {reason} | Assumed Assembly: {assemblyName} | Assumed File: {fileName}");
+                LogManager.Log($"HEY!! Pixelyth Menu blocked a potentionally DANGEROUS REQUEST to: {url} | Reason: {reason} | Assumed Assembly: {assemblyName} | Assumed File: {fileName}");
         }
 
         private static string NormalizeHost(string host)
@@ -247,7 +247,7 @@ namespace Seralyth.Patches.Safety
 
         private static bool IsBlockedProcess(string args, IEnumerable<string> argList = null)
         {
-            bool Check(string text)
+            static bool Check(string text)
             {
                 if (string.IsNullOrEmpty(text))
                     return false;
@@ -329,7 +329,7 @@ namespace Seralyth.Patches.Safety
 
                     var response = new HttpResponseMessage(HttpStatusCode.Forbidden)
                     {
-                        Content = new StringContent("This request has been blocked by Seralyth Menu, as it has been marked as a unsafe site.")
+                        Content = new StringContent("This request has been blocked by Pixelyth Menu, as it has been marked as a unsafe site.")
                     };
 
                     __result = Task.FromResult(response);

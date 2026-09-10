@@ -1,28 +1,29 @@
-﻿/*
- * Seralyth Menu  Mods/Preferences.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+/*
+** Pixelyth-Menu - Classes/Menu/Preferences.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using Photon.Pun;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Mods;
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Mods;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,14 +31,14 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using Valve.Newtonsoft.Json;
-using static Seralyth.Menu.Main;
+using static Pixelyth.Menu.Main;
 
-namespace Seralyth.Classes.Menu
+namespace Pixelyth.Classes.Menu
 {
     public static class Preferences
     {
-        private const string FileName = "Seralyth_Preferences.json";
-        private const string LegacyFileName = "Seralyth_Preferences.txt";
+        private const string FileName = "Pixelyth_Preferences.json";
+        private const string LegacyFileName = "Pixelyth_Preferences.txt";
         internal static bool DisableAutoSave = false;
 
         private const int MinWriteIntervalMs = 250;

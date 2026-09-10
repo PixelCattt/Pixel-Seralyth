@@ -1,23 +1,24 @@
 /*
- * Seralyth Menu  Menu/Main.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Menu/Main.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using ExitGames.Client.Photon;
 using GorillaExtensions;
@@ -29,14 +30,15 @@ using GorillaTagScripts;
 using HarmonyLib;
 using Photon.Pun;
 using Photon.Realtime;
-using Seralyth.Classes.Menu;
-using Seralyth.Classes.Mods;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Mods;
-using Seralyth.Patches;
-using Seralyth.Patches.Menu;
-using Seralyth.Utilities;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Classes.Menu.ConsoleScripts;
+using Pixelyth.Classes.Mods;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Mods;
+using Pixelyth.Patches;
+using Pixelyth.Patches.Menu;
+using Pixelyth.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,7 +53,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Networking;
-using UnityEngine.Rendering;
 using UnityEngine.TextCore;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -59,17 +60,17 @@ using UnityEngine.XR;
 using Valve.Newtonsoft.Json;
 using Valve.VR;
 using WebSocketSharp;
-using static Seralyth.Utilities.AssetUtilities;
-using static Seralyth.Utilities.FileUtilities;
-using static Seralyth.Utilities.RandomUtilities;
-using ButtonCollider = Seralyth.Classes.Menu.ButtonCollider;
+using static Pixelyth.Utilities.AssetUtilities;
+using static Pixelyth.Utilities.FileUtilities;
+using static Pixelyth.Utilities.RandomUtilities;
+using ButtonCollider = Pixelyth.Classes.Menu.ButtonCollider;
 using CommonUsages = UnityEngine.XR.CommonUsages;
-using Console = Seralyth.Classes.Menu.Console;
+using Console = Pixelyth.Classes.Menu.ConsoleScripts.Console;
 using JoinType = GorillaNetworking.JoinType;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Seralyth.Menu
+namespace Pixelyth.Menu
 {
     [HarmonyPatch(typeof(GTPlayer), nameof(GTPlayer.LateUpdate))]
     public class Main : MonoBehaviour
@@ -83,7 +84,7 @@ namespace Seralyth.Menu
                 LogManager.LogError("CoroutineManager instance is null on menu launch. Features may not function properly.");
 
             if (NotificationManager.Instance == null)
-                LogManager.LogError("CoroutineManager instance is null on menu launch. Features may not function properly.");
+                LogManager.LogError("NotificationManager instance is null on menu launch. Features may not function properly.");
 
             timeMenuStarted = Time.time;
             IsSteam = PlayFabAuthenticator.instance.platform;
@@ -94,12 +95,12 @@ namespace Seralyth.Menu
             //if (Plugin.FirstLaunch)
             //    Prompt("It seems like this is your first time using the menu. Would you like to watch a quick tutorial to get to know how to use it?", Settings.ShowTutorial);
             //else
-            //    acceptedDonations = File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_HideDonationButton.txt");
+            //    acceptedDonations = File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_HideDonationButton.txt");
 
             if (Bootstrapper.FirstLaunch)
                 Settings.LoadDefaultPreferences();
             else
-                acceptedDonations = File.Exists($"{PluginInfo.BaseDirectory}/Seralyth_HideDonationButton.txt");
+                acceptedDonations = File.Exists($"{PluginInfo.BaseDirectory}/Pixelyth_HideDonationButton.txt");
 
 
             NetworkSystem.Instance.OnJoinedRoomEvent += OnJoinRoom;
@@ -566,7 +567,7 @@ namespace Seralyth.Menu
 
                 if (animatedTitle && title != null)
                 {
-                    string targetString = doCustomName ? NoRichtextTags(customMenuName) : "Seralyth Menu";
+                    string targetString = doCustomName ? NoRichtextTags(customMenuName) : "Pixelyth Menu";
                     int length = (int)Mathf.PingPong(Time.time / 0.25f, targetString.Length + 1);
                     title.text = length > 0 ? targetString[..length] : "";
                 }
@@ -738,8 +739,13 @@ namespace Seralyth.Menu
 
                 GunSpawned = false;
 
+                // Gun Cleanup Selected Player
+                if (gunLockedPlayer != null && !GetGunInput(false))
+                    gunLockedPlayer = null;
+
                 UpdateKeyboard();
 
+                // Annoying Mode
                 if (annoyingMode)
                 {
                     CustomBoardManager.BoardMaterial.color = new Color32(226, 74, 44, 255);
@@ -1955,7 +1961,7 @@ namespace Seralyth.Menu
             {
                 if (buttonSpriteSheet != null) return buttonSpriteSheet;
                 buttonSpriteSheet = ScriptableObject.CreateInstance<TMP_SpriteAsset>();
-                buttonSpriteSheet.name = "Seralyth_SpriteSheet";
+                buttonSpriteSheet.name = "Pixelyth_SpriteSheet";
 
                 var textureList = new List<Texture2D>();
                 var spriteDataList = new List<(string name, int index)>();
@@ -2470,7 +2476,7 @@ namespace Seralyth.Menu
                     case 61:
                         if (videoPlayer == null)
                         {
-                            videoPlayer = new GameObject("Seralyth_VideoPlayer").AddComponent<VideoPlayer>();
+                            videoPlayer = new GameObject("Pixelyth_VideoPlayer").AddComponent<VideoPlayer>();
                             videoPlayer.playOnAwake = true;
                             videoPlayer.isLooping = true;
                             videoPlayer.url = $"{PluginInfo.ServerResourcePath}/Videos/Themes/badapple.mp4";
@@ -2530,7 +2536,7 @@ namespace Seralyth.Menu
                     }
                 }.AddComponent<TextMeshPro>();
                 title.font = activeFont;
-                title.text = translate ? "Seralyth" : "<b>Seralyth</b>";
+                title.text = translate ? "Pixelyth" : "<b>Pixelyth</b>";
 
                 if (doCustomName)
                     title.text = customMenuName;
@@ -2573,7 +2579,7 @@ namespace Seralyth.Menu
 
                 if (animatedTitle)
                 {
-                    string targetString = doCustomName ? NoRichtextTags(customMenuName) : "Seralyth Menu";
+                    string targetString = doCustomName ? NoRichtextTags(customMenuName) : "Pixelyth Menu";
                     int length = (int)Mathf.PingPong(Time.time / 0.25f, targetString.Length);
                     title.text = length > 0 ? targetString[..length] : "";
                 }
@@ -3165,7 +3171,7 @@ namespace Seralyth.Menu
                         if (Mouse.current.leftButton.isPressed && !isMouseDown)
                         {
                             Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-                            bool worked = Physics.Raycast(ray, out RaycastHit hit, 512f, NoInvisLayerMask());
+                            bool worked = Physics.Raycast(ray, out RaycastHit hit, 512f, NoInvisibleLayersMask());
                             if (worked)
                             {
                                 ButtonCollider collide = hit.transform.gameObject.GetComponent<ButtonCollider>();
@@ -3542,7 +3548,7 @@ namespace Seralyth.Menu
                     case "webm":
                     case "mov":
                         {
-                            promptVideoPlayer = new GameObject("Seralyth_PromptVideoPlayer").AddComponent<VideoPlayer>();
+                            promptVideoPlayer = new GameObject("Pixelyth_PromptVideoPlayer").AddComponent<VideoPlayer>();
                             promptVideoPlayer.playOnAwake = true;
                             promptVideoPlayer.isLooping = true;
                             promptVideoPlayer.url = promptImageUrl;
@@ -4316,12 +4322,12 @@ namespace Seralyth.Menu
                 Right = GunTransform.right;
             }
 
-            Physics.Raycast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), Direction, out var Ray, 512f, layerMask ?? DefaultLayerMask());
+            Physics.Raycast(StartPosition + Direction / 4f * (scaleWithPlayer ? GTPlayer.Instance.scale : 1f), Direction, out var Ray, 512f, layerMask ?? NoInvisibleLayersMask());
 
             if (shouldBePC)
             {
                 Ray ray = TPC.ScreenPointToRay(Mouse.current.position.ReadValue());
-                Physics.Raycast(ray, out Ray, 512f, DefaultLayerMask());
+                Physics.Raycast(ray, out Ray, 512f, NoInvisibleLayersMask());
                 Direction = ray.direction;
             }
             Vector3 EndPosition = gunLockedPlayer != null ? gunLockedPlayer.transform.position : Ray.point;
@@ -4392,17 +4398,13 @@ namespace Seralyth.Menu
                     }
                 }
             }
-            else
-            {
-                gunLockedPlayer = null;
-            }
 
             if (disableGunLine)
                 return (Ray, GunPointer);
 
             if (GunLine == null)
             {
-                GameObject line = new GameObject("Seralyth_GunLine");
+                GameObject line = new GameObject("Pixelyth_GunLine");
                 GunLine = line.AddComponent<LineRenderer>();
             }
 
@@ -5975,30 +5977,12 @@ namespace Seralyth.Menu
             catch { }
         }
 
-        private static int? defaultLayerMask;
-        public static int DefaultLayerMask()
+        private static int? noInvisibleLayersMask;
+        public static int NoInvisibleLayersMask()
         {
-            defaultLayerMask ??= (1 << LayerMask.NameToLayer("Default"))
-                               | (1 << LayerMask.NameToLayer("Gorilla Object"))
-                               | (1 << LayerMask.NameToLayer("Gorilla Tag Collider"));
+            noInvisibleLayersMask ??= (1 << LayerMask.NameToLayer("Default")) | (1 << LayerMask.NameToLayer("Gorilla Object")) | (1 << LayerMask.NameToLayer("Gorilla Tag Collider"));
 
-            return defaultLayerMask ?? GTPlayer.Instance.locomotionEnabledLayers;
-        }
-
-        private static int? noInvisLayerMask;
-        public static int NoInvisLayerMask()
-        {
-            noInvisLayerMask ??= ~(
-                1 << LayerMask.NameToLayer("TransparentFX") |
-                1 << LayerMask.NameToLayer("Ignore Raycast") |
-                1 << LayerMask.NameToLayer("Zone") |
-                1 << LayerMask.NameToLayer("Gorilla Trigger") |
-                1 << LayerMask.NameToLayer("Gorilla Boundary") |
-                1 << LayerMask.NameToLayer("GorillaCosmetics") |
-                1 << LayerMask.NameToLayer("GorillaParticle")
-            );
-
-            return noInvisLayerMask ?? GTPlayer.Instance.locomotionEnabledLayers;
+            return noInvisibleLayersMask ?? GTPlayer.LocomotionEnabledLayers;
         }
 
         /// <summary>
@@ -6927,9 +6911,9 @@ jgs \_   _/ |Oo\
         public static string customMenuName = "Your Text Here";
         public static readonly string menuName =
 #if LEGAL
-            "<b>Seralyth</b> Legal";
+            "<b>Pixelyth</b> Legal";
 #else
-            "<b>Seralyth</b> Menu";
+            "<b>Pixelyth</b> Menu";
 #endif
         public static bool doCustomMenuBackground;
         public static bool menuTrail;

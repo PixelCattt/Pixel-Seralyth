@@ -1,35 +1,36 @@
-﻿/*
- * Seralyth Menu  Managers/CustomBoardManager.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+/*
+** Pixelyth-Menu - Managers/CustomBoardManager.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using GorillaNetworking;
-using Seralyth.Extensions;
+using Pixelyth.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Seralyth.Menu.Main;
+using static Pixelyth.Menu.Main;
 
-namespace Seralyth.Managers
+namespace Pixelyth.Managers
 {
     public class CustomBoardManager : MonoBehaviour
     {
@@ -174,11 +175,7 @@ namespace Seralyth.Managers
         public const int ForestLeaderboardIndex = 6;
 
         public static bool motdTextDirty = true;
-        public static string motdTemplate = "You are using build {0}. This menu was created by Seralyth Software. " +
-        "This menu is completely free and open sourced, if you paid for this menu you have been scammed. " +
-        "There are a total of <b>{1}</b> mods on this menu. " +
-        "<color=red>Seralyth is not responsible for any bans using this menu.</color> " +
-        "If you get banned while using this, it's your responsibility.\n\nCurrent menu status: <b>Loading...</b>\nMade with <3 by the community.\n\n<alpha=128>{2} {0} {3}<alpha=255>";
+        public static string motdTemplate = "\n\n<align=\"center\"><b>Loading...</b></align>";
 
         public Material forestMaterial;
         public Material stumpMaterial;
@@ -196,8 +193,8 @@ namespace Seralyth.Managers
 
         private void RebuildMotdText()
         {
-            cachedMotdHeading = FollowMenuSettings($"Thanks for using {(doCustomName ? customMenuName : menuName)}!");
-            cachedMotdBody = FollowMenuSettings(string.Format(motdTemplate, PluginInfo.Version, fullModAmount, PluginInfo.BetaBuild ? "Beta" : "Release", PluginInfo.BuildTimestamp));
+            cachedMotdHeading = FollowMenuSettings($"Thank You for using {(doCustomName ? customMenuName : menuName)}!");
+            cachedMotdBody = FollowMenuSettings(string.Format(motdTemplate, PluginInfo.Version, fullModAmount, PluginInfo.BetaBuild ? "BETA" : "RELEASE", PluginInfo.BuildTimestamp));
             motdTextDirty = false;
         }
 

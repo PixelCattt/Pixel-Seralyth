@@ -1,7 +1,29 @@
-﻿using System;
+/*
+** Pixelyth-Menu - Managers/DiscordRPC/Entities/Timestamps.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
+
+using System;
 using Valve.Newtonsoft.Json;
 
-namespace Seralyth.Managers.DiscordRPC
+namespace Pixelyth.Managers.DiscordRPC.Entities
 {
     /// <summary>
     /// Structure representing the start and endtimes of a match.
@@ -76,7 +98,7 @@ namespace Seralyth.Managers.DiscordRPC
         }
 
         /// <summary>
-        /// Converts between DateTime and Milliseconds to give the Unix Epoch Time for the <see cref="Timestamps.Start"/>.
+        /// Converts between DateTime and Milliseconds to give the Unix Epoch Time for the <see cref="Start"/>.
         /// </summary>
         [JsonProperty("start", NullValueHandling = NullValueHandling.Ignore)]
         public ulong? StartUnixMilliseconds
@@ -94,7 +116,7 @@ namespace Seralyth.Managers.DiscordRPC
 
 
         /// <summary>
-        /// Converts between DateTime and Milliseconds to give the Unix Epoch Time  for the <see cref="Timestamps.End"/>.
+        /// Converts between DateTime and Milliseconds to give the Unix Epoch Time  for the <see cref="End"/>.
         /// <seealso cref="End"/>
         /// </summary>
         [JsonProperty("end", NullValueHandling = NullValueHandling.Ignore)]

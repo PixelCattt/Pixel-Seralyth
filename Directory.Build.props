@@ -7,6 +7,6 @@
 		<BepInExAssemblyPath>$(GamePath)\BepInEx\core</BepInExAssemblyPath>
 		<PluginsPath>$(GamePath)\BepInEx\plugins</PluginsPath>
 
-    <BuildTimestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd@HH-mm-ss"))</BuildTimestamp>
+		<BuildTimestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd@HH-mm-ss"))</BuildTimestamp>
 	</PropertyGroup>
 </Project>

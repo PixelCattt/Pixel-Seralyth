@@ -1,23 +1,24 @@
 /*
- * Seralyth Menu  Mods/Fun.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Mods/Fun.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
 using ExitGames.Client.Photon;
 using GorillaExtensions;
@@ -40,13 +41,13 @@ using Photon.Voice.Unity.UtilityScripts;
 using PlayFab;
 using PlayFab.ClientModels;
 using POpusCodec.Enums;
-using Seralyth.Classes.Menu;
-using Seralyth.Classes.Mods;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Patches.Menu;
-using Seralyth.Utilities;
+using Pixelyth.Classes.Menu;
+using Pixelyth.Classes.Mods;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Patches.Menu;
+using Pixelyth.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -57,16 +58,16 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Windows.Speech;
-using static Seralyth.Menu.Main;
-using static Seralyth.Utilities.AssetUtilities;
-using static Seralyth.Utilities.GameModeUtilities;
-using static Seralyth.Utilities.RandomUtilities;
-using static Seralyth.Utilities.RigUtilities;
+using static Pixelyth.Menu.Main;
+using static Pixelyth.Utilities.AssetUtilities;
+using static Pixelyth.Utilities.GameModeUtilities;
+using static Pixelyth.Utilities.RandomUtilities;
+using static Pixelyth.Utilities.RigUtilities;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Seralyth.Mods
+namespace Pixelyth.Mods
 {
     public static class Fun
     {
@@ -612,7 +613,7 @@ namespace Seralyth.Mods
         {
             if (FreeCamObject == null)
             {
-                FreeCamObject = new GameObject("Seralyth_CameraObj");
+                FreeCamObject = new GameObject("Pixelyth_CameraObj");
                 FreeCamObject.transform.position = GorillaTagger.Instance.headCollider.transform.position;
             }
 
@@ -637,7 +638,7 @@ namespace Seralyth.Mods
         {
             if (FreeCamObject == null)
             {
-                FreeCamObject = new GameObject("Seralyth_CameraObj");
+                FreeCamObject = new GameObject("Pixelyth_CameraObj");
                 FreeCamObject.transform.position = GorillaTagger.Instance.headCollider.transform.position;
             }
 
@@ -653,7 +654,7 @@ namespace Seralyth.Mods
         {
             if (FreeCamObject == null)
             {
-                FreeCamObject = new GameObject("Seralyth_CameraObj");
+                FreeCamObject = new GameObject("Pixelyth_CameraObj");
                 FreeCamObject.transform.position = GorillaTagger.Instance.headCollider.transform.position;
             }
 
@@ -669,7 +670,7 @@ namespace Seralyth.Mods
         {
             if (FreeCamObject == null)
             {
-                FreeCamObject = new GameObject("Seralyth_CameraObj");
+                FreeCamObject = new GameObject("Pixelyth_CameraObj");
                 FreeCamObject.transform.position = GorillaTagger.Instance.headCollider.transform.position;
             }
 
@@ -754,7 +755,7 @@ namespace Seralyth.Mods
                 {
                     if (FreeCamObject == null)
                     {
-                        FreeCamObject = new GameObject("Seralyth_CameraObj");
+                        FreeCamObject = new GameObject("Pixelyth_CameraObj");
                         FreeCamObject.transform.position = GorillaTagger.Instance.headCollider.transform.position;
                     }
 
@@ -1404,7 +1405,7 @@ namespace Seralyth.Mods
 
         private static VirtualStumpAd virtualStumpAd;
         public static void CustomVirtualStumpVideo() =>
-            virtualStumpAd ??= new GameObject("Seralyth_VirtualStumpAd").AddComponent<VirtualStumpAd>();
+            virtualStumpAd ??= new GameObject("Pixelyth_VirtualStumpAd").AddComponent<VirtualStumpAd>();
 
         public static void DisableCustomVirtualStumpVideo()
         {
@@ -2952,7 +2953,7 @@ Piece Name: {gunTarget.name}";
             Vector3 localPosition = localSlingshot.drawingHand.transform.position + (localSlingshot.centerOrigin.position - localSlingshot.drawingHand.transform.position).normalized * ((EquipmentInteractor.instance.grabRadius - localSlingshot.dummyProjectileColliderRadius) * (localSlingshot.dummyProjectileInitialScale * Mathf.Abs(localSlingshot.transform.lossyScale.x)));
             Vector3 localVelocity = localSlingshot.GetLaunchVelocity();
 
-            Visuals.DrawTrajectory(localPosition, localVelocity, paintbrawlTriggerLine, NoInvisLayerMask(), Vector3.down * 10.79f);
+            Visuals.DrawTrajectory(localPosition, localVelocity, paintbrawlTriggerLine, NoInvisibleLayersMask(), Vector3.down * 10.79f);
 
             paintbrawlTriggerLine.enabled = false;
 
@@ -3113,7 +3114,7 @@ Piece Name: {gunTarget.name}";
 
                     ThrowableBug targetBug = bugSpamToggle ? bug : firefly;
 
-                    GameObject bugSpamObject = new GameObject("Seralyth_BugSpamObject");
+                    GameObject bugSpamObject = new GameObject("Pixelyth_BugSpamObject");
                     bugSpamObject.transform.localScale = Vector3.one * 0.2f;
                     bugSpamObject.layer = 3;
 
@@ -3157,7 +3158,7 @@ Piece Name: {gunTarget.name}";
 
                 LckSocialCamera camera = cameraSpamType ? LckSocialCameraManager.Instance._networkedCococam : LckSocialCameraManager.Instance._networkedTablet;
 
-                GameObject cameraSpamObject = new GameObject("Seralyth_CameraSpamObject");
+                GameObject cameraSpamObject = new GameObject("Pixelyth_CameraSpamObject");
                 cameraSpamObject.transform.localScale = Vector3.one * 0.2f;
                 cameraSpamObject.layer = 3;
 
@@ -3225,7 +3226,7 @@ Piece Name: {gunTarget.name}";
                     case 0:
                         {
                             ThrowableBug targetBug = bug;
-                            GameObject bugSpamObject = new GameObject("Seralyth_BugSpamObject");
+                            GameObject bugSpamObject = new GameObject("Pixelyth_BugSpamObject");
                             bugSpamObject.transform.localScale = Vector3.one * 0.2f;
                             bugSpamObject.layer = 3;
 
@@ -3259,7 +3260,7 @@ Piece Name: {gunTarget.name}";
                     case 1:
                         {
                             ThrowableBug targetBug = firefly;
-                            GameObject bugSpamObject = new GameObject("Seralyth_FireflySpamObject");
+                            GameObject bugSpamObject = new GameObject("Pixelyth_FireflySpamObject");
                             bugSpamObject.transform.localScale = Vector3.one * 0.2f;
                             bugSpamObject.layer = 3;
 
@@ -3297,7 +3298,7 @@ Piece Name: {gunTarget.name}";
 
                             LckSocialCamera camera = LckSocialCameraManager.Instance._networkedCococam;
 
-                            GameObject cameraSpamObject = new GameObject("Seralyth_CameraSpamObject");
+                            GameObject cameraSpamObject = new GameObject("Pixelyth_CameraSpamObject");
                             cameraSpamObject.transform.localScale = Vector3.one * 0.2f;
                             cameraSpamObject.layer = 3;
 
@@ -3341,7 +3342,7 @@ Piece Name: {gunTarget.name}";
 
                             LckSocialCamera camera = LckSocialCameraManager.Instance._networkedTablet;
 
-                            GameObject cameraSpamObject = new GameObject("Seralyth_CameraSpamObject");
+                            GameObject cameraSpamObject = new GameObject("Pixelyth_CameraSpamObject");
                             cameraSpamObject.transform.localScale = Vector3.one * 0.2f;
                             cameraSpamObject.layer = 3;
 
@@ -3602,7 +3603,7 @@ Piece Name: {gunTarget.name}";
 
                 if (inAir && !lastInAir)
                 {
-                    GameObject bugSpamObject = new GameObject("Seralyth_BugSpamObject");
+                    GameObject bugSpamObject = new GameObject("Pixelyth_BugSpamObject");
                     bugSpamObject.transform.localScale = Vector3.one * 0.2f;
                     bugSpamObject.layer = 3;
 
@@ -3683,7 +3684,7 @@ Piece Name: {gunTarget.name}";
                 {
                     grabbingCamera = false;
 
-                    GameObject bugSpamObject = new GameObject("Seralyth_BugSpamObject");
+                    GameObject bugSpamObject = new GameObject("Pixelyth_BugSpamObject");
                     bugSpamObject.transform.localScale = Vector3.one * 0.2f;
                     bugSpamObject.layer = 3;
 
@@ -5668,7 +5669,7 @@ Piece Name: {gunTarget.name}";
         public static string[] names = { };
         public static void EnableCustomNameCycle() // Thanks to xynz_ for some fixes
         {
-            var path = $"{PluginInfo.BaseDirectory}/Seralyth_CustomNameCycle.txt";
+            var path = $"{PluginInfo.BaseDirectory}/Pixelyth_CustomNameCycle.txt";
             if (File.Exists(path))
             {
                 names = File.ReadAllText(path)
@@ -6670,7 +6671,7 @@ Piece Name: {gunTarget.name}";
                 catch { LogManager.Log("Failed to log player"); }
             }
             text += "\n====================================\n";
-            text += "Text file generated with Seralyth Menu";
+            text += "Text file generated with Pixelyth Menu";
             string fileName = $"{PluginInfo.BaseDirectory}/PlayerInfo/" + PhotonNetwork.CurrentRoom.Name + ".txt";
 
             File.WriteAllText(fileName, text);

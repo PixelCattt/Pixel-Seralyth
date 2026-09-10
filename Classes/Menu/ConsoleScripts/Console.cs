@@ -1,90 +1,84 @@
 /*
- * Seralyth Menu  Classes/Menu/Console.cs
- * A community driven mod menu for Gorilla Tag with over 1000+ mods
- *
- * Copyright (C) 2026  Seralyth Software
- * https://github.com/Seralyth/Seralyth-Menu
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+** Pixelyth-Menu - Classes/Menu/ConsoleScripts/Console.cs
+** An Open-Source Mod Menu for Gorilla Tag with 2000+ Mods!
+**
+** Copyright (C) 2026 - PixelCatt
+** https://github.com/PixelCattt/Pixelyth-Menu
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.
+** If not, see <https://www.gnu.org/licenses/>.
+*/
 
-using ExitGames.Client.Photon;
+using HarmonyLib;
 using GorillaLocomotion;
 using GorillaNetworking;
 using GorillaTag.Rendering;
-using HarmonyLib;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice.Unity;
-using Seralyth.Extensions;
-using Seralyth.Managers;
-using Seralyth.Menu;
-using Seralyth.Mods;
+using Pixelyth.Extensions;
+using Pixelyth.Managers;
+using Pixelyth.Menu;
+using Pixelyth.Mods;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Video;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.UI;
-using UnityEngine.Video;
-using JoinType = GorillaNetworking.JoinType;
 using Random = UnityEngine.Random;
+using JoinType = GorillaNetworking.JoinType;
 
-namespace Seralyth.Classes.Menu
+namespace Pixelyth.Classes.Menu.ConsoleScripts
 {
     public class Console : MonoBehaviour
     {
         #region Configuration
 #if LEGAL || LEGAL_DEBUG
-        public static readonly string MenuName = "PSM_Legal";
+        public static readonly string ModName = "Pixelyth_Legal";
 #else
-        public static readonly string MenuName = "Pixel-Seralyth";
+        public static readonly string ModName = "Pixelyth";
 #endif
-        public static readonly string MenuVersion = PluginInfo.Version;
+        public static readonly string ModVersion = PluginInfo.Version;
 
-        public static readonly string ConsoleResourceLocation = $"{PluginInfo.BaseDirectory}/Console";
-        public static readonly string ConsoleSuperAdminIcon = $"{ServerData.AssetURL}/icon.png";
-        public static readonly string ConsoleAdminIcon = $"{ServerData.AssetURL}/crown.png";
+        public static readonly string ConsoleResourceLocation = "Console";
+        public static readonly string ConsoleOwnerIcon = $"{ServerData.AssetURL}/Icons/Owner.png";
+        public static readonly string ConsoleSuperIcon = $"{ServerData.AssetURL}/Icons/Super.png";
+        public static readonly string ConsoleAdminIcon = $"{ServerData.AssetURL}/Icons/Admin.png";
 
-        public static bool DisableMenu // Variable used to disable menu from opening
-        {
+        public static bool DisableMenu // Check this Variable in your Mod to disable it from Opening if your Mod is a Menu
+		{
             get => Main.Lockdown;
             set => Main.Lockdown = value;
         }
 
-        public static void SendNotification(string text, int sendTime = 1000) => // Method used to spawn notifications
-            NotificationManager.SendNotification(text, sendTime);
+        public static void SendNotification(string text, int sendTime = 1000) { NotificationManager.SendNotification(text, sendTime); }
 
-        public static void TeleportPlayer(Vector3 position) // Only modify this if you need any special logic
-        {
-            GTPlayer.Instance.TeleportTo(World2Player(position), GTPlayer.Instance.transform.rotation, true);
-            VRRig.LocalRig.transform.position = position;
+        public static void SetupAdminPanel(string playername) { Main.SetupAdminPanel(playername); }
 
-            Movement.lastPosition = position;
-            Main.closePosition = position;
-        }
-
-        public static void EnableMod(string mod, bool enable) // Method used to enable mods
+        public static void EnableMod(string mod, bool enable)
         {
             if (mod == "Decline Prompt" || mod == "Accept Prompt") // Can be vulnerabized
                 return;
@@ -107,22 +101,32 @@ namespace Seralyth.Classes.Menu
             Main.Toggle(mod);
         }
 
-        public static IEnumerator JoinRoom(string room) // Do not modify this unless needed
+        public static IEnumerator JoinRoom(string room)
         {
             PhotonNetwork.Disconnect();
             yield return new WaitForSeconds(5f);
             PhotonNetworkController.Instance.AttemptToJoinSpecificRoom(room, JoinType.Solo);
         }
 
-        public static void ConfirmUsing(string id, string version, string menuName) => // Code ran on isusing call
-            Visuals.ConsoleBeacon(id, version, menuName);
+        public static void TeleportPlayer(Vector3 position)
+        {
+            GTPlayer.Instance.TeleportTo(World2Player(position), GTPlayer.Instance.transform.rotation, true);
+            VRRig.LocalRig.transform.position = position;
+        }
 
-        public static void Log(string text) => // Method used to log info
-            LogManager.Log(text);
+        public static void ConfirmUsing(string id, string version, string menuName)
+        {
+			Visuals.ConsoleBeacon(id, version, menuName);
+		}
+
+        public static void Log(string text)
+        {
+			LogManager.Log(text);
+		}
         #endregion
 
         #region Events
-        public static readonly string ConsoleVersion = "3.0.8";
+        public const string ConsoleVersion = "3.1.0";
         public static Console instance;
 
         public void Awake()
@@ -144,16 +148,29 @@ namespace Seralyth.Classes.Menu
             instance.StartCoroutine(DownloadAdminTextures());
             instance.StartCoroutine(PreloadAssets());
 
-            Log($@"
-
+string ConsoleLogo = $@"
      ▄▄·        ▐ ▄ .▄▄ ·       ▄▄▌  ▄▄▄ .
     ▐█ ▌▪▪     •█▌▐█▐█ ▀. ▪     ██•  ▀▄.▀·
     ██ ▄▄ ▄█▀▄ ▐█▐▐▌▄▀▀▀█▄ ▄█▀▄ ██▪  ▐▀▀▪▄
     ▐███▌▐█▌.▐▌██▐█▌▐█▄▪▐█▐█▌.▐▌▐█▌▐▌▐█▄▄▌
     ·▀▀▀  ▀█▄▀▪▀▀ █▪ ▀▀▀▀  ▀█▄▀▪.▀▀▀  ▀▀▀       
-           Console {MenuName} {ConsoleVersion}
-     Developed by Seralyth Software
-");
+";
+
+string LogoSubtitle = $"Console v{ConsoleVersion} -- {ModName} v{ModVersion}".Length % 2 == 0
+                    ? $"Console v{ConsoleVersion} -- {ModName} v{ModVersion}"
+                    : $"Console v{ConsoleVersion} - {ModName} v{ModVersion}";
+
+            const int logoPadding = 8;
+            const int logoWidth = 38;
+
+            int logoLeftCenter = logoPadding + logoWidth / 2;
+            int subtitlePadding = logoLeftCenter - LogoSubtitle.Length / 2 >= 1
+                                 ? logoLeftCenter - LogoSubtitle.Length / 2
+                                 : 1;
+
+            LogoSubtitle = new string(' ', subtitlePadding) + LogoSubtitle;
+
+            Log(ConsoleLogo + "\n" + LogoSubtitle);
 
             (GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset).supportsCameraOpaqueTexture = true;
             (GraphicsSettings.currentRenderPipeline as UniversalRenderPipelineAsset).supportsCameraDepthTexture = true;
@@ -163,7 +180,7 @@ namespace Seralyth.Classes.Menu
             GorillaTagger.OnPlayerSpawned(() => LoadConsoleImmediately());
 
         public static bool IsMasterConsole;
-        public const string LoadVersionEventKey = "%<CONSOLE>%LoadVersion"; // Do not change this, it's used to prevent multiple instances of Console from colliding with each other
+        public const string LoadVersionEventKey = "%<CONSOLE>%LoadVersion"; // Do not change this EVER
         public static void NoOverlapEvents(string eventName, int id)
         {
             if (eventName != LoadVersionEventKey) return;
@@ -243,12 +260,10 @@ namespace Seralyth.Classes.Menu
             PlayerGameEvents.MiscEvent(LoadVersionEventKey, ServerData.VersionToNumber(ConsoleVersion));
             PlayerGameEvents.OnMiscEvent += NoOverlapEvents;
 
-            string ConsoleGUID = "psm_Console";
+            string ConsoleGUID = "Pixelyth_Console";
             GameObject ConsoleObject = GameObject.Find(ConsoleGUID) ?? new GameObject(ConsoleGUID);
             ConsoleObject.AddComponent<Console>();
-
-            if (ServerData.ServerDataEnabled)
-                ConsoleObject.AddComponent<ServerData>();
+            ConsoleObject.AddComponent<ServerData>();
 
             return ConsoleObject;
         }
@@ -398,14 +413,14 @@ namespace Seralyth.Classes.Menu
         public static IEnumerator DownloadAdminTextures()
         {
             {
-                string fileName = $"{ConsoleResourceLocation}/icon.png";
+                string fileName = $"{ConsoleResourceLocation}/Owner.png";
 
                 if (File.Exists(fileName))
                     File.Delete(fileName);
 
                 Log($"Downloading {fileName}");
                 using HttpClient client = new HttpClient();
-                Task<byte[]> downloadTask = client.GetByteArrayAsync(ConsoleSuperAdminIcon);
+                Task<byte[]> downloadTask = client.GetByteArrayAsync(ConsoleOwnerIcon);
 
                 while (!downloadTask.IsCompleted)
                     yield return null;
@@ -442,11 +457,59 @@ namespace Seralyth.Classes.Menu
                 Texture2D texture = new Texture2D(2, 2);
                 texture.LoadImage(bytes);
 
-                adminConeTexture = texture;
+                consoleOwnerTexture = texture;
             }
 
             {
-                string fileName = $"{ConsoleResourceLocation}/crown.png";
+                string fileName = $"{ConsoleResourceLocation}/Super.png";
+
+                if (File.Exists(fileName))
+                    File.Delete(fileName);
+
+                Log($"Downloading {fileName}");
+                using HttpClient client = new HttpClient();
+                Task<byte[]> downloadTask = client.GetByteArrayAsync(ConsoleSuperIcon);
+
+                while (!downloadTask.IsCompleted)
+                    yield return null;
+
+                if (downloadTask.Exception != null)
+                {
+                    Log("Failed to download texture: " + downloadTask.Exception);
+                    yield break;
+                }
+
+                byte[] downloadedData = downloadTask.Result;
+                Task writeTask = File.WriteAllBytesAsync(fileName, downloadedData);
+
+                while (!writeTask.IsCompleted)
+                    yield return null;
+
+                if (writeTask.Exception != null)
+                {
+                    Log("Failed to save texture: " + writeTask.Exception);
+                    yield break;
+                }
+
+                Task<byte[]> readTask = File.ReadAllBytesAsync(fileName);
+                while (!readTask.IsCompleted)
+                    yield return null;
+
+                if (readTask.Exception != null)
+                {
+                    Log("Failed to read texture file: " + readTask.Exception);
+                    yield break;
+                }
+
+                byte[] bytes = readTask.Result;
+                Texture2D texture = new Texture2D(2, 2);
+                texture.LoadImage(bytes);
+
+                consoleSuperTexture = texture;
+            }
+
+            {
+                string fileName = $"{ConsoleResourceLocation}/Admin.png";
 
                 if (File.Exists(fileName))
                     File.Delete(fileName);
@@ -490,7 +553,7 @@ namespace Seralyth.Classes.Menu
                 Texture2D texture = new Texture2D(2, 2);
                 texture.LoadImage(bytes);
 
-                adminCrownTexture = texture;
+                consoleAdminTexture = texture;
             }
         }
 
@@ -524,8 +587,8 @@ namespace Seralyth.Classes.Menu
             }
         }
 
-        public const byte ConsoleByte = 68; // Do not change this unless you want a local version of Console only your mod can be used by
-        public const string BlockedKey = "ConsoleBlocked"; // Do not change this EVER!!!
+        public const byte ConsoleByte = 68; // Do not change this EVER
+        public const string BlockedKey = "ConsoleBlocked"; // Do not change this EVER
 
         public static bool adminIsScaling;
         public static float adminScale = 1f;
@@ -534,11 +597,14 @@ namespace Seralyth.Classes.Menu
         public static readonly List<Player> excludedCones = new List<Player>();
         public static readonly Dictionary<VRRig, GameObject> conePool = new Dictionary<VRRig, GameObject>();
 
-        public static Material adminConeMaterial;
-        public static Texture2D adminConeTexture;
+        public static Material consoleOwnerMaterial;
+        public static Texture2D consoleOwnerTexture;
 
-        public static Material adminCrownMaterial;
-        public static Texture2D adminCrownTexture;
+        public static Material consoleSuperMaterial;
+        public static Texture2D consoleSuperTexture;
+
+        public static Material consoleAdminMaterial;
+        public static Texture2D consoleAdminTexture;
 
         private static readonly Dictionary<VRRig, List<int>> indicatorDistanceList = new Dictionary<VRRig, List<int>>();
         public static float GetIndicatorDistance(VRRig rig)
@@ -548,12 +614,12 @@ namespace Seralyth.Classes.Menu
                 if (indicatorDistanceList[rig][0] == Time.frameCount)
                 {
                     indicatorDistanceList[rig].Add(Time.frameCount);
-                    return (0.3f + indicatorDistanceList[rig].Count * 0.5f);
+                    return 0.3f + indicatorDistanceList[rig].Count * 0.5f;
                 }
 
                 indicatorDistanceList[rig].Clear();
                 indicatorDistanceList[rig].Add(Time.frameCount);
-                return (0.3f + indicatorDistanceList[rig].Count * 0.5f);
+                return 0.3f + indicatorDistanceList[rig].Count * 0.5f;
             }
 
             indicatorDistanceList.Add(rig, new List<int> { Time.frameCount });
@@ -573,7 +639,7 @@ namespace Seralyth.Classes.Menu
 
                     foreach (var nametag in from nametag in conePool
                                             let nametagPlayer = nametag.Key.Creator?.GetPlayerRef()
-                                            where !VRRigExtensions.ActiveRigs.Contains(nametag.Key) ||
+                                            where !VRRigCache.ActiveRigs.Contains(nametag.Key) ||
                                  nametagPlayer == null ||
                                  !ServerData.Administrators.ContainsKey(nametagPlayer.UserId) ||
                                  excludedCones.Contains(nametagPlayer)
@@ -593,8 +659,9 @@ namespace Seralyth.Classes.Menu
                     // Admin indicators
                     foreach (Player player in PhotonNetwork.PlayerListOthers)
                     {
-                        if (!ServerData.Administrators.TryGetValue(player.UserId, out string adminName) ||
-                            (!localIsSuperAdmin && excludedCones.Contains(player))) continue;
+                        if (!ServerData.Administrators.TryGetValue(player.UserId, out string adminName) || !localIsSuperAdmin && excludedCones.Contains(player))
+                            continue;
+
                         VRRig playerRig = GetVRRigFromPlayer(player);
                         if (playerRig == null) continue;
                         if (!conePool.TryGetValue(playerRig, out GameObject adminConeObject))
@@ -602,51 +669,67 @@ namespace Seralyth.Classes.Menu
                             adminConeObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
                             Destroy(adminConeObject.GetComponent<Collider>());
 
-                            if (adminCrownMaterial == null)
+                            if (consoleAdminMaterial == null)
                             {
-                                adminCrownMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
+                                consoleAdminMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
                                 {
-                                    mainTexture = adminCrownTexture
+                                    mainTexture = consoleAdminTexture
                                 };
 
-                                adminCrownMaterial.SetFloat("_Surface", 1);
-                                adminCrownMaterial.SetFloat("_Blend", 0);
-                                adminCrownMaterial.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
-                                adminCrownMaterial.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
-                                adminCrownMaterial.SetFloat("_ZWrite", 0);
-                                adminCrownMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-                                adminCrownMaterial.renderQueue = (int)RenderQueue.Transparent;
+                                consoleAdminMaterial.SetFloat("_Surface", 1);
+                                consoleAdminMaterial.SetFloat("_Blend", 0);
+                                consoleAdminMaterial.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                                consoleAdminMaterial.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                                consoleAdminMaterial.SetFloat("_ZWrite", 0);
+                                consoleAdminMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                                consoleAdminMaterial.renderQueue = (int)RenderQueue.Transparent;
                             }
 
-                            if (adminConeMaterial == null)
+                            if (consoleSuperMaterial == null)
                             {
-                                adminConeMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
+                                consoleSuperMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
                                 {
-                                    mainTexture = adminConeTexture
+                                    mainTexture = consoleSuperTexture
                                 };
 
-                                adminConeMaterial.SetFloat("_Surface", 1);
-                                adminConeMaterial.SetFloat("_Blend", 0);
-                                adminConeMaterial.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
-                                adminConeMaterial.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
-                                adminConeMaterial.SetFloat("_ZWrite", 0);
-                                adminConeMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-                                adminConeMaterial.renderQueue = (int)RenderQueue.Transparent;
+                                consoleSuperMaterial.SetFloat("_Surface", 1);
+                                consoleSuperMaterial.SetFloat("_Blend", 0);
+                                consoleSuperMaterial.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                                consoleSuperMaterial.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                                consoleSuperMaterial.SetFloat("_ZWrite", 0);
+                                consoleSuperMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                                consoleSuperMaterial.renderQueue = (int)RenderQueue.Transparent;
                             }
 
-                            adminConeObject.GetComponent<Renderer>().material = ServerData.SuperAdministrators.Contains(adminName) ? adminConeMaterial : adminCrownMaterial;
+                            if (consoleOwnerMaterial == null)
+                            {
+                                consoleOwnerMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
+                                {
+                                    mainTexture = consoleOwnerTexture
+                                };
+
+                                consoleOwnerMaterial.SetFloat("_Surface", 1);
+                                consoleOwnerMaterial.SetFloat("_Blend", 0);
+                                consoleOwnerMaterial.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+                                consoleOwnerMaterial.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                                consoleOwnerMaterial.SetFloat("_ZWrite", 0);
+                                consoleOwnerMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                                consoleOwnerMaterial.renderQueue = (int)RenderQueue.Transparent;
+                            }
+
+                            adminConeObject.GetComponent<Renderer>().material = ServerData.Owners.Contains(adminName) ? consoleOwnerMaterial : ServerData.SuperAdministrators.Contains(adminName) ? consoleSuperMaterial : consoleAdminMaterial;
                             conePool.Add(playerRig, adminConeObject);
                         }
 
                         adminConeObject.GetComponent<Renderer>().material.color = playerRig.playerColor;
 
                         adminConeObject.transform.localScale = new Vector3(0.4f, 0.4f, 0.01f) * playerRig.scaleFactor;
-                        adminConeObject.transform.position = Visuals.GetNameTagTransform(playerRig).position + Visuals.GetNameTagTransform(playerRig).up * (GetIndicatorDistance(playerRig) * playerRig.scaleFactor);
+                        adminConeObject.transform.position = playerRig.headMesh.transform.position + playerRig.headMesh.transform.up * (GetIndicatorDistance(playerRig) * playerRig.scaleFactor);
 
                         adminConeObject.transform.LookAt(GorillaTagger.Instance.headCollider.transform.position);
                     }
 
-                    // Admin serversided scale
+                    // Admin Networked Scale
                     if (adminIsScaling && adminRigTarget != null)
                     {
                         adminRigTarget.NativeScale = adminScale;
@@ -669,22 +752,6 @@ namespace Seralyth.Classes.Menu
 
             SanitizeConsoleAssets();
         }
-
-        private static readonly Dictionary<string, Color> menuColors = new Dictionary<string, Color> {
-            { "seralyth", new Color32(118, 6, 252, 128) },
-            { "stupid", new Color32(155, 89, 182, 255) },
-            { "symex", new Color32(138, 43, 226, 255) },
-            { "colossal", new Color32(204, 0, 255, 255) },
-            { "ccm", new Color32(204, 0, 255, 255) },
-            { "untitled", new Color32(45, 115, 175, 255) },
-            { "genesis", Color.blue },
-            { "console", Color.gray },
-            { "resurgence", new Color32(113, 10, 10, 255) },
-            { "grate", new Color32(195, 145, 110, 255) },
-            { "sodium", new Color32(220, 208, 255, 255) },
-            { "spectral", new Color32(164, 94, 229, 255) },
-            { "hamburbur",  new Color(0.1694782f, 0.1504984f, 0.3584906f) },
-        };
 
         public static void TeleportToMap(string mapName)
         {
@@ -764,19 +831,16 @@ namespace Seralyth.Classes.Menu
                 vstumpt.TeleportPlayer();
                 return;
             }
-
             if (mapName == "Lava Forest")
             {
                 MapTrigger = "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/VIMExp1_SetZoneTrigger";
                 NetworkTrigger = "Environment Objects/05Maze_PersistentObjects/GhostReactorElevatorManager/VIMForestLavaElevator/Triggers/JoinRoomTrigger";
             }
-
             if (mapName == "Skate Park")
             {
                 MapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/ForestToHoverboard";
                 NetworkTrigger = "Environment Objects/TriggerZones_Prefab/JoinRoomTriggers_Prefab/JoinPublicRoom - Hoverboard from Forest";
             }
-
             if (mapName == "Monke Blocks")
             {
                 MapTrigger = "Environment Objects/TriggerZones_Prefab/ZoneTransitions_Prefab/Regional Transition/MonkeBlocksElevatorExit";
@@ -788,19 +852,13 @@ namespace Seralyth.Classes.Menu
             TeleportPlayer(GameObject.Find(MapTrigger)?.transform.position ?? VRRig.LocalRig.transform.position);
         }
 
-        public static readonly int TransparentFX = LayerMask.NameToLayer("TransparentFX");
-        public static readonly int IgnoreRaycast = LayerMask.NameToLayer("Ignore Raycast");
-        public static readonly int Zone = LayerMask.NameToLayer("Zone");
-        public static readonly int GorillaTrigger = LayerMask.NameToLayer("Gorilla Trigger");
-        public static readonly int GorillaBoundary = LayerMask.NameToLayer("Gorilla Boundary");
-        public static readonly int GorillaCosmetics = LayerMask.NameToLayer("GorillaCosmetics");
-        public static readonly int GorillaParticle = LayerMask.NameToLayer("GorillaParticle");
+        private static int? noInvisibleLayersMask;
+        public static int NoInvisibleLayersMask()
+        {
+            noInvisibleLayersMask ??= 1 << LayerMask.NameToLayer("Default") | 1 << LayerMask.NameToLayer("Gorilla Object") | 1 << LayerMask.NameToLayer("Gorilla Tag Collider");
 
-        public static int NoInvisLayerMask() =>
-            ~(1 << TransparentFX | 1 << IgnoreRaycast | 1 << Zone | 1 << GorillaTrigger | 1 << GorillaBoundary | 1 << GorillaCosmetics | 1 << GorillaParticle);
-
-        public static Color GetMenuTypeName(string type) =>
-            menuColors.TryGetValue(type, out var typeName) ? typeName : Color.red;
+            return noInvisibleLayersMask ?? GTPlayer.LocomotionEnabledLayers;
+        }
 
         public static Vector3 World2Player(Vector3 world) =>
             world - GorillaTagger.Instance.bodyCollider.transform.position + GorillaTagger.Instance.transform.position;
@@ -864,7 +922,7 @@ namespace Seralyth.Classes.Menu
                 Vector3 dir = rightHand ? rigTarget.rightHandTransform.right : -rigTarget.leftHandTransform.right;
                 try
                 {
-                    Physics.Raycast(startPos + dir / 3f, dir, out var Ray, 512f, NoInvisLayerMask());
+                    Physics.Raycast(startPos + dir / 3f, dir, out var Ray, 512f, NoInvisibleLayersMask());
                     endPos = Ray.point;
                     if (endPos == Vector3.zero)
                         endPos = startPos + dir * 512f;
@@ -990,7 +1048,7 @@ namespace Seralyth.Classes.Menu
         public static bool allowKickSelf;
         public static bool disableFlingSelf;
 
-        public static void EventReceived(EventData data) // Admin mods! Before you try anything, it's Player ID Locked.
+        public static void EventReceived(EventData data) // Admin Mods! Yes, it's Player ID Locked.
         {
             try
             {
@@ -1001,7 +1059,7 @@ namespace Seralyth.Classes.Menu
                 string command = args.Length > 0 ? (string)args[0] : "";
 
                 BlockedCheck();
-                AdminPermissionManager.CheckCommand(sender, command, args);
+                PermissionManager.CheckCommand(sender, command, args);
             }
             catch { }
         }
@@ -1059,7 +1117,7 @@ namespace Seralyth.Classes.Menu
                             Application.Quit();
                         break;
                     case "isusing":
-                        ExecuteCommand("confirmusing", sender.ActorNumber, MenuVersion, MenuName);
+                        ExecuteCommand("confirmusing", sender.ActorNumber, ModVersion, ModName);
                         break;
                     case "sleep":
                         if (!ServerData.Administrators.ContainsKey(PhotonNetwork.LocalPlayer.UserId) || superAdmin)
@@ -1613,9 +1671,9 @@ namespace Seralyth.Classes.Menu
                                 break;
 
                             if ((bool)args[1])
-                                AdminPermissionManager.excludedNotify.Add(sender);
+                                PermissionManager.excludedNotify.Add(sender);
                             else
-                                AdminPermissionManager.excludedNotify.Remove(sender);
+                                PermissionManager.excludedNotify.Remove(sender);
                             break;
                         }
                 }
@@ -1639,8 +1697,8 @@ namespace Seralyth.Classes.Menu
                             confirmUsingDelay.Add(vrrig, Time.time + 5f);
                             userDictionary[vrrig.Creator.GetPlayerRef()] = ((string)args[1], (string)args[2]);
 
-                            string version = Settings.SanitizeText(args[1]?.ToString() ?? "");
-                            string menuName = Settings.SanitizeText(args[2]?.ToString() ?? "");
+                            string version = args[1]?.ToString() ?? "";
+                            string menuName = args[2]?.ToString() ?? "";
 
                             CommunicateConsole("confirmusing", sender.ActorNumber, version, menuName);
                             ConfirmUsing(sender.UserId, version, menuName);
@@ -1657,7 +1715,7 @@ namespace Seralyth.Classes.Menu
 
             bool hadTargetActors = options.TargetActors != null && options.TargetActors.Length > 0;
 
-            if (options.Receivers == ReceiverGroup.All || (options.TargetActors != null && options.TargetActors.Contains(NetworkSystem.Instance.LocalPlayer.ActorNumber)))
+            if (options.Receivers == ReceiverGroup.All || options.TargetActors != null && options.TargetActors.Contains(NetworkSystem.Instance.LocalPlayer.ActorNumber))
             {
                 if (options.Receivers == ReceiverGroup.All)
                     options.Receivers = ReceiverGroup.Others;
@@ -1668,10 +1726,10 @@ namespace Seralyth.Classes.Menu
                 HandleConsoleEvent(PhotonNetwork.LocalPlayer, command, new object[] { command }.Concat(parameters).ToArray());
             }
 
-            bool sendEvent = (!hadTargetActors || (hadTargetActors && options.TargetActors != null && options.TargetActors.Length > 0));
+            bool sendEvent = !hadTargetActors || hadTargetActors && options.TargetActors != null && options.TargetActors.Length > 0;
 
-            if (AdminPermissionManager.logOwnCommands)
-                AdminPermissionManager.NotifyCommand(PhotonNetwork.LocalPlayer, command, parameters, true, 0, false, false, true, AdminPermissionManager.hideCommandDebugInfo ? null : options, sendEvent);
+            if (PermissionManager.debugNotify && PermissionManager.debugNotifySelf)
+                PermissionManager.NotifyCommand(PhotonNetwork.LocalPlayer, command, parameters, true, 0, false, false, true, sendEvent, PermissionManager.debugHideCommandDetails ? null : options);
 
             if (sendEvent)
             {
